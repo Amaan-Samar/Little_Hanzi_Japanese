@@ -9,7 +9,7 @@ Little hanzi Greek is a nice simple that i created to make Greek learning proces
 
 ![LittleHanzi Demo](./data/demo/demo.png)
 
-**Live Demo:** [Little Hanzi](https://amaan-samar.github.io/Little_Hanzi_Greek/)
+**Live Demo:** [Little Hanzi](https://amaan-samar.github.io/Little_Hanzi_Japenese/)
 ## What is this?
 
 Little Hanzi Greek lets you paste GReek text and its English translation, then displays them with lanized pronunciation rendered with its greek and english paragrah for understing meaning. Perfect for reading practice and vocabulary building.
@@ -35,7 +35,7 @@ Copy these into the app to see how it works.
 
 ```bash
 # Clone the repo
-git clone https://github.com/Amaan-Samar/Little_Hanzi_Greek.git
+git clone https://github.com/Amaan-Samar/LIttle_Hanzi_Japenese.git
 
 # Install dependencies
 npm install
