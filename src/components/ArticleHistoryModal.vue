@@ -1,0 +1,254 @@
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="handleOverlayClick">
+      <div class="bg-white/90 backdrop-blur-xl rounded-2xl w-[85%] max-w-[600px] max-h-[80vh] flex flex-col shadow-2xl border border-white/20 animate-slideUp" :class="{ 'w-[95%] max-h-[85vh]': isMobile }" @click.stop>
+
+        <button class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white shadow-lg border border-gray-100/50 flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-xl hover:bg-gray-50 z-10" @click="close">
+          <X :size="16" class="text-gray-500" />
+        </button>
+
+        <div class="flex-1 overflow-y-auto p-6 pt-8 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+          <div v-if="articles.length === 0" class="text-center py-16">
+            <BookOpen :size="40" class="mx-auto text-indigo-300" />
+            <p class="mt-4 text-sm font-medium text-gray-500">No saved articles yet</p>
+            <p class="text-xs text-gray-400 mt-1">Articles you read will appear here</p>
+          </div>
+
+          <div v-else>
+            <!-- Date range filter -->
+            <div class="mb-4 flex flex-wrap items-center gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <label class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Filter</label>
+              <input
+                type="date"
+                v-model="startDate"
+                :min="dateRange.minStr"
+                :max="dateRange.maxStr"
+                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-indigo-300"
+              />
+              <span class="text-slate-300 text-xs">—</span>
+              <input
+                type="date"
+                v-model="endDate"
+                :min="dateRange.minStr"
+                :max="dateRange.maxStr"
+                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-indigo-300"
+              />
+              <button
+                v-if="startDate || endDate"
+                @click="startDate = ''; endDate = ''"
+                class="text-[11px] text-indigo-500 hover:text-indigo-700 font-medium"
+              >
+                Clear
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ filteredArticles.length }} of {{ articles.length }} article{{ articles.length === 1 ? '' : 's' }}</span>
+                <button v-if="articles.length > 0" @click="confirmDeleteAll" class="text-xs text-gray-400 hover:text-red-500 transition-colors duration-200 flex items-center gap-1">
+                  <Trash2 :size="14" />
+                  Delete All
+                </button>
+              </div>
+
+              <div v-if="filteredArticles.length === 0" class="text-center py-8 text-xs text-slate-400">
+                No articles in this date range.
+              </div>
+
+              <div class="space-y-3">
+                <div
+                  v-for="article in filteredArticles"
+                  :key="article.id"
+                  class="group relative bg-white/50 rounded-xl border border-gray-100/80 transition-all duration-200 hover:border-indigo-200 hover:shadow-md hover:bg-white/80"
+                  :class="{ 'border-indigo-300 bg-indigo-50/50 shadow-sm': isCurrentArticle(article.id) }"
+                >
+                  <div class="p-4 pr-12 cursor-pointer" @click="selectArticle(article)">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="flex-1 min-w-0">
+                        <h3 class="text-sm font-semibold text-gray-800 leading-tight mb-1.5 line-clamp-2">
+                          {{ article.title }}
+                        </h3>
+                        <p class="text-xs text-gray-700 leading-relaxed mb-1">
+                          <span class="text-[10px] font-medium text-indigo-400 uppercase tracking-wider mr-1">GR</span>
+                          {{ truncateText(article.greekContent, 60) }}
+                        </p>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                          <span class="text-[10px] font-medium text-gray-400 uppercase tracking-wider mr-1">EN</span>
+                          {{ truncateText(article.englishContent, 80) }}
+                        </p>
+                      </div>
+                      <span class="text-[10px] text-gray-400 whitespace-nowrap pt-0.5 flex-shrink-0">
+                        {{ formatDate(article.timestamp) }}
+                      </span>
+                    </div>
+                    <div v-if="article.bookmark !== null && article.bookmark !== undefined" class="mt-1.5">
+                      <span class="text-[10px] text-indigo-400 font-medium">🔖 Bookmarked</span>
+                    </div>
+                  </div>
+
+                  <button
+                    @click="confirmDeleteArticle(article.id)"
+                    class="absolute top-3 right-3 w-7 h-7 rounded-full bg-transparent hover:bg-red-50 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 hover:scale-110"
+                    title="Delete article"
+                  >
+                    <Trash2 :size="14" class="text-gray-300 group-hover:text-red-400 transition-colors" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 pt-0 flex justify-end">
+          <button class="text-xs font-medium text-gray-400 hover:text-gray-600 transition-colors duration-200 px-4 py-2" @click="close">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ConfirmModal
+      :isOpen="showConfirmModal"
+      :title="confirmModalTitle"
+      :message="confirmModalMessage"
+      :confirmText="confirmModalConfirmText"
+      cancelText="Cancel"
+      @confirm="handleConfirmDelete"
+      @cancel="cancelDelete"
+    />
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { X, BookOpen, Trash2 } from 'lucide-vue-next'
+import ConfirmModal from './ConfirmModal.vue'
+
+const props = defineProps({
+  isOpen: { type: Boolean, default: false },
+  articles: { type: Array, default: () => [] },
+  isCurrentArticle: { type: Function, default: () => false },
+  formatDate: { type: Function, default: () => '' }
+})
+
+const emit = defineEmits(['close', 'load-article', 'delete-article', 'delete-all'])
+
+const isMobile = ref(false)
+const showConfirmModal = ref(false)
+const pendingDeleteId = ref(null)
+const pendingDeleteAll = ref(false)
+const confirmModalTitle = ref('')
+const confirmModalMessage = ref('')
+const confirmModalConfirmText = ref('')
+
+// Date filter
+const startDate = ref('')
+const endDate = ref('')
+
+const toDateInputValue = (ts) => {
+  const d = new Date(ts)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
+const dateRange = computed(() => {
+  if (!props.articles.length) return { minStr: '', maxStr: '' }
+  const timestamps = props.articles.map(a => a.timestamp)
+  return {
+    minStr: toDateInputValue(Math.min(...timestamps)),
+    maxStr: toDateInputValue(Math.max(...timestamps))
+  }
+})
+
+const filteredArticles = computed(() => {
+  let list = props.articles
+  if (startDate.value) {
+    const start = new Date(startDate.value + 'T00:00:00').getTime()
+    list = list.filter(a => a.timestamp >= start)
+  }
+  if (endDate.value) {
+    const end = new Date(endDate.value + 'T23:59:59').getTime()
+    list = list.filter(a => a.timestamp <= end)
+  }
+  return list
+})
+
+const checkMobile = () => { isMobile.value = window.innerWidth <= 768 }
+const handleOverlayClick = () => { close() }
+const close = () => { emit('close') }
+
+const truncateText = (text, maxLength) => {
+  if (!text) return 'No content available'
+  const cleaned = text.replace(/\n/g, ' ').trim()
+  if (cleaned.length <= maxLength) return cleaned
+  return cleaned.substring(0, maxLength) + '...'
+}
+
+const selectArticle = (article) => {
+  emit('load-article', article)
+  close()
+}
+
+const confirmDeleteArticle = (articleId) => {
+  pendingDeleteId.value = articleId
+  pendingDeleteAll.value = false
+  confirmModalTitle.value = 'Delete Article'
+  confirmModalMessage.value = 'Are you sure you want to delete this article from your history?'
+  confirmModalConfirmText.value = 'Yes, Delete'
+  showConfirmModal.value = true
+}
+
+const confirmDeleteAll = () => {
+  pendingDeleteAll.value = true
+  pendingDeleteId.value = null
+  confirmModalTitle.value = 'Delete All Articles'
+  confirmModalMessage.value = 'Are you sure you want to delete ALL articles from your history? This action cannot be undone.'
+  confirmModalConfirmText.value = 'Yes, Delete All'
+  showConfirmModal.value = true
+}
+
+const handleConfirmDelete = () => {
+  if (pendingDeleteAll.value) {
+    emit('delete-all')
+  } else if (pendingDeleteId.value) {
+    emit('delete-article', pendingDeleteId.value)
+  }
+  showConfirmModal.value = false
+  pendingDeleteId.value = null
+  pendingDeleteAll.value = false
+}
+
+const cancelDelete = () => {
+  showConfirmModal.value = false
+  pendingDeleteId.value = null
+  pendingDeleteAll.value = false
+}
+
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen && !showConfirmModal.value) close()
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('keydown', handleEscape)
+})
+</script>
+
+<style scoped>
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.animate-fadeIn { animation: fadeIn 0.25s ease; }
+.animate-slideUp { animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 20px; }
+.group { transition: all 0.2s ease; }
+</style>

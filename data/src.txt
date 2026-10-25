@@ -1,0 +1,3848 @@
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+```javascript
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+import './style.css'
+
+import './assets/main.css'
+// import '../register-service-worker.js lets do it one more time'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
+
+```
+```vue
+<template>
+  <div class="app-container">
+    <main class="main-content">
+      <RouterView />
+    </main>
+  </div>
+</template>
+
+<script setup>
+import { RouterView } from 'vue-router'
+</script>
+<style>
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+</style>
+
+```
+```javascript
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'converter',
+      component: () => import('../components/KoreanConverter.vue'), // Removed /index.js
+    },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   component: () => import('../views/AboutView.vue'),
+    // },
+  ],
+})
+
+export default router
+```
+```vue
+<template>
+
+<svg
+width="70" height="100" viewBox="10 0 110 100"
+>
+
+<g
+     id="g65">
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;fill-rule:evenodd"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26"
+       inkscape:path-effect="#path-effect26"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.58351985,0,0,0.6690606,77.765556,47.627924)" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;fill-rule:evenodd"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5"
+       inkscape:path-effect="#path-effect26-4"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.58351985,0,0,0.6690606,-15.992358,47.641261)" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;fill-rule:evenodd"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-3"
+       inkscape:path-effect="#path-effect26-9"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.58351985,0,0,-0.6690606,77.675513,103.19441)" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;fill-rule:evenodd"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-3"
+       inkscape:path-effect="#path-effect26-4-0"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.58351985,0,0,-0.6690606,-15.996336,103.41998)" />
+  </g>
+  <g
+     id="g66"
+     style="fill:url(#radialGradient67);fill-opacity:0.35144928">
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:none;stroke-width:0.737135;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 29.732471,29.368241 c 0,0 12.992829,-6.887473 0,0 z"
+       id="path24" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-4"
+       inkscape:path-effect="#path-effect26-49"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,0.41931285,53.231292,0.89045461)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-9"
+       inkscape:path-effect="#path-effect26-4-9"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,0.41931285,16.427231,0.89881386)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-3-0"
+       inkscape:path-effect="#path-effect26-9-1"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,-0.41931285,53.260913,35.789877)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-3-7"
+       inkscape:path-effect="#path-effect26-4-0-6"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,-0.41931285,16.425671,35.781516)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-6"
+       inkscape:path-effect="#path-effect26-5"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,0.41931285,53.231292,0.89045461)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-2"
+       inkscape:path-effect="#path-effect26-4-4"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,0.41931285,16.427231,0.89881386)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-3-2"
+       inkscape:path-effect="#path-effect26-9-8"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,-0.41931285,53.260913,35.789877)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-3-0"
+       inkscape:path-effect="#path-effect26-4-0-2"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,-0.41931285,16.425671,35.781516)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-33"
+       inkscape:path-effect="#path-effect26-1"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,0.41931285,53.231292,0.89045461)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-7"
+       inkscape:path-effect="#path-effect26-4-09"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,0.41931285,16.427231,0.89881386)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-3-5"
+       inkscape:path-effect="#path-effect26-9-18"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.22905693,0,0,-0.41931285,53.260913,35.789877)" />
+    <path
+       style="fill:url(#radialGradient67);fill-opacity:0.35144928;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-3-9"
+       inkscape:path-effect="#path-effect26-4-0-66"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.22905693,0,0,-0.41931285,16.425671,35.781516)" />
+  </g>
+  <g
+     id="g67"
+     style="opacity:1">
+    <path
+       style="fill:none;fill-opacity:0.351449;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-7"
+       inkscape:path-effect="#path-effect26-0"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.82415194,0,0,1.1903848,123.7935,-5.4782749)" />
+    <path
+       style="fill:none;fill-opacity:0.351449;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-6"
+       inkscape:path-effect="#path-effect26-4-8"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.82415194,0,0,1.1903848,-8.6283342,-5.4545438)" />
+    <path
+       style="fill:none;fill-opacity:0.351449;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-3-9"
+       inkscape:path-effect="#path-effect26-9-5"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(-0.82415194,0,0,-1.1903848,123.66633,93.384964)" />
+    <path
+       style="fill:none;fill-opacity:0.351449;stroke:#f9d00f;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 23.951442,9.445061 5.093038,5.534623 5.849882,14.648285 6.196776,19.189439 0.346893,4.541153 0.283823,4.509617 0.22075,4.47808"
+       id="path26-5-3-1"
+       inkscape:path-effect="#path-effect26-4-0-1"
+       inkscape:original-d="m 49.763482,41.627247 c 9.429202,1.955219 18.858404,3.910438 28.287606,5.865657 0.756874,9.114027 1.513718,18.227689 2.270577,27.341533 -0.06307,-0.03154 -0.126143,-0.06307 -0.189215,-0.09461"
+       transform="matrix(0.82415194,0,0,-1.1903848,-8.633951,93.786291)" />
+  </g>
+</svg>
+
+
+
+</template>
+
+<script>
+export default {
+  name: 'CopiedIcon',
+};
+</script>
+
+```
+```vue
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="handleOverlayClick">
+      <div class="bg-white/90 backdrop-blur-xl rounded-2xl w-[85%] max-w-[600px] max-h-[80vh] flex flex-col shadow-2xl border border-white/20 animate-slideUp" :class="{ 'w-[95%] max-h-[85vh]': isMobile }" @click.stop>
+        
+        <!-- Floating Close Button -->
+        <button class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white shadow-lg border border-gray-100/50 flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-xl hover:bg-gray-50 z-10" @click="close">
+          <X :size="16" class="text-gray-500" />
+        </button>
+
+        <!-- Body -->
+        <div class="flex-1 overflow-y-auto p-6 pt-8 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+          <div v-if="articles.length === 0" class="text-center py-16">
+            <BookOpen :size="40" class="mx-auto text-purple-300" />
+            <p class="mt-4 text-sm font-medium text-gray-500">No saved articles yet</p>
+            <p class="text-xs text-gray-400 mt-1">Articles you read will appear here</p>
+          </div>
+
+          <div v-else class="space-y-3">
+            <!-- Header -->
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+              <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ articles.length }} article{{ articles.length === 1 ? '' : 's' }}</span>
+              <button v-if="articles.length > 0" @click="confirmDeleteAll" class="text-xs text-gray-400 hover:text-red-500 transition-colors duration-200 flex items-center gap-1">
+                <Trash2 :size="14" />
+                Delete All
+              </button>
+            </div>
+
+            <!-- Articles -->
+            <div class="space-y-3">
+              <div
+                v-for="article in articles"
+                :key="article.id"
+                class="group relative bg-white/50 rounded-xl border border-gray-100/80 transition-all duration-200 hover:border-purple-200 hover:shadow-md hover:bg-white/80"
+                :class="{ 'border-purple-300 bg-purple-50/50 shadow-sm': isCurrentArticle(article.id) }"
+              >
+                <!-- Article Content -->
+                <div class="p-4 pr-12 cursor-pointer" @click="selectArticle(article)">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1 min-w-0">
+                      <h3 class="text-sm font-semibold text-gray-800 leading-tight mb-1.5 line-clamp-2">
+                        {{ article.title }}
+                      </h3>
+                      
+                      <!-- Korean Content -->
+                      <p class="text-xs text-gray-700 leading-relaxed mb-1">
+                        <span class="text-[10px] font-medium text-purple-400 uppercase tracking-wider mr-1">KR</span>
+                        {{ truncateText(article.koreanContent, 60) }}
+                      </p>
+                      
+                      <!-- English Content -->
+                      <p class="text-xs text-gray-500 leading-relaxed">
+                        <span class="text-[10px] font-medium text-gray-400 uppercase tracking-wider mr-1">EN</span>
+                        {{ truncateText(article.englishContent, 80) }}
+                      </p>
+                    </div>
+                    
+                    <span class="text-[10px] text-gray-400 whitespace-nowrap pt-0.5 flex-shrink-0">
+                      {{ formatDate(article.timestamp) }}
+                    </span>
+                  </div>
+                  
+                  <!-- Read More Indicator -->
+                  <div v-if="needsTruncation(article.koreanContent, 60) || needsTruncation(article.englishContent, 80)" class="mt-1.5">
+                    <span class="text-[10px] text-purple-400 font-medium">Read more →</span>
+                  </div>
+                </div>
+
+                <!-- Delete Button -->
+                <button 
+                  @click="confirmDeleteArticle(article.id)" 
+                  class="absolute top-3 right-3 w-7 h-7 rounded-full bg-transparent hover:bg-red-50 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 hover:scale-110"
+                  title="Delete article"
+                >
+                  <Trash2 :size="14" class="text-gray-300 group-hover:text-red-400 transition-colors" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-4 pt-0 flex justify-end">
+          <button class="text-xs font-medium text-gray-400 hover:text-gray-600 transition-colors duration-200 px-4 py-2" @click="close">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <ConfirmModal
+      :isOpen="showConfirmModal"
+      :title="confirmModalTitle"
+      :message="confirmModalMessage"
+      :confirmText="confirmModalConfirmText"
+      cancelText="Cancel"
+      @confirm="handleConfirmDelete"
+      @cancel="cancelDelete"
+    />
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { X, BookOpen, Trash2 } from 'lucide-vue-next'
+import ConfirmModal from './ConfirmModal.vue'
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  },
+  articles: {
+    type: Array,
+    default: () => []
+  },
+  isCurrentArticle: {
+    type: Function,
+    default: () => false
+  },
+  formatDate: {
+    type: Function,
+    default: () => ''
+  }
+})
+
+const emit = defineEmits(['close', 'load-article', 'delete-article', 'delete-all'])
+
+const isMobile = ref(false)
+const showConfirmModal = ref(false)
+const pendingDeleteId = ref(null)
+const pendingDeleteAll = ref(false)
+
+const confirmModalTitle = ref('')
+const confirmModalMessage = ref('')
+const confirmModalConfirmText = ref('')
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+const handleOverlayClick = () => {
+  close()
+}
+
+const close = () => {
+  emit('close')
+}
+
+const truncateText = (text, maxLength) => {
+  if (!text) return 'No content available'
+  const cleaned = text.replace(/\n/g, ' ').trim()
+  if (cleaned.length <= maxLength) return cleaned
+  return cleaned.substring(0, maxLength) + '...'
+}
+
+const needsTruncation = (text, maxLength) => {
+  if (!text) return false
+  const cleaned = text.replace(/\n/g, ' ').trim()
+  return cleaned.length > maxLength
+}
+
+const selectArticle = (article) => {
+  emit('load-article', article)
+  close()
+}
+
+const confirmDeleteArticle = (articleId) => {
+  pendingDeleteId.value = articleId
+  pendingDeleteAll.value = false
+  confirmModalTitle.value = 'Delete Article'
+  confirmModalMessage.value = 'Are you sure you want to delete this article from your history?'
+  confirmModalConfirmText.value = 'Yes, Delete'
+  showConfirmModal.value = true
+}
+
+const confirmDeleteAll = () => {
+  pendingDeleteAll.value = true
+  pendingDeleteId.value = null
+  confirmModalTitle.value = 'Delete All Articles'
+  confirmModalMessage.value = 'Are you sure you want to delete ALL articles from your history? This action cannot be undone.'
+  confirmModalConfirmText.value = 'Yes, Delete All'
+  showConfirmModal.value = true
+}
+
+const handleConfirmDelete = () => {
+  if (pendingDeleteAll.value) {
+    emit('delete-all')
+  } else if (pendingDeleteId.value) {
+    emit('delete-article', pendingDeleteId.value)
+  }
+  showConfirmModal.value = false
+  pendingDeleteId.value = null
+  pendingDeleteAll.value = false
+}
+
+const cancelDelete = () => {
+  showConfirmModal.value = false
+  pendingDeleteId.value = null
+  pendingDeleteAll.value = false
+}
+
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen && !showConfirmModal.value) {
+    close()
+  }
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('keydown', handleEscape)
+})
+</script>
+
+<style scoped>
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Line clamping for titles */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .w-\[95\%\] {
+    width: 95%;
+  }
+  
+  .max-h-\[85vh\] {
+    max-height: 85vh;
+  }
+}
+
+/* Hide scrollbar for cleaner look */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+/* Smooth hover transitions */
+.group {
+  transition: all 0.2s ease;
+}
+
+/* Current article indicator */
+.border-purple-300 {
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.bg-purple-50\/50 {
+  background: rgba(139, 92, 246, 0.05);
+}
+
+/* Floating close button hover */
+.absolute.-top-3.-right-3 {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+</style>
+```
+```vue
+<template>
+  <div class="converter-wrapper">
+    <!-- Header with Logo and Settings -->
+    <div class="app-header">
+      <div class="logo-section">
+        <h1 class="logo">LittleHanzi 한국인</h1>
+      </div>
+      <div class="header-buttons">
+        <!-- Save Button -->
+        <button 
+          class="save-icon-btn" 
+          @click="handleManualSave" 
+          title="Save Article"
+          :disabled="!inputText.trim() || isSaving"
+        >
+          <Save :size="20" />
+          <span v-if="isSaving" class="save-spinner"></span>
+        </button>
+        
+        <button class="history-icon-btn" @click="openHistoryModal" title="Reading History">
+          <BookOpen :size="22" />
+        </button>
+        
+        <button class="settings-icon-btn" @click="openSettingsModal" title="Settings">
+          <Settings :size="24" />
+        </button>
+        
+        <!-- Info Button -->
+        <button class="info-icon-btn" @click="openInfoModal" title="Information">
+          <Info :size="22" />
+        </button>
+      </div>
+    </div>
+
+    <!-- History Modal -->
+    <ArticleHistoryModal
+      :isOpen="isHistoryModalOpen"
+      :articles="articles"
+      :isCurrentArticle="isCurrentArticle"
+      :formatDate="formatDate"
+      @close="closeHistoryModal"
+      @load-article="loadArticleIntoEditor"
+      @delete-article="handleDeleteArticle"
+      @delete-all="handleDeleteAllArticles"
+    />
+
+    <!-- Info Modal -->
+    <InfoModal
+      :isOpen="isInfoModalOpen"
+      @close="closeInfoModal"
+    />
+
+    <div class="main-content">
+      <LoadingSpinner :isLoading="isLoading" :text="loadingText" />
+      
+      <!-- Success Toast for Save -->
+      <div v-if="showSaveToast" class="toast toast-success animate-slideDown">
+        <span>✅ Article saved successfully!</span>
+      </div>
+      
+      <div class="input-display-row">
+        <!-- Korean Text Input -->
+        <div class="text-section" :style="{fontFamily: getFontFamily, fontSize: `${fontSize}px` }">
+          <div class="input-wrapper">
+            <textarea 
+              v-model="inputText" 
+              placeholder="Enter Korean text here..." 
+              class="text-input w-full" 
+            ></textarea>
+            <button 
+              v-if="inputText.trim()" 
+              @click="openEditModal('korean')" 
+              class="edit-btn"
+              title="Edit in popup"
+            >
+              <EditIcon :size="16" />
+            </button>
+          </div>
+          <button @click="clearOrPasteText('korean')" class="action-btn">
+            {{ inputText.trim() ? 'Clear' : 'Paste' }}
+          </button>
+        </div>
+
+        <!-- English Translation Input -->
+        <div class="text-section" :style="{fontSize: `${fontSize}px` }">
+          <div class="input-wrapper">
+            <textarea 
+              v-model="englishText" 
+              placeholder="Enter English translation here..." 
+              class="text-input w-full english-input" 
+            ></textarea>
+            <button 
+              v-if="englishText.trim()" 
+              @click="openEditModal('english')" 
+              class="edit-btn"
+              title="Edit in popup"
+            >
+              <EditIcon :size="16" />
+            </button>
+          </div>
+          <button @click="clearOrPasteText('english')" class="action-btn">
+            {{ englishText.trim() ? 'Clear' : 'Paste' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <EditModal
+        :isOpen="isEditModalOpen"
+        :title="editModalTitle"
+        :content="editModalContent"
+        :fontSize="Number(fontSize)"
+        :fontFamily="getFontFamily"
+        @close="closeEditModal"
+        @save="saveEditModalContent"
+      />
+
+      <!-- Settings Modal -->
+      <SettingsModal
+        :isOpen="isSettingsModalOpen"
+        :settings="settings"
+        @close="closeSettingsModal"
+        @save="saveSettings"
+        @reset="resetToDefaults"
+      />
+
+      <div v-if="inputText.trim() && (showEnglish || showKorean)" class="comparison-section">
+        <div class="comparison-display relative">
+          <!-- Render based on display order and visibility toggles -->
+          <div v-for="(block, sentenceId) in comparisonData" :key="sentenceId" class="comparison-block relative">
+            
+            <template v-if="displayOrder === 'en-kr'">
+              <!-- English first, then Korean -->
+              <div v-if="showEnglish && englishSegments[sentenceId]" class="english-translation-box" :style="{ fontFamily: getFontFamily }">
+                <div class="english-text" :style="{ 
+                  fontSize: `${englishFontSize}px`, 
+                  lineHeight: '1.6' 
+                }">
+                  {{ englishSegments[sentenceId] }}
+                </div>
+              </div>
+
+              <div v-if="showKorean" class="line-container" :style="{ fontFamily: getFontFamily }">
+                <div class="text-line relative">
+                  <div class="line-words" :style="{ fontSize: `${fontSize}px` }">
+                    <span v-for="(wordData, wordIndex) in block.words" :key="wordIndex" class="word-group">
+                      <span class="word-with-romanization">
+                        <span class="romanization-above" :style="{ display: showRomanization ? 'flex' : 'none' }">
+                          <span 
+                            v-for="(char, charIndex) in wordData.romanizedChars" 
+                            :key="charIndex"
+                            class="romanization-char"
+                            :style="{ 
+                              fontSize: `${romanizationFontSize}px`,
+                              minWidth: `${romanizationFontSize * 0.6}px`,
+                              textAlign: 'center'
+                            }"
+                          >
+                            {{ char }}
+                          </span>
+                        </span>
+                        <span class="word" :style="{fontWeight: '400'}">
+                          <span v-for="(char, charIndex) in wordData.koreanChars" :key="charIndex" class="korean-char">
+                            {{ char }}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+            <template v-else>
+              <!-- Korean first, then English -->
+              <div v-if="showKorean" class="line-container" :style="{ fontFamily: getFontFamily }">
+                <div class="text-line relative">
+                  <div class="line-words" :style="{ fontSize: `${fontSize}px` }">
+                    <span v-for="(wordData, wordIndex) in block.words" :key="wordIndex" class="word-group">
+                      <span class="word-with-romanization">
+                        <span class="romanization-above" :style="{ display: showRomanization ? 'flex' : 'none' }">
+                          <span 
+                            v-for="(char, charIndex) in wordData.romanizedChars" 
+                            :key="charIndex"
+                            class="romanization-char"
+                            :style="{ 
+                              fontSize: `${romanizationFontSize}px`,
+                              minWidth: `${romanizationFontSize * 0.6}px`,
+                              textAlign: 'center'
+                            }"
+                          >
+                            {{ char }}
+                          </span>
+                        </span>
+                        <span class="word" :style="{fontWeight: '400'}">
+                          <span v-for="(char, charIndex) in wordData.koreanChars" :key="charIndex" class="korean-char">
+                            {{ char }}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="showEnglish && englishSegments[sentenceId]" class="english-translation-box" :style="{ fontFamily: getFontFamily }">
+                <div class="english-text" :style="{ 
+                  fontSize: `${englishFontSize}px`, 
+                  lineHeight: '1.6' 
+                }">
+                  {{ englishSegments[sentenceId] }}
+                </div>
+              </div>
+            </template>
+
+          </div>
+
+          <div v-if="inputText.trim()" class="quick-actions">
+            <button @click="requestClearAll" class="clear-all-btn">
+              Clear All Text
+            </button>
+          </div>
+
+          <div 
+            class="scroll-spacer"
+            :style="{
+              minHeight: `calc(66vh - ${fontSize * 2}px)`
+            }"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Empty state when both English and Korean are hidden -->
+      <div v-else-if="inputText.trim() && !showEnglish && !showKorean" class="empty-state">
+        <p>Both English and Korean paragraphs are hidden. Enable them in settings.</p>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <ConfirmModal
+      :isOpen="showConfirmModal"
+      title="Clear All Text"
+      message="Are you sure you want to clear all Korean and English text? This action cannot be undone."
+      confirmText="Yes, Clear All"
+      cancelText="Cancel"
+      @confirm="confirmClearAll"
+      @cancel="cancelClearAll"
+    />
+  </div>
+</template>
+
+<script>
+import ArticleHistoryModal from './ArticleHistoryModal.vue';
+import { useArticleHistory } from '../composables/useArticleHistory';
+import { Edit as EditIcon, Settings, BookOpen, Save, Info } from 'lucide-vue-next';
+import EditModal from './EditModal.vue';
+import ConfirmModal from './ConfirmModal.vue';
+import SettingsModal from './SettingsModal.vue';
+import InfoModal from './InfoModal.vue';
+import { ref, computed, watch } from 'vue';
+import { romanize } from 'koroman';
+import LoadingSpinner from './LoadingSpinner.vue';
+import { useSettings } from '../composables/useSettings';
+
+export default {
+  components: {
+    ArticleHistoryModal,
+    EditModal,
+    ConfirmModal,
+    SettingsModal,
+    InfoModal,
+    LoadingSpinner,
+    BookOpen,
+    EditIcon,
+    Settings,
+    Save,
+    Info,
+  },
+  name: 'KoreanConverter',
+  setup() {
+    const {
+      fontSize,
+      selectedFont,
+      showRomanization,
+      showKorean,
+      showEnglish,
+      displayOrder,
+      romanizationFontSize,
+      englishFontSize,
+      resetSettings
+    } = useSettings()
+
+    const {
+      articles,
+      scheduleAutoSave,
+      cancelAutoSave,
+      saveCurrentArticle,
+      deleteArticle,
+      deleteAllArticles,
+      loadArticle,
+      isCurrentArticle,
+      formatDate,
+      resetCurrentTracking,
+      isSaving,
+      saveArticles
+    } = useArticleHistory()
+    
+    const inputText = ref('');
+    const englishText = ref('');
+    const showConfirmModal = ref(false);
+    const isSettingsModalOpen = ref(false);
+    const isInfoModalOpen = ref(false);
+    const isLoading = ref(false);
+    const loadingText = ref('Processing...');
+    const showSaveToast = ref(false);
+    let toastTimeout = null;
+
+    const isEditModalOpen = ref(false)
+    const editModalType = ref('korean')
+    const editModalTitle = computed(() => editModalType.value === 'korean' ? 'Korean Text' : 'English Translation')
+    const editModalContent = computed(() => editModalType.value === 'korean' ? inputText.value : englishText.value)
+
+    const isHistoryModalOpen = ref(false)
+    const lastSavedContent = ref({ korean: '', english: '' })
+
+    // Manual save function
+    const handleManualSave = () => {
+      if (!inputText.value.trim()) {
+        return
+      }
+      
+      const article = saveCurrentArticle(inputText.value, englishText.value)
+      if (article) {
+        showSaveToastMessage('Article saved successfully!')
+      }
+    }
+
+    // Show toast message
+    const showSaveToastMessage = (message) => {
+      showSaveToast.value = true
+      if (toastTimeout) {
+        clearTimeout(toastTimeout)
+      }
+      toastTimeout = setTimeout(() => {
+        showSaveToast.value = false
+      }, 3000)
+    }
+
+    // Watchers for auto-save
+    watch([inputText, englishText], ([newKorean, newEnglish]) => {
+      if (newKorean && newKorean.trim()) {
+        scheduleAutoSave(newKorean, newEnglish)
+        lastSavedContent.value = { korean: newKorean, english: newEnglish }
+      } else {
+        cancelAutoSave()
+        resetCurrentTracking()
+      }
+    }, { deep: true })
+
+    // Modal methods
+    const openHistoryModal = () => {
+      isHistoryModalOpen.value = true
+    }
+
+    const closeHistoryModal = () => {
+      isHistoryModalOpen.value = false
+    }
+
+    const openInfoModal = () => {
+      isInfoModalOpen.value = true
+    }
+
+    const closeInfoModal = () => {
+      isInfoModalOpen.value = false
+    }
+
+    const loadArticleIntoEditor = async (article) => {
+      isLoading.value = true
+      loadingText.value = 'Loading article...'
+      
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      inputText.value = article.koreanContent || article.chineseContent || ''
+      englishText.value = article.englishContent || ''
+      cancelAutoSave()
+      resetCurrentTracking()
+      
+      isLoading.value = false
+    }
+
+    const handleDeleteArticle = (articleId) => {
+      deleteArticle(articleId)
+    }
+
+    const handleDeleteAllArticles = () => {
+      deleteAllArticles()
+    }
+
+    // Settings object for modal
+    const settings = computed(() => ({
+      fontSize: Number(fontSize.value),
+      selectedFont: selectedFont.value,
+      showRomanization: showRomanization.value,
+      showEnglish: showEnglish.value,
+      showKorean: showKorean.value,
+      displayOrder: displayOrder.value,
+      romanizationFontSize: romanizationFontSize.value,
+      englishFontSize: englishFontSize.value
+    }))
+
+    // Core function: split Korean text into words with per-character romanization
+    const getWordsWithRomanization = (text) => {
+      if (!text) return []
+      
+      const tokens = text.split(/(\s+|[.,!?;:()"'])/g).filter(t => t.trim() || t === ' ')
+      
+      const result = []
+      let currentWord = ''
+      
+      for (const token of tokens) {
+        if (token.trim() === '') {
+          if (currentWord) {
+            result.push(processWord(currentWord))
+            currentWord = ''
+          }
+          result.push({
+            korean: token,
+            koreanChars: [],
+            romanized: '',
+            romanizedChars: [],
+            isPunctuation: false
+          })
+        } else if (/[\uAC00-\uD7AF]/.test(token)) {
+          if (currentWord) {
+            result.push(processWord(currentWord))
+            currentWord = ''
+          }
+          result.push(processWord(token))
+        } else if (/[.,!?;:()"']/.test(token)) {
+          if (currentWord) {
+            result.push(processWord(currentWord))
+            currentWord = ''
+          }
+          result.push({
+            korean: token,
+            koreanChars: [token],
+            romanized: token,
+            romanizedChars: [token],
+            isPunctuation: true
+          })
+        } else {
+          currentWord += token
+        }
+      }
+      
+      if (currentWord) {
+        result.push(processWord(currentWord))
+      }
+      
+      return result
+    }
+
+    // Process a single word into characters with romanization
+    const processWord = (word) => {
+      const koreanChars = [...word]
+      const romanized = romanize(word, { 
+        usePronunciationRules: true,
+        casingOption: 'lowercase'
+      })
+      
+      const romanizedChars = []
+      for (let i = 0; i < koreanChars.length; i++) {
+        const char = koreanChars[i]
+        const charRomanized = romanize(char, { 
+          usePronunciationRules: true,
+          casingOption: 'lowercase'
+        })
+        romanizedChars.push(charRomanized || '')
+      }
+      
+      return {
+        korean: word,
+        koreanChars: koreanChars,
+        romanized: romanized,
+        romanizedChars: romanizedChars,
+        isPunctuation: false
+      }
+    }
+
+    const openSettingsModal = () => {
+      isSettingsModalOpen.value = true
+    }
+
+    const requestClearAll = () => {
+      if (inputText.value.trim() || englishText.value.trim()) {
+        showConfirmModal.value = true
+      }
+    }
+
+    const confirmClearAll = () => {
+      clearText('both')
+      showConfirmModal.value = false
+    }
+
+    const cancelClearAll = () => {
+      showConfirmModal.value = false
+    }
+
+    const closeSettingsModal = () => {
+      isSettingsModalOpen.value = false
+    }
+
+    const saveSettings = (newSettings) => {
+      fontSize.value = newSettings.fontSize
+      selectedFont.value = newSettings.selectedFont
+      showRomanization.value = newSettings.showRomanization
+      showEnglish.value = newSettings.showEnglish
+      showKorean.value = newSettings.showKorean
+      displayOrder.value = newSettings.displayOrder
+      romanizationFontSize.value = newSettings.romanizationFontSize
+      englishFontSize.value = newSettings.englishFontSize
+      closeSettingsModal()
+    }
+
+    const resetToDefaults = () => {
+      resetSettings()
+      closeSettingsModal()
+    }
+
+    const openEditModal = (type) => {
+      editModalType.value = type
+      isEditModalOpen.value = true
+    }
+
+    const closeEditModal = () => {
+      isEditModalOpen.value = false
+    }
+
+    const saveEditModalContent = (newContent) => {
+      if (editModalType.value === 'korean') {
+        inputText.value = newContent
+      } else {
+        englishText.value = newContent
+      }
+      closeEditModal()
+    }
+
+    // Font configurations
+    const fonts = {
+      NotoSansSC: "'Noto Sans SC', 'Inter', sans-serif",
+      NotoSerifSC: "'Noto Serif SC', 'Georgia', serif",
+      Inter: "'Inter', 'Noto Sans SC', sans-serif",
+      Roboto: "'Roboto', 'Noto Sans SC', sans-serif",
+      Poppins: "'Poppins', 'Noto Sans SC', sans-serif",
+      ZCOOLKuaiLe: "'ZCOOL KuaiLe', cursive",
+      MaShanZheng: "'Ma Shan Zheng', cursive",
+    };
+
+    const getFontFamily = computed(() => fonts[selectedFont.value]);
+
+    const breakEnglishText = (englishText, koreanSegments) => {
+      if (!englishText.trim()) return {};
+      
+      const normalizedText = englishText
+        .replace(/\r\n/g, '\n')
+        .replace(/\n\s*\n(\s*\n)*/g, '\n\n');
+      
+      const englishParagraphs = normalizedText
+        .split(/\n\n/)
+        .map(para => para.trim())
+        .filter(para => para);
+      
+      const result = {};
+      const koreanSegmentKeys = koreanSegments ? Object.keys(koreanSegments) : [];
+      
+      englishParagraphs.forEach((paragraph, index) => {
+        if (index < koreanSegmentKeys.length) {
+          result[koreanSegmentKeys[index]] = paragraph;
+        }
+      });
+      
+      return result;
+    };
+
+    const englishSegments = computed(() => {
+      return breakEnglishText(englishText.value, comparisonData.value);
+    });
+
+    const pasteFromClipboard = async (target = null) => {
+      isLoading.value = true;
+      loadingText.value = 'Pasting from clipboard...';
+      
+      try {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        const clipboardText = await navigator.clipboard.readText();
+        const targetType = target || 'korean';
+        
+        loadingText.value = 'Processing text...';
+        await new Promise(resolve => setTimeout(resolve, 50));
+        
+        if (targetType === 'korean') {
+          inputText.value = clipboardText;
+        } else {
+          englishText.value = clipboardText;
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error('Failed to read clipboard contents: ', error);
+        loadingText.value = 'Failed to paste. Try again.';
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } finally {
+        isLoading.value = false;
+      }
+    };
+
+    const clearText = (type = 'both') => {
+      if (type === 'korean' || type === 'both') {
+        inputText.value = '';
+      }
+      
+      if (type === 'english' || type === 'both') {
+        englishText.value = '';
+      }
+      
+      if (type === 'both' || (type === 'korean' && !inputText.value.trim())) {
+        cancelAutoSave()
+        resetCurrentTracking()
+      }
+    }
+
+    const clearOrPasteText = (type) => {
+      const text = type === 'korean' ? inputText.value : englishText.value;
+      
+      if (text.trim()) {
+        clearText(type);
+      } else {
+        pasteFromClipboard(type);
+      }
+    };
+
+    // Updated comparison data for Korean
+    const comparisonData = computed(() => {
+      if (!inputText.value) return {};
+      
+      const normalizedText = inputText.value
+        .replace(/\r\n/g, '\n')
+        .replace(/\n\s*\n(\s*\n)*/g, '\n\n');
+      
+      const koreanParagraphs = normalizedText
+        .split(/\n\n/)
+        .map(para => para.trim())
+        .filter(para => para);
+      
+      const result = {};
+      
+      koreanParagraphs.forEach((paragraph, index) => {
+        const sentenceId = index;
+        result[sentenceId] = {
+          words: getWordsWithRomanization(paragraph)
+        };
+      });
+      
+      return result;
+    });
+
+    return {
+      articles,
+      isHistoryModalOpen,
+      openHistoryModal,
+      closeHistoryModal,
+      loadArticleIntoEditor,
+      handleDeleteArticle,
+      handleDeleteAllArticles,
+      isCurrentArticle,
+      formatDate,
+      
+      // Info modal
+      isInfoModalOpen,
+      openInfoModal,
+      closeInfoModal,
+
+      // Data
+      inputText,
+      englishText,
+      selectedFont,
+      fontSize,
+      showRomanization,
+      showEnglish,
+      showKorean,
+      displayOrder,
+      romanizationFontSize,
+      englishFontSize,
+
+      isLoading,
+      loadingText,
+      isSaving,
+      showSaveToast,
+      
+      // Computed
+      getFontFamily,
+      comparisonData,
+      englishSegments,
+      settings,
+      
+      // Methods
+      clearOrPasteText,
+      clearAllText: clearText,
+      handleManualSave,
+      showSaveToastMessage,
+      
+      // Modal related
+      EditIcon,
+      Settings,
+      Save,
+      Info,
+      isEditModalOpen,
+      editModalTitle,
+      editModalContent,
+      openEditModal,
+      closeEditModal,
+      saveEditModalContent,
+      
+      // Settings modal
+      isSettingsModalOpen,
+      openSettingsModal,
+      closeSettingsModal,
+      saveSettings,
+      resetToDefaults,
+
+      showConfirmModal,
+      requestClearAll,
+      confirmClearAll,
+      cancelClearAll,
+    };
+  },
+};
+</script>
+
+<style scoped>
+/* App Header */
+.app-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border-bottom: var(--border-primary-light);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  background: var(--gradient-logo);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Save Button */
+.save-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.save-icon-btn:hover:not(:disabled) {
+  background: #dbeafe;
+  color: #2563eb;
+  transform: scale(1.05);
+}
+
+.save-icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.save-spinner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.history-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+
+.history-icon-btn:hover {
+  background: var(--p-100);
+  transform: scale(1.05);
+}
+
+.settings-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+
+.settings-icon-btn:hover {
+  background: var(--p-100);
+  transform: rotate(90deg);
+}
+
+.info-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+
+.info-icon-btn:hover {
+  background: #fef3c7;
+  color: #d97706;
+  transform: scale(1.05);
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 3000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #16a34a;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.main-content {
+  display: block;
+}
+
+/* Main Background */
+.converter-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--gradient-main);
+}
+
+.input-display-row {
+  margin: 20px auto;
+  padding: 5px;
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.text-section {
+  width: 100%;
+  padding: 0 1rem;
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.text-input {
+  width: 100%;
+  min-height: 40px;
+  padding: 12px;
+  background: var(--bg-input);
+  backdrop-filter: blur(10px);
+  border: var(--border-primary-strong);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  transition: all 0.2s;
+  resize: vertical;
+  font-family: inherit;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  color: var(--text);
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.text-input::placeholder {
+  color: var(--p-400);
+  opacity: 0.5;
+}
+
+.english-input {
+  width: 100%;
+  min-height: 30px;
+  padding: 8px;
+  background: var(--bg-input);
+  backdrop-filter: blur(10px);
+  border: var(--border-primary-strong);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  transition: all 0.2s;
+  resize: vertical;
+  font-family: inherit;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  color: var(--text);
+}
+
+.english-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.english-input::placeholder {
+  color: var(--p-400);
+  opacity: 0.5;
+}
+
+.action-btn {
+  padding: 8px 20px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: var(--border-primary);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--p-100);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.edit-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--bg-input);
+  backdrop-filter: blur(10px);
+  border: var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--text-muted);
+  z-index: 10;
+}
+
+.edit-btn:hover {
+  background: var(--p-100);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+.quick-actions {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.clear-all-btn {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--r-100);
+  border: 1px solid var(--r-200);
+  border-radius: var(--radius-sm);
+  color: var(--r-600);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-all-btn:hover {
+  background: var(--r-200);
+  transform: translateY(-1px);
+}
+
+/* Korean word-based romanization - ABOVE the word */
+.line-words {
+  text-wrap: wrap;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.word-group {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: normal;
+  margin: 0 1px;
+}
+
+.word-with-romanization {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.romanization-above {
+  display: flex;
+  gap: 0px;
+  justify-content: center;
+  margin-bottom: 1px;
+  flex-wrap: nowrap;
+}
+
+.romanization-char {
+  color: var(--primary);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: inline-block;
+  opacity: 0.7;
+}
+
+.word {
+  display: inline-flex;
+  font-weight: 400;
+  color: var(--text);
+  gap: 0px;
+}
+
+.korean-char {
+  display: inline-block;
+}
+
+.english-translation-box {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border: var(--border-secondary);
+}
+
+.english-text {
+  color: var(--g-800);
+  line-height: 1.6;
+  font-family: inherit;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--primary);
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+}
+
+.relative {
+  position: relative;
+}
+
+.comparison-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  overflow-x: hidden;
+}
+
+.comparison-display {
+  max-width: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.comparison-block {
+  margin-bottom: 24px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.line-container {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  border: var(--border-primary-light);
+  box-shadow: var(--shadow-primary);
+  width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  transition: all 0.3s;
+}
+
+.line-container:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-primary-hover);
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+.text-line {
+  display: block;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 8px 16px;
+  }
+  
+  .logo {
+    font-size: 18px;
+  }
+  
+  .input-display-row {
+    margin: 10px auto;
+  }
+  
+  .text-section {
+    padding: 0 0.5rem;
+  }
+  
+  .comparison-section {
+    padding: 0 0.5rem;
+  }
+  
+  .line-container {
+    padding: 12px;
+  }
+  
+  .line-words {
+    gap: 2px 4px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .line-words {
+    gap: 1px 3px;
+  }
+  
+  .line-container {
+    padding: 8px;
+  }
+  
+  .english-text {
+    font-size: 0.9em;
+  }
+  
+  .toast {
+    top: 70px;
+    font-size: 12px;
+    padding: 10px 16px;
+    max-width: 90%;
+  }
+}
+</style>
+```
+```vue
+<template>
+  <div v-if="isLoading" class="loading-overlay">
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">{{ text }}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'LoadingSpinner',
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: String,
+      default: 'Processing...'
+    }
+  }
+}
+</script>
+
+<style scoped>
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--p-200);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 16px;
+  color: var(--primary-dark);
+  font-weight: 500;
+  margin: 0;
+}
+</style>
+```
+```vue
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="handleOverlayClick">
+      <div class="relative bg-white/85 backdrop-blur-xl rounded-2xl w-[90%] max-w-[700px] h-[80vh] max-h-[650px] flex flex-col animate-slideUp border border-white/50 shadow-2xl" :class="{ 'w-[95%] h-[85vh] max-h-none rounded-xl': isMobile }" @click.stop>
+        
+        <!-- Floating Close Button -->
+        <button class="absolute -top-2.5 -right-2.5 w-8 h-8 rounded-full bg-white border border-black/5 cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-gray-50 hover:border-black/10 text-gray-400 hover:text-gray-600 shadow-md hover:shadow-lg z-10" @click="close">
+          <X :size="16" />
+        </button>
+
+        <!-- Header -->
+        <div class="flex-shrink-0 px-6 pt-6 pb-4 border-b border-gray-100/50">
+          <h3 class="m-0 text-base font-semibold text-gray-800">Edit {{ title }}</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="flex-1 p-5 overflow-hidden min-h-0">
+          <textarea
+            ref="textareaRef"
+            v-model="editText"
+            :placeholder="`Edit ${title} text...`"
+            class="w-full h-full min-h-[200px] p-4 border border-gray-200/60 rounded-xl font-inherit leading-relaxed resize-none outline-none transition-all duration-200 bg-white/60 text-gray-700 focus:border-purple-400 focus:bg-white focus:shadow-purple-100/20 placeholder:text-gray-400"
+            :style="{ fontSize: `${fontSize}px`, fontFamily: fontFamily }"
+          ></textarea>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex-shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-gray-100/50" :class="{ 'flex-col-reverse': isMobile }">
+          <button class="px-6 py-2.5 rounded-xl font-medium cursor-pointer transition-all duration-200 text-sm bg-white/60 border border-gray-200/60 text-gray-500 hover:bg-gray-50 hover:border-gray-300" :class="{ 'w-full justify-center': isMobile }" @click="close">
+            Cancel
+          </button>
+          <button class="px-6 py-2.5 rounded-xl font-medium cursor-pointer transition-all duration-200 text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white border-none hover:-translate-y-0.5 hover:shadow-purple-500/25" :class="{ 'w-full justify-center': isMobile }" @click="save">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { X } from 'lucide-vue-next'
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    default: ''
+  },
+  fontSize: {
+    type: Number,
+    default: 15
+  },
+  fontFamily: {
+    type: String,
+    default: "'Noto Sans SC', sans-serif"
+  }
+})
+
+const emit = defineEmits(['close', 'save'])
+
+const editText = ref(props.content)
+const textareaRef = ref(null)
+const isMobile = ref(false)
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+const handleOverlayClick = () => {
+  close()
+}
+
+const close = () => {
+  emit('close')
+}
+
+const save = () => {
+  emit('save', editText.value)
+  close()
+}
+
+// Handle escape key
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen) {
+    close()
+  }
+}
+
+// Auto-focus textarea when opened
+watch(() => props.isOpen, async (newVal) => {
+  if (newVal) {
+    editText.value = props.content
+    await nextTick()
+    if (textareaRef.value) {
+      textareaRef.value.focus()
+      textareaRef.value.select()
+    }
+  }
+})
+
+// Update editText when content prop changes
+watch(() => props.content, (newVal) => {
+  if (props.isOpen) {
+    editText.value = newVal
+  }
+})
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('keydown', handleEscape)
+})
+</script>
+
+<style scoped>
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Textarea scrollbar styling */
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+textarea {
+  scrollbar-width: thin;
+}
+
+/* Focus ring for textarea */
+textarea:focus {
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.06);
+}
+
+/* Mobile responsive overrides */
+@media (max-width: 768px) {
+  .w-\[95\%\] {
+    width: 95%;
+  }
+  
+  .h-\[85vh\] {
+    height: 85vh;
+  }
+  
+  .max-h-none {
+    max-height: none;
+  }
+  
+  .rounded-xl {
+    border-radius: 16px;
+  }
+}
+
+/* Smooth transitions for buttons */
+button {
+  transition: all 0.2s ease;
+}
+
+/* Gradient button hover shadow */
+.hover\:shadow-purple-500\/25:hover {
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+}
+</style>
+```
+```vue
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="confirm-modal-overlay" @click="handleOverlayClick">
+      <div class="confirm-modal" :class="{ 'mobile': isMobile }" @click.stop>
+        <div class="confirm-modal-header">
+          <div class="icon-wrapper">
+            <AlertTriangle :size="32" />
+          </div>
+          <h3>{{ title }}</h3>
+        </div>
+        
+        <div class="confirm-modal-body">
+          <p>{{ message }}</p>
+        </div>
+        
+        <div class="confirm-modal-footer">
+          <button class="cancel-btn" @click="cancel">
+            {{ cancelText }}
+          </button>
+          <button class="confirm-btn" @click="confirm">
+            {{ confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { AlertTriangle } from 'lucide-vue-next'
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  },
+  title: {
+    type: String,
+    default: 'Confirm Action'
+  },
+  message: {
+    type: String,
+    default: 'Are you sure you want to proceed?'
+  },
+  confirmText: {
+    type: String,
+    default: 'Confirm'
+  },
+  cancelText: {
+    type: String,
+    default: 'Cancel'
+  }
+})
+
+const emit = defineEmits(['confirm', 'cancel'])
+
+const isMobile = ref(false)
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+const handleOverlayClick = () => {
+  cancel()
+}
+
+const confirm = () => {
+  emit('confirm')
+}
+
+const cancel = () => {
+  emit('cancel')
+}
+
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen) {
+    cancel()
+  }
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('keydown', handleEscape)
+})
+</script>
+<style scoped>
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(139, 92, 246, 0.08);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.confirm-modal {
+  background: var(--bg-card);
+  backdrop-filter: blur(30px);
+  border-radius: var(--radius-2xl);
+  width: 90%;
+  max-width: 400px;
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.confirm-modal.mobile {
+  width: 95%;
+  border-radius: var(--radius-xl);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.confirm-modal-header {
+  padding: 24px 24px 16px;
+  text-align: center;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #F59E0B;
+}
+
+.confirm-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.confirm-modal-body {
+  padding: 0 24px 24px;
+  text-align: center;
+}
+
+.confirm-modal-body p {
+  margin: 0;
+  color: var(--gray-500);
+  line-height: 1.6;
+}
+
+.confirm-modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px 24px;
+  border-top: var(--border-primary-light);
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.5);
+  border: var(--border-primary);
+  color: var(--text-muted);
+}
+
+.cancel-btn:hover {
+  background: var(--p-100);
+  transform: translateY(-1px);
+}
+
+.confirm-btn {
+  background: var(--gradient-danger);
+  color: var(--text-white);
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-danger);
+}
+
+@media (max-width: 768px) {
+  .confirm-modal-header {
+    padding: 20px 20px 12px;
+  }
+  
+  .confirm-modal-body {
+    padding: 0 20px 20px;
+  }
+  
+  .confirm-modal-footer {
+    padding: 12px 20px 20px;
+    flex-direction: column;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    padding: 12px;
+  }
+}
+</style>
+```
+```vue
+<!-- components/InfoModal.vue -->
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="close">
+      <div class="relative bg-white/85 backdrop-blur-xl rounded-2xl w-[90%] max-w-[600px] max-h-[90vh] flex flex-col animate-slideUp border border-white/50 shadow-2xl" @click.stop>
+        
+        <!-- Close Button -->
+        <button class="absolute -top-2.5 -right-2.5 w-8 h-8 rounded-full bg-white border border-black/5 cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-gray-50 hover:border-black/10 text-gray-400 hover:text-gray-600 shadow-md hover:shadow-lg z-10" @click="close">
+          <X :size="16" />
+        </button>
+
+        <div class="flex-1 overflow-y-auto p-6 pb-8 scrollbar-thin scrollbar-thumb-gray-200/50 scrollbar-track-transparent">
+          
+          <!-- App Info -->
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">About LittleHanzi 한국인</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              A tool for learning Korean through reading. Paste Korean text and get instant 
+              romanization and English translations to help you read and understand better.
+            </p>
+          </div>
+
+          <!-- App Link -->
+          <div class="mb-6 bg-gradient-to-br from-purple-50/50 to-blue-50/50 rounded-xl p-4 border border-purple-100/50">
+            <label class="block text-[11px] font-semibold text-purple-600 uppercase tracking-wider mb-2">App URL</label>
+            <a 
+              href="https://amaan-samar.github.io/Little_Hanzi_Korean/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block text-sm text-purple-700 hover:text-purple-900 font-medium break-all hover:underline"
+            >
+              https://amaan-samar.github.io/Little_Hanzi_Korean/
+            </a>
+          </div>
+
+          <!-- Learning Resources -->
+          <div class="mb-6">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Learning Resources</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <a
+                v-for="resource in resources"
+                :key="resource.name"
+                :href="resource.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block p-4 bg-white border border-black/5 rounded-xl hover:border-purple-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <div class="flex items-start gap-3">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-200">
+                    <span class="text-lg">{{ resource.icon }}</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="text-sm font-semibold text-gray-800 group-hover:text-purple-700 transition-colors duration-200">
+                      {{ resource.name }}
+                    </h4>
+                    <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">
+                      {{ resource.description }}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Tips -->
+          <div class="bg-amber-50/80 rounded-xl p-4 border border-amber-100/50">
+            <h4 class="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">💡 Tips</h4>
+            <ul class="text-sm text-gray-600 space-y-1.5">
+              <li class="flex items-start gap-2">
+                <span class="text-amber-500 mt-0.5">•</span>
+                <span>Paste Korean text in the left box and English translation in the right</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-500 mt-0.5">•</span>
+                <span>Adjust font sizes and display settings using the Settings gear icon</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-500 mt-0.5">•</span>
+                <span>Your articles are automatically saved in History for later reading</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Teleport>
+</template>
+
+<script setup>
+import { X } from 'lucide-vue-next'
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['close'])
+
+const resources = [
+  {
+    name: 'Naver News',
+    icon: '🇰🇷',
+    url: 'https://news.naver.com/',
+    description: 'South Korea\'s largest news portal with comprehensive coverage in Korean'
+  },
+  {
+    name: 'KBS News',
+    icon: '📺',
+    url: 'https://news.kbs.co.kr/',
+    description: 'Major Korean broadcasting network with news articles in Korean'
+  },
+  {
+    name: 'Hankyoreh',
+    icon: '📰',
+    url: 'https://www.hani.co.kr/',
+    description: 'Progressive Korean newspaper with quality journalism'
+  },
+  {
+    name: 'Chosun Ilbo',
+    icon: '📋',
+    url: 'https://www.chosun.com/',
+    description: 'One of Korea\'s major newspapers with diverse content'
+  },
+  {
+    name: 'Talk To Me In Korean',
+    icon: '🎓',
+    url: 'https://talktomeinkorean.com/',
+    description: 'Popular Korean learning website with lessons and resources'
+  },
+  {
+    name: 'Korean Grammar Dictionary',
+    icon: '📚',
+    url: 'https://www.korean-grammar.com/',
+    description: 'Comprehensive Korean grammar reference and learning tool'
+  }
+]
+
+const close = () => {
+  emit('close')
+}
+</script>
+
+<style scoped>
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
+```
+```vue
+<template>
+  <Teleport to="body">
+    <div v-if="isOpen" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="handleOverlayClick">
+      <div class="relative bg-white/85 backdrop-blur-xl rounded-2xl w-[90%] max-w-[520px] max-h-[90vh] flex flex-col animate-slideUp border border-white/50 shadow-2xl" :class="{ 'w-[92%] max-h-[90vh] rounded-xl': isMobile }" @click.stop>
+        
+        <!-- Floating Close Button -->
+        <button class="absolute -top-2.5 -right-2.5 w-8 h-8 rounded-full bg-white border border-black/5 cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-gray-50 hover:border-black/10 text-gray-400 hover:text-gray-600 shadow-md hover:shadow-lg z-10" @click="close">
+          <X :size="16" />
+        </button>
+
+        <div class="flex-1 overflow-y-auto p-6 pb-8 scrollbar-thin scrollbar-thumb-gray-200/50 scrollbar-track-transparent">
+          
+          <!-- Live Preview Section -->
+          <div class="mb-6 bg-gradient-to-br from-purple-50/50 to-blue-50/50 rounded-xl p-4 border border-purple-100/50">
+            <label class="block text-[11px] font-semibold text-purple-600 uppercase tracking-wider mb-3">Live Preview</label>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/50">
+              <!-- Korean with Romanization Preview -->
+              <div class="mb-3" :style="{ fontFamily: getSelectedFontFamily() }">
+                <div class="flex flex-col items-start">
+                  <!-- Romanization above Korean -->
+                  <div class="flex gap-0 mb-0.5" v-if="localSettings.showRomanization">
+                    <span 
+                      v-for="(char, index) in previewKoreanChars" 
+                      :key="index"
+                      class="text-purple-500 font-light"
+                      :style="{ fontSize: `${Math.min(localSettings.romanizationFontSize, localSettings.fontSize)}px` }"
+                    >
+                      {{ getRomanizationForChar(char) }}
+                    </span>
+                  </div>
+                  <!-- Korean text -->
+                  <div class="flex gap-0 font-semibold" :style="{ fontSize: `${localSettings.fontSize}px` }">
+                    <span v-for="(char, index) in previewKoreanChars" :key="index">
+                      {{ char }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- English Preview -->
+              <div v-if="localSettings.showEnglish" class="mt-2 pt-2 border-t border-gray-100/50" :style="{ fontFamily: getSelectedFontFamily() }">
+                <div :style="{ fontSize: `${Math.min(localSettings.englishFontSize, localSettings.fontSize)}px` }">
+                  <span class="text-gray-700">Hello, this is a preview</span>
+                </div>
+              </div>
+              
+              <!-- Display order indicator -->
+              <div class="mt-2 text-[10px] text-gray-400 flex items-center gap-2">
+                <span class="font-medium">Order:</span>
+                <span class="px-2 py-0.5 bg-gray-100 rounded-full">
+                  {{ localSettings.displayOrder === 'kr-en' ? 'Korean → English' : 'English → Korean' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Korean Font Size -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Korean Font Size</label>
+            <div class="flex items-center gap-3.5 mb-3.5">
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="decreaseFontSize"
+                :disabled="localSettings.fontSize <= 12"
+              >
+                <Minus :size="16" />
+              </button>
+              <span class="text-lg font-semibold text-gray-800 min-w-[48px] text-center">{{ localSettings.fontSize }}</span>
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="increaseFontSize"
+                :disabled="localSettings.fontSize >= 32"
+              >
+                <Plus :size="16" />
+              </button>
+            </div>
+            <div class="flex gap-1.5 flex-wrap">
+              <button
+                v-for="size in fontSizePresets"
+                :key="size"
+                class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
+                :class="{ 'bg-gray-100 border-gray-300 text-gray-700 shadow-sm': localSettings.fontSize === size }"
+                @click="setFontSize(size)"
+              >
+                {{ size }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Romanization Font Size -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Romanization Size</label>
+            <div class="flex items-center gap-3.5 mb-3.5">
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="decreaseRomanizationSize"
+                :disabled="localSettings.romanizationFontSize <= 4"
+              >
+                <Minus :size="16" />
+              </button>
+              <span class="text-lg font-semibold text-gray-800 min-w-[48px] text-center">{{ localSettings.romanizationFontSize }}</span>
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="increaseRomanizationSize"
+                :disabled="localSettings.romanizationFontSize >= localSettings.fontSize"
+              >
+                <Plus :size="16" />
+              </button>
+            </div>
+            <div class="flex gap-1.5 flex-wrap">
+              <button
+                v-for="size in romanizationPresets"
+                :key="size"
+                class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
+                :class="{ 'bg-gray-100 border-gray-300 text-gray-700 shadow-sm': localSettings.romanizationFontSize === size }"
+                @click="setRomanizationSize(size)"
+              >
+                {{ size }}
+              </button>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Korean)</p>
+          </div>
+
+          <!-- English Font Size -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">English Size</label>
+            <div class="flex items-center gap-3.5 mb-3.5">
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="decreaseEnglishSize"
+                :disabled="localSettings.englishFontSize <= 4"
+              >
+                <Minus :size="16" />
+              </button>
+              <span class="text-lg font-semibold text-gray-800 min-w-[48px] text-center">{{ localSettings.englishFontSize }}</span>
+              <button 
+                class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+                @click="increaseEnglishSize"
+                :disabled="localSettings.englishFontSize >= localSettings.fontSize"
+              >
+                <Plus :size="16" />
+              </button>
+            </div>
+            <div class="flex gap-1.5 flex-wrap">
+              <button
+                v-for="size in englishPresets"
+                :key="size"
+                class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
+                :class="{ 'bg-gray-100 border-gray-300 text-gray-700 shadow-sm': localSettings.englishFontSize === size }"
+                @click="setEnglishSize(size)"
+              >
+                {{ size }}
+              </button>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Korean)</p>
+          </div>
+
+          <!-- Font Family -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Font Family</label>
+            <div class="relative font-select-wrapper">
+              <button 
+                class="w-full px-4 py-3 bg-white border border-black/5 rounded-lg flex justify-between items-center cursor-pointer transition-all duration-200 text-gray-600 text-sm hover:bg-gray-50 hover:border-black/10"
+                :style="{ fontFamily: getSelectedFontFamily() }"
+                @click="toggleFontDropdown"
+              >
+                <span>{{ getSelectedFontLabel() }}</span>
+                <ChevronDown :size="16" class="transition-transform duration-200" :class="{ 'rotate-180': isFontDropdownOpen }" />
+              </button>
+              <div v-if="isFontDropdownOpen" class="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-xl border border-black/5 rounded-lg max-h-[200px] overflow-y-auto z-10 shadow-lg animate-slideDown">
+                <button
+                  v-for="font in fontOptions"
+                  :key="font.value"
+                  class="w-full px-4 py-2.5 bg-transparent border-none text-left cursor-pointer transition-all duration-200 text-gray-600 text-sm hover:bg-purple-50"
+                  :class="{ 'bg-purple-50/50 text-purple-700': localSettings.selectedFont === font.value }"
+                  :style="{ fontFamily: font.fontFamily }"
+                  @click="handleFontChange(font.value)"
+                >
+                  {{ font.label }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Display Sections -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Display Sections</label>
+            <div class="flex flex-col gap-3">
+              <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
+                <input type="checkbox" v-model="localSettings.showRomanization" class="w-4.5 h-4.5 cursor-pointer accent-purple-500" @change="handleShowRomanizationChange">
+                <span>Romanization</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
+                <input type="checkbox" v-model="localSettings.showKorean" class="w-4.5 h-4.5 cursor-pointer accent-purple-500" @change="handleShowKoreanChange">
+                <span>Korean</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
+                <input type="checkbox" v-model="localSettings.showEnglish" class="w-4.5 h-4.5 cursor-pointer accent-purple-500" @change="handleShowEnglishChange">
+                <span>English</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Display Order -->
+          <div class="mb-6 last:mb-0">
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Display Order</label>
+            <div class="flex gap-6" :class="{ 'flex-col gap-3': isMobile }">
+              <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                <input type="radio" v-model="localSettings.displayOrder" value="en-kr" class="w-4.5 h-4.5 cursor-pointer accent-purple-500" @change="handleDisplayOrderChange">
+                <span>English → Korean</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                <input type="radio" v-model="localSettings.displayOrder" value="kr-en" class="w-4.5 h-4.5 cursor-pointer accent-purple-500" @change="handleDisplayOrderChange">
+                <span>Korean → English</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-2">
+            <button class="w-full px-5 py-2.5 bg-red-50 border border-red-200 rounded-lg text-red-600 font-medium cursor-pointer transition-all duration-200 hover:bg-red-100 hover:-translate-y-0.5" @click="resetToDefaults">
+              Reset to defaults
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Teleport>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { X, Minus, Plus, ChevronDown } from 'lucide-vue-next'
+import { romanize } from 'koroman'
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  },
+  settings: {
+    type: Object,
+    required: true
+  }
+})
+
+const emit = defineEmits(['close', 'save', 'reset'])
+
+const localSettings = ref({ 
+  fontSize: 18,
+  selectedFont: 'NotoSansSC',
+  showRomanization: true,
+  showKorean: true,
+  showEnglish: true,
+  displayOrder: 'kr-en',
+  romanizationFontSize: 10,
+  englishFontSize: 14,
+  ...props.settings 
+})
+
+const isMobile = ref(false)
+const isFontDropdownOpen = ref(false)
+const fontSizePresets = [12, 14, 16, 18, 20, 24, 28, 32]
+const romanizationPresets = [4, 6, 8, 10, 12, 14, 16, 18]
+const englishPresets = [6, 8, 10, 12, 14, 16, 18, 20]
+
+const fontOptions = [
+  { value: 'NotoSansSC', label: 'Noto Sans SC', fontFamily: "'Noto Sans SC', sans-serif" },
+  { value: 'NotoSerifSC', label: 'Noto Serif SC', fontFamily: "'Noto Serif SC', serif" },
+  { value: 'Inter', label: 'Inter', fontFamily: "'Inter', sans-serif" },
+  { value: 'Roboto', label: 'Roboto', fontFamily: "'Roboto', sans-serif" },
+  { value: 'Poppins', label: 'Poppins', fontFamily: "'Poppins', sans-serif" },
+  { value: 'ZCOOLKuaiLe', label: 'ZCOOL KuaiLe', fontFamily: "'ZCOOL KuaiLe', cursive" },
+  { value: 'MaShanZheng', label: 'Ma Shan Zheng', fontFamily: "'Ma Shan Zheng', cursive" }
+]
+
+// Preview Korean characters
+const previewKoreanChars = ['안', '녕', '하', '세', '요']
+
+// Helper function to get romanization for a character
+const getRomanizationForChar = (char) => {
+  try {
+    return romanize(char, { 
+      usePronunciationRules: true,
+      casingOption: 'lowercase'
+    })
+  } catch {
+    return char
+  }
+}
+
+let fontSizeTimeout = null
+
+const getSelectedFontLabel = () => {
+  const font = fontOptions.find(f => f.value === localSettings.value.selectedFont)
+  return font ? font.label : 'Noto Sans SC'
+}
+
+const getSelectedFontFamily = () => {
+  const font = fontOptions.find(f => f.value === localSettings.value.selectedFont)
+  return font ? font.fontFamily : "'Noto Sans SC', sans-serif"
+}
+
+const toggleFontDropdown = () => {
+  isFontDropdownOpen.value = !isFontDropdownOpen.value
+}
+
+// Korean font size controls
+const increaseFontSize = () => {
+  if (localSettings.value.fontSize < 32) {
+    localSettings.value.fontSize += 2
+    emitSave()
+  }
+}
+
+const decreaseFontSize = () => {
+  if (localSettings.value.fontSize > 12) {
+    localSettings.value.fontSize -= 2
+    emitSave()
+  }
+}
+
+const setFontSize = (size) => {
+  localSettings.value.fontSize = size
+  // Ensure romanization and English don't exceed the new Korean size
+  if (localSettings.value.romanizationFontSize > size) {
+    localSettings.value.romanizationFontSize = size
+  }
+  if (localSettings.value.englishFontSize > size) {
+    localSettings.value.englishFontSize = size
+  }
+  emitSave()
+}
+
+// Romanization font size controls
+const increaseRomanizationSize = () => {
+  if (localSettings.value.romanizationFontSize < localSettings.value.fontSize) {
+    localSettings.value.romanizationFontSize += 1
+    emitSave()
+  }
+}
+
+const decreaseRomanizationSize = () => {
+  if (localSettings.value.romanizationFontSize > 4) {
+    localSettings.value.romanizationFontSize -= 1
+    emitSave()
+  }
+}
+
+const setRomanizationSize = (size) => {
+  if (size <= localSettings.value.fontSize) {
+    localSettings.value.romanizationFontSize = size
+    emitSave()
+  }
+}
+
+// English font size controls
+const increaseEnglishSize = () => {
+  if (localSettings.value.englishFontSize < localSettings.value.fontSize) {
+    localSettings.value.englishFontSize += 1
+    emitSave()
+  }
+}
+
+const decreaseEnglishSize = () => {
+  if (localSettings.value.englishFontSize > 4) {
+    localSettings.value.englishFontSize -= 1
+    emitSave()
+  }
+}
+
+const setEnglishSize = (size) => {
+  if (size <= localSettings.value.fontSize) {
+    localSettings.value.englishFontSize = size
+    emitSave()
+  }
+}
+
+const emitSave = () => {
+  if (fontSizeTimeout) clearTimeout(fontSizeTimeout)
+  fontSizeTimeout = setTimeout(() => {
+    emit('save', localSettings.value)
+  }, 50)
+}
+
+const handleFontChange = (fontValue) => {
+  localSettings.value.selectedFont = fontValue
+  isFontDropdownOpen.value = false
+  emit('save', localSettings.value)
+}
+
+const handleShowRomanizationChange = () => {
+  emit('save', localSettings.value)
+}
+
+const handleShowKoreanChange = () => {
+  emit('save', localSettings.value)
+}
+
+const handleShowEnglishChange = () => {
+  emit('save', localSettings.value)
+}
+
+const handleDisplayOrderChange = () => {
+  emit('save', localSettings.value)
+}
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+const handleOverlayClick = () => {
+  // Don't close on overlay click - user must click the close button
+}
+
+const close = () => {
+  isFontDropdownOpen.value = false
+  emit('close')
+}
+
+const resetToDefaults = () => {
+  const defaults = {
+    fontSize: 18,
+    selectedFont: 'NotoSansSC',
+    showRomanization: true,
+    showKorean: true,
+    showEnglish: true,
+    displayOrder: 'kr-en',
+    romanizationFontSize: 10,
+    englishFontSize: 14
+  }
+  localSettings.value = { ...defaults }
+  emit('reset')
+  emit('save', localSettings.value)
+}
+
+const handleEscape = (e) => {
+  if (e.key === 'Escape' && props.isOpen) {
+    close()
+  }
+}
+
+// Close font dropdown when clicking outside
+const handleClickOutside = (e) => {
+  if (isFontDropdownOpen.value) {
+    const wrapper = document.querySelector('.font-select-wrapper')
+    if (wrapper && !wrapper.contains(e.target)) {
+      isFontDropdownOpen.value = false
+    }
+  }
+}
+
+watch(() => props.isOpen, (newVal) => {
+  if (newVal) {
+    localSettings.value = { ...props.settings }
+    isFontDropdownOpen.value = false
+  }
+})
+
+watch(() => props.settings, (newVal) => {
+  if (props.isOpen) {
+    localSettings.value = { ...newVal }
+  }
+}, { deep: true })
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+  window.removeEventListener('keydown', handleEscape)
+  window.removeEventListener('click', handleClickOutside)
+  if (fontSizeTimeout) clearTimeout(fontSizeTimeout)
+})
+</script>
+
+<style scoped>
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-slideDown {
+  animation: slideDown 0.2s ease;
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+/* Custom checkbox and radio styles using accent-color */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #8B5CF6;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .w-\[92\%\] {
+    width: 92%;
+  }
+  
+  .max-h-\[90vh\] {
+    max-height: 90vh;
+  }
+  
+  .rounded-xl {
+    border-radius: 16px;
+  }
+}
+
+/* Smooth hover transitions for buttons */
+button {
+  transition: all 0.2s ease;
+}
+
+/* Font dropdown custom scroll */
+.font-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.font-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+/* Live preview styles */
+.preview-romanization {
+  transition: all 0.2s ease;
+}
+
+/* Responsive adjustments for preview */
+@media (max-width: 480px) {
+  .preview-container {
+    padding: 12px;
+  }
+}
+</style>
+```
+```javascript
+// composables/useSettings.js
+import { ref, watch } from 'vue'
+
+const STORAGE_KEY = 'littleKorean_settings'
+
+export function useSettings() {
+  // Load saved settings or use defaults
+  const loadSettings = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        
+        // Migrate from old Chinese settings if needed
+        const migrated = {
+          fontSize: parsed.fontSize ?? 18,
+          selectedFont: parsed.selectedFont ?? 'NotoSansSC',
+          showRomanization: parsed.showRomanization ?? parsed.showPinyin ?? true,
+          showKorean: parsed.showKorean ?? parsed.showChinese ?? true,
+          showEnglish: parsed.showEnglish ?? true,
+          displayOrder: parsed.displayOrder === 'en-cn' ? 'en-kr' : 
+                       parsed.displayOrder === 'cn-en' ? 'kr-en' : 
+                       parsed.displayOrder ?? 'kr-en',
+          interleaveLines: parsed.interleaveLines ?? false,
+          romanizationFontSize: parsed.romanizationFontSize ?? 10,
+          englishFontSize: parsed.englishFontSize ?? 14
+        }
+        
+        return migrated
+      }
+    } catch (error) {
+      console.error('Failed to load settings:', error)
+    }
+    return null
+  }
+
+  const saveSettings = (settings) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+    } catch (error) {
+      console.error('Failed to save settings:', error)
+    }
+  }
+
+  // Default settings - Korean optimized
+  const defaultSettings = {
+    fontSize: 18,
+    selectedFont: 'NotoSansSC',
+    showRomanization: true,
+    showKorean: true,
+    showEnglish: true,
+    displayOrder: 'kr-en',
+    interleaveLines: false,
+    romanizationFontSize: 10,
+    englishFontSize: 14
+  }
+
+  const savedSettings = loadSettings()
+  
+  // Create reactive settings with saved values or defaults
+  const fontSize = ref(savedSettings?.fontSize ?? defaultSettings.fontSize)
+  const selectedFont = ref(savedSettings?.selectedFont ?? defaultSettings.selectedFont)
+  const showRomanization = ref(savedSettings?.showRomanization ?? defaultSettings.showRomanization)
+  const showKorean = ref(savedSettings?.showKorean ?? defaultSettings.showKorean)
+  const showEnglish = ref(savedSettings?.showEnglish ?? defaultSettings.showEnglish)
+  const displayOrder = ref(savedSettings?.displayOrder ?? defaultSettings.displayOrder)
+  const interleaveLines = ref(savedSettings?.interleaveLines ?? defaultSettings.interleaveLines)
+  const romanizationFontSize = ref(savedSettings?.romanizationFontSize ?? defaultSettings.romanizationFontSize)
+  const englishFontSize = ref(savedSettings?.englishFontSize ?? defaultSettings.englishFontSize)
+
+  // Save settings whenever any setting changes
+  const saveCurrentSettings = () => {
+    saveSettings({
+      fontSize: fontSize.value,
+      selectedFont: selectedFont.value,
+      showRomanization: showRomanization.value,
+      showKorean: showKorean.value,
+      showEnglish: showEnglish.value,
+      displayOrder: displayOrder.value,
+      interleaveLines: interleaveLines.value,
+      romanizationFontSize: romanizationFontSize.value,
+      englishFontSize: englishFontSize.value
+    })
+  }
+
+  // Watch all settings and save on change
+  watch([fontSize, selectedFont, showRomanization, showKorean, showEnglish, displayOrder, interleaveLines, romanizationFontSize, englishFontSize], () => {
+    saveCurrentSettings()
+  }, { deep: true })
+
+  // Reset to defaults
+  const resetSettings = () => {
+    fontSize.value = defaultSettings.fontSize
+    selectedFont.value = defaultSettings.selectedFont
+    showRomanization.value = defaultSettings.showRomanization
+    showKorean.value = defaultSettings.showKorean
+    showEnglish.value = defaultSettings.showEnglish
+    displayOrder.value = defaultSettings.displayOrder
+    interleaveLines.value = defaultSettings.interleaveLines
+    romanizationFontSize.value = defaultSettings.romanizationFontSize
+    englishFontSize.value = defaultSettings.englishFontSize
+  }
+
+  return {
+    fontSize,
+    selectedFont,
+    showRomanization,
+    showKorean,
+    showEnglish,
+    displayOrder,
+    interleaveLines,
+    romanizationFontSize,
+    englishFontSize,
+    resetSettings,
+    saveCurrentSettings
+  }
+}
+```
+```javascript
+// import { ref, watch, onMounted } from 'vue'
+
+// const STORAGE_KEY = 'littleKorean_article_history'
+// const SAVE_DELAY = 3 * 60 * 1000 // 3 minutes in milliseconds
+
+// export function useArticleHistory() {
+//   const articles = ref([])
+//   const saveTimeout = ref(null)
+//   const currentArticleId = ref(null)
+//   const lastContentHash = ref('')
+  
+//   // Load articles from localStorage
+//   const loadArticles = () => {
+//     try {
+//       const saved = localStorage.getItem(STORAGE_KEY)
+//       if (saved) {
+//         const parsed = JSON.parse(saved)
+//         if (Array.isArray(parsed)) {
+//           articles.value = parsed.map(article => ({
+//             ...article,
+//             id: article.id || Date.now(),
+//             title: article.title || 'Untitled Article',
+//             koreanContent: article.koreanContent || article.chineseContent || '',
+//             englishContent: article.englishContent || '',
+//             timestamp: article.timestamp || Date.now(),
+//             version: article.version || 2,
+//             // Track when article was last edited
+//             lastEdited: article.lastEdited || article.timestamp || Date.now()
+//           }))
+//         }
+//       }
+//     } catch (error) {
+//       console.error('Failed to load articles:', error)
+//       articles.value = []
+//     }
+//   }
+  
+//   // Save articles to localStorage
+//   const saveArticles = () => {
+//     try {
+//       localStorage.setItem(STORAGE_KEY, JSON.stringify(articles.value))
+//     } catch (error) {
+//       console.error('Failed to save articles:', error)
+//     }
+//   }
+  
+//   // Generate a simple hash of the content to detect changes
+//   const generateContentHash = (korean, english) => {
+//     return `${korean}|${english}`.length.toString() + 
+//            (korean + english).substring(0, 100)
+//   }
+  
+//   // Extract title from first line of English content (preferred) or Korean
+//   const extractTitle = (koreanContent, englishContent) => {
+//     // First try English content
+//     if (englishContent && englishContent.trim()) {
+//       const firstLine = englishContent.split('\n')[0].trim()
+//       if (firstLine && firstLine.length > 0) {
+//         return firstLine.length > 50 ? firstLine.substring(0, 47) + '...' : firstLine
+//       }
+//     }
+    
+//     // Fallback to Korean content
+//     if (koreanContent && koreanContent.trim()) {
+//       const firstLine = koreanContent.split('\n')[0].trim()
+//       if (firstLine && firstLine.length > 0) {
+//         return firstLine.length > 50 ? firstLine.substring(0, 47) + '...' : firstLine
+//       }
+//     }
+    
+//     return 'Untitled Article'
+//   }
+  
+//   // Save current article to history
+//   const saveCurrentArticle = (koreanContent, englishContent) => {
+//     if (!koreanContent || !koreanContent.trim()) {
+//       return
+//     }
+    
+//     const contentHash = generateContentHash(koreanContent, englishContent)
+//     const title = extractTitle(koreanContent, englishContent)
+//     const now = Date.now()
+    
+//     // Check if we should update an existing article
+//     if (contentHash === lastContentHash.value && currentArticleId.value) {
+//       const existingArticle = articles.value.find(a => a.id === currentArticleId.value)
+//       if (existingArticle && 
+//           existingArticle.koreanContent === koreanContent && 
+//           existingArticle.englishContent === englishContent) {
+//         existingArticle.timestamp = now
+//         existingArticle.lastEdited = now
+//         existingArticle.title = title
+//         saveArticles()
+//         return
+//       }
+//     }
+    
+//     // Check if we already have an article with this exact content
+//     const existingArticle = articles.value.find(a => 
+//       a.koreanContent === koreanContent && 
+//       a.englishContent === (englishContent || '')
+//     )
+    
+//     if (existingArticle) {
+//       existingArticle.timestamp = now
+//       existingArticle.lastEdited = now
+//       existingArticle.title = title
+//       currentArticleId.value = existingArticle.id
+//       lastContentHash.value = contentHash
+//       saveArticles()
+//       return
+//     }
+    
+//     // Create new article
+//     const newArticle = {
+//       id: Date.now(),
+//       title: title,
+//       koreanContent: koreanContent,
+//       englishContent: englishContent || '',
+//       timestamp: now,
+//       lastEdited: now,
+//       version: 2
+//     }
+    
+//     articles.value.unshift(newArticle)
+    
+//     // Keep only last 50 articles
+//     if (articles.value.length > 50) {
+//       articles.value = articles.value.slice(0, 50)
+//     }
+    
+//     currentArticleId.value = newArticle.id
+//     lastContentHash.value = contentHash
+//     saveArticles()
+//   }
+  
+//   // Schedule auto-save after delay
+//   const scheduleAutoSave = (koreanContent, englishContent) => {
+//     if (saveTimeout.value) {
+//       clearTimeout(saveTimeout.value)
+//     }
+    
+//     if (koreanContent && koreanContent.trim()) {
+//       saveTimeout.value = setTimeout(() => {
+//         saveCurrentArticle(koreanContent, englishContent)
+//         saveTimeout.value = null
+//       }, SAVE_DELAY)
+//     }
+//   }
+  
+//   // Cancel pending auto-save
+//   const cancelAutoSave = () => {
+//     if (saveTimeout.value) {
+//       clearTimeout(saveTimeout.value)
+//       saveTimeout.value = null
+//     }
+//   }
+  
+//   // Delete an article
+//   const deleteArticle = (articleId) => {
+//     const index = articles.value.findIndex(a => a.id === articleId)
+//     if (index !== -1) {
+//       articles.value.splice(index, 1)
+//       saveArticles()
+//       return true
+//     }
+//     return false
+//   }
+  
+//   // Delete all articles
+//   const deleteAllArticles = () => {
+//     articles.value = []
+//     saveArticles()
+//   }
+  
+//   // Load an article into the editor
+//   const loadArticle = (article) => {
+//     return {
+//       korean: article.koreanContent || article.chineseContent || '',
+//       english: article.englishContent || ''
+//     }
+//   }
+  
+//   // Check if article is currently being viewed
+//   const isCurrentArticle = (articleId) => {
+//     return currentArticleId.value === articleId
+//   }
+  
+//   // Get formatted date string with edit info
+//   const formatDate = (timestamp) => {
+//     const date = new Date(timestamp)
+//     const now = new Date()
+//     const diffMs = now - date
+//     const diffMins = Math.floor(diffMs / 60000)
+//     const diffHours = Math.floor(diffMs / 3600000)
+//     const diffDays = Math.floor(diffMs / 86400000)
+    
+//     if (diffMins < 1) return 'Just now'
+//     if (diffMins < 60) return `${diffMins}m ago`
+//     if (diffHours < 24) return `${diffHours}h ago`
+//     if (diffDays < 7) return `${diffDays}d ago`
+    
+//     return date.toLocaleDateString()
+//   }
+  
+//   // Reset current article tracking
+//   const resetCurrentTracking = () => {
+//     currentArticleId.value = null
+//     lastContentHash.value = ''
+//     cancelAutoSave()
+//   }
+  
+//   onMounted(() => {
+//     loadArticles()
+//   })
+  
+//   return {
+//     articles,
+//     scheduleAutoSave,
+//     cancelAutoSave,
+//     saveCurrentArticle,
+//     deleteArticle,
+//     deleteAllArticles,
+//     loadArticle,
+//     isCurrentArticle,
+//     formatDate,
+//     resetCurrentTracking
+//   }
+// }
+
+
+// composables/useArticleHistory.js
+import { ref, onMounted } from 'vue'
+
+const STORAGE_KEY = 'littleKorean_articles'
+const MAX_ARTICLES = 100
+
+export function useArticleHistory() {
+  const articles = ref([])
+  const currentArticleId = ref(null)
+  const autoSaveTimeout = ref(null)
+  const isSaving = ref(false)
+
+  // Load articles from localStorage
+  const loadArticles = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        articles.value = JSON.parse(saved)
+      }
+    } catch (error) {
+      console.error('Failed to load articles:', error)
+      articles.value = []
+    }
+  }
+
+  // Save articles to localStorage
+  const saveArticles = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(articles.value))
+    } catch (error) {
+      console.error('Failed to save articles:', error)
+    }
+  }
+
+  // Generate a unique ID
+  const generateId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+  }
+
+  // Extract title from content (first 50 chars or first line)
+  const extractTitle = (content) => {
+    if (!content) return 'Untitled'
+    const lines = content.split('\n').filter(line => line.trim())
+    if (lines.length === 0) return 'Untitled'
+    const firstLine = lines[0].trim()
+    return firstLine.length > 50 ? firstLine.substring(0, 50) + '...' : firstLine
+  }
+
+  // Save current article manually
+  const saveCurrentArticle = (koreanContent, englishContent) => {
+    if (!koreanContent || !koreanContent.trim()) {
+      console.warn('No Korean content to save')
+      return null
+    }
+
+    // Check if this content is already saved (avoid duplicates)
+    const existingIndex = articles.value.findIndex(a => 
+      a.koreanContent === koreanContent && 
+      a.englishContent === englishContent
+    )
+
+    if (existingIndex !== -1) {
+      // Update existing article timestamp
+      articles.value[existingIndex].timestamp = Date.now()
+      saveArticles()
+      currentArticleId.value = articles.value[existingIndex].id
+      return articles.value[existingIndex]
+    }
+
+    // Create new article
+    const article = {
+      id: generateId(),
+      koreanContent: koreanContent,
+      englishContent: englishContent || '',
+      title: extractTitle(koreanContent),
+      timestamp: Date.now()
+    }
+
+    // Add to beginning of array
+    articles.value.unshift(article)
+
+    // Limit number of articles
+    if (articles.value.length > MAX_ARTICLES) {
+      articles.value = articles.value.slice(0, MAX_ARTICLES)
+    }
+
+    saveArticles()
+    currentArticleId.value = article.id
+    return article
+  }
+
+  // Schedule auto-save (with debounce)
+  const scheduleAutoSave = (koreanContent, englishContent) => {
+    // Clear any existing timeout
+    if (autoSaveTimeout.value) {
+      clearTimeout(autoSaveTimeout.value)
+    }
+
+    // Only schedule if there's content
+    if (!koreanContent || !koreanContent.trim()) {
+      return
+    }
+
+    // Set new timeout (3 seconds delay)
+    autoSaveTimeout.value = setTimeout(() => {
+      saveCurrentArticle(koreanContent, englishContent)
+      autoSaveTimeout.value = null
+    }, 3000)
+  }
+
+  // Cancel auto-save
+  const cancelAutoSave = () => {
+    if (autoSaveTimeout.value) {
+      clearTimeout(autoSaveTimeout.value)
+      autoSaveTimeout.value = null
+    }
+  }
+
+  // Delete an article
+  const deleteArticle = (articleId) => {
+    articles.value = articles.value.filter(a => a.id !== articleId)
+    if (currentArticleId.value === articleId) {
+      currentArticleId.value = null
+    }
+    saveArticles()
+  }
+
+  // Delete all articles
+  const deleteAllArticles = () => {
+    articles.value = []
+    currentArticleId.value = null
+    saveArticles()
+  }
+
+  // Load an article into the editor
+  const loadArticle = (articleId) => {
+    const article = articles.value.find(a => a.id === articleId)
+    if (article) {
+      currentArticleId.value = articleId
+      return article
+    }
+    return null
+  }
+
+  // Check if an article is the current one
+  const isCurrentArticle = (articleId) => {
+    return currentArticleId.value === articleId
+  }
+
+  // Reset current tracking
+  const resetCurrentTracking = () => {
+    currentArticleId.value = null
+  }
+
+  // Format date for display
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp)
+    const now = new Date()
+    const diff = now - date
+
+    // Less than 1 minute
+    if (diff < 60000) {
+      return 'Just now'
+    }
+    // Less than 1 hour
+    if (diff < 3600000) {
+      const minutes = Math.floor(diff / 60000)
+      return `${minutes}m ago`
+    }
+    // Less than 24 hours
+    if (diff < 86400000) {
+      const hours = Math.floor(diff / 3600000)
+      return `${hours}h ago`
+    }
+    // Less than 7 days
+    if (diff < 604800000) {
+      const days = Math.floor(diff / 86400000)
+      return `${days}d ago`
+    }
+    // Format as date
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
+
+  // Initialize
+  onMounted(() => {
+    loadArticles()
+  })
+
+  return {
+    articles,
+    currentArticleId,
+    isSaving,
+    saveCurrentArticle,
+    scheduleAutoSave,
+    cancelAutoSave,
+    deleteArticle,
+    deleteAllArticles,
+    loadArticle,
+    isCurrentArticle,
+    resetCurrentTracking,
+    formatDate,
+    saveArticles // Expose for manual saves
+  }
+}
+```
+```css
+@import './base.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: Overpass, sans-serif;
+}
+
+
+/* src/assets/colors.css */
+
+:root {
+  /* ===== Purple Family ===== */
+  --p-50: #F5F3FF;
+  --p-100: #EDE9FE;
+  --p-200: #DDD6FE;
+  --p-300: #C4B5FD;
+  --p-400: #A78BFA;
+  --p-500: #8B5CF6;
+  --p-600: #7C3AED;
+  --p-700: #6D28D9;
+  --p-800: #5B21B6;
+  --p-900: #4C1D95;
+  
+  /* ===== Green Family ===== */
+  --g-50: #ECFDF5;
+  --g-100: #D1FAE5;
+  --g-200: #A7F3D0;
+  --g-300: #6EE7B7;
+  --g-400: #34D399;
+  --g-500: #10B981;
+  --g-600: #059669;
+  --g-700: #047857;
+  --g-800: #065F46;
+  --g-900: #064E3B;
+  
+  /* ===== Red Family ===== */
+  --r-50: #FEF2F2;
+  --r-100: #FEE2E2;
+  --r-200: #FECACA;
+  --r-300: #FCA5A5;
+  --r-400: #F87171;
+  --r-500: #EF4444;
+  --r-600: #DC2626;
+  --r-700: #B91C1C;
+  --r-800: #991B1B;
+  --r-900: #7F1D1D;
+  
+  /* ===== Gray Family ===== */
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  
+  /* ===== White ===== */
+  --white: #FFFFFF;
+  
+  /* ===== Semantic Colors (Short & Clear) ===== */
+  --primary: var(--p-500);
+  --primary-dark: var(--p-600);
+  --primary-darker: var(--p-700);
+  --primary-light: var(--p-400);
+  --primary-lighter: var(--p-300);
+  --primary-bg: var(--p-50);
+  
+  --secondary: var(--g-500);
+  --secondary-dark: var(--g-700);
+  --secondary-darker: var(--g-800);
+  --secondary-light: var(--g-400);
+  --secondary-lighter: var(--g-300);
+  --secondary-bg: var(--g-50);
+  
+  --danger: var(--r-500);
+  --danger-dark: var(--r-600);
+  --danger-darker: var(--r-700);
+  --danger-bg: var(--r-100);
+  
+  /* ===== Text Colors ===== */
+  --text: #1a1a1a;
+  --text-secondary: #4A1942;
+  --text-muted: #6B21A5;
+  --text-light: var(--gray-500);
+  --text-white: var(--white);
+  
+  /* ===== Backgrounds ===== */
+  --bg-main: var(--p-50);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-input: rgba(255, 255, 255, 0.8);
+  --bg-white: var(--white);
+  
+  /* ===== Gradients ===== */
+  --gradient-main: linear-gradient(135deg, var(--p-50) 0%, var(--p-100) 25%, #FCE7F3 60%, var(--g-50) 100%);
+  --gradient-logo: linear-gradient(135deg, var(--p-600) 0%, var(--p-500) 50%, var(--p-400) 100%);
+  --gradient-btn: linear-gradient(135deg, var(--p-500) 0%, var(--p-600) 100%);
+  --gradient-danger: linear-gradient(135deg, var(--r-500) 0%, var(--r-600) 100%);
+  
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-primary: 0 4px 20px rgba(139, 92, 246, 0.06);
+  --shadow-primary-hover: 0 4px 24px rgba(139, 92, 246, 0.1);
+  --shadow-danger: 0 4px 16px rgba(239, 68, 68, 0.3);
+  
+  /* ===== Borders ===== */
+  --border-primary-light: 1px solid rgba(139, 92, 246, 0.08);
+  --border-primary: 1px solid rgba(139, 92, 246, 0.15);
+  --border-primary-strong: 2px solid rgba(139, 92, 246, 0.15);
+  --border-secondary: 1px solid rgba(16, 185, 129, 0.08);
+  --border-secondary-strong: 1px solid rgba(16, 185, 129, 0.2);
+  
+  /* ===== Border Radius ===== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+}
+```
+```css
+/* Add to your global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at top center,
+    #f5f7fa 0%,
+    #c3cfe2 25%,
+    white 70%
+  );
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background-attachment: fixed;
+  margin: 0;
+}
+```
