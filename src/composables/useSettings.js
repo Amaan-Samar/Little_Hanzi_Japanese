@@ -1,7 +1,7 @@
 // composables/useSettings.js
 import { ref, watch } from 'vue'
 
-const STORAGE_KEY = 'littleGreek_settings'
+const STORAGE_KEY = 'littleJapanese_settings'
 
 export function useSettings() {
   const loadSettings = () => {
@@ -11,17 +11,14 @@ export function useSettings() {
         const parsed = JSON.parse(saved)
         return {
           fontSize: parsed.fontSize ?? 18,
-          selectedFont: parsed.selectedFont ?? 'NotoSansSC',
+          selectedFont: parsed.selectedFont ?? 'NotoSansJP',
           showRomanization: parsed.showRomanization ?? true,
-          showGreek: parsed.showGreek ?? true,
+          showJapanese: parsed.showJapanese ?? true,
           showEnglish: parsed.showEnglish ?? true,
-          displayOrder: parsed.displayOrder === 'en-gr' ? 'en-gr' :
-                       parsed.displayOrder === 'gr-en' ? 'gr-en' :
-                       parsed.displayOrder ?? 'gr-en',
+          displayOrder: parsed.displayOrder ?? 'ja-en',
           romanizationFontSize: parsed.romanizationFontSize ?? 10,
           englishFontSize: parsed.englishFontSize ?? 14,
-          // NEW: Greek transliteration preset
-          transliterationPreset: parsed.transliterationPreset ?? 'sbl-academic'
+          romajiSystem: parsed.romajiSystem ?? 'hepburn'
         }
       }
     } catch (error) {
@@ -40,14 +37,14 @@ export function useSettings() {
 
   const defaultSettings = {
     fontSize: 18,
-    selectedFont: 'NotoSansSC',
+    selectedFont: 'NotoSansJP',
     showRomanization: true,
-    showGreek: true,
+    showJapanese: true,
     showEnglish: true,
-    displayOrder: 'gr-en',
+    displayOrder: 'ja-en',
     romanizationFontSize: 10,
     englishFontSize: 14,
-    transliterationPreset: 'sbl-academic'
+    romajiSystem: 'hepburn'
   }
 
   const savedSettings = loadSettings()
@@ -55,30 +52,30 @@ export function useSettings() {
   const fontSize = ref(savedSettings?.fontSize ?? defaultSettings.fontSize)
   const selectedFont = ref(savedSettings?.selectedFont ?? defaultSettings.selectedFont)
   const showRomanization = ref(savedSettings?.showRomanization ?? defaultSettings.showRomanization)
-  const showGreek = ref(savedSettings?.showGreek ?? defaultSettings.showGreek)
+  const showJapanese = ref(savedSettings?.showJapanese ?? defaultSettings.showJapanese)
   const showEnglish = ref(savedSettings?.showEnglish ?? defaultSettings.showEnglish)
   const displayOrder = ref(savedSettings?.displayOrder ?? defaultSettings.displayOrder)
   const romanizationFontSize = ref(savedSettings?.romanizationFontSize ?? defaultSettings.romanizationFontSize)
   const englishFontSize = ref(savedSettings?.englishFontSize ?? defaultSettings.englishFontSize)
-  const transliterationPreset = ref(savedSettings?.transliterationPreset ?? defaultSettings.transliterationPreset)
+  const romajiSystem = ref(savedSettings?.romajiSystem ?? defaultSettings.romajiSystem)
 
   const saveCurrentSettings = () => {
     saveSettings({
       fontSize: fontSize.value,
       selectedFont: selectedFont.value,
       showRomanization: showRomanization.value,
-      showGreek: showGreek.value,
+      showJapanese: showJapanese.value,
       showEnglish: showEnglish.value,
       displayOrder: displayOrder.value,
       romanizationFontSize: romanizationFontSize.value,
       englishFontSize: englishFontSize.value,
-      transliterationPreset: transliterationPreset.value
+      romajiSystem: romajiSystem.value
     })
   }
 
   watch([
-    fontSize, selectedFont, showRomanization, showGreek, showEnglish,
-    displayOrder, romanizationFontSize, englishFontSize, transliterationPreset
+    fontSize, selectedFont, showRomanization, showJapanese, showEnglish,
+    displayOrder, romanizationFontSize, englishFontSize, romajiSystem
   ], () => {
     saveCurrentSettings()
   }, { deep: true })
@@ -87,24 +84,24 @@ export function useSettings() {
     fontSize.value = defaultSettings.fontSize
     selectedFont.value = defaultSettings.selectedFont
     showRomanization.value = defaultSettings.showRomanization
-    showGreek.value = defaultSettings.showGreek
+    showJapanese.value = defaultSettings.showJapanese
     showEnglish.value = defaultSettings.showEnglish
     displayOrder.value = defaultSettings.displayOrder
     romanizationFontSize.value = defaultSettings.romanizationFontSize
     englishFontSize.value = defaultSettings.englishFontSize
-    transliterationPreset.value = defaultSettings.transliterationPreset
+    romajiSystem.value = defaultSettings.romajiSystem
   }
 
   return {
     fontSize,
     selectedFont,
     showRomanization,
-    showGreek,
+    showJapanese,
     showEnglish,
     displayOrder,
     romanizationFontSize,
     englishFontSize,
-    transliterationPreset,
+    romajiSystem,
     resetSettings,
     saveCurrentSettings
   }

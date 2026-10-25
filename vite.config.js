@@ -12,14 +12,14 @@ export default defineConfig({
         'icons/apple-icon-180.png'
       ],
       manifest: {
-        name: 'Little Greek',
-        short_name: 'Greek',
-        description: 'Greek reading tool with scholarly transliteration',
+        name: 'Little Japanese',
+        short_name: 'Japanese',
+        description: 'Japanese reading tool with scholarly transliteration',
         theme_color: '#6366F1',
         background_color: '#F8FAFC',
         display: 'standalone',
-        scope: '/Little_Hanzi_Greek/',
-        start_url: '/Little_Hanzi_Greek/',
+        scope: '/Little_Hanzi_Japanese/',
+        start_url: '/Little_Hanzi_Japanese/',
         icons: [
           {
             src: 'icons/manifest-icon-192.maskable.png',
@@ -49,7 +49,7 @@ export default defineConfig({
       }
     })
   ],
-  base: '/Little_Hanzi_Greek/',
+  base: '/Little_Hanzi_Japanese/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

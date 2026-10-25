@@ -1,7 +1,7 @@
 // composables/useArticleHistory.js
 import { ref, onMounted } from 'vue'
 
-const STORAGE_KEY = 'littleGreek_articles'
+const STORAGE_KEY = 'littleJapanese_articles'
 const MAX_ARTICLES = 100
 const AUTOSAVE_DELAY = 60 * 1000 // 1 minute
 
@@ -41,46 +41,32 @@ export function useArticleHistory() {
     return firstLine.length > 50 ? firstLine.substring(0, 50) + '...' : firstLine
   }
 
-  /**
-   * Save the current editing session.
-   *
-   * Behavior:
-   *  - If currentArticleId is set, UPDATE that article in place (this is the
-   *    "same session" case: edit, manual save, auto-save — all keep the same
-   *    article, even if the content changes drastically).
-   *  - If currentArticleId is null, CREATE a new article and set
-   *    currentArticleId so subsequent saves target it.
-   *
-   * The session is only ended by resetCurrentTracking() — which is called by
-   * the "Clear All Text" action in GreekConverter.vue.
-   */
-  const saveCurrentArticle = (greekContent, englishContent) => {
-    if (!greekContent || !greekContent.trim()) {
+  const saveCurrentArticle = (japaneseContent, englishContent) => {
+    if (!japaneseContent || !japaneseContent.trim()) {
       return null
     }
 
     const now = Date.now()
-    const title = extractTitle(greekContent)
+    const title = extractTitle(japaneseContent)
 
-    // --- Case 1: existing session — update in place, keep same id ---
+    // Update existing session
     if (currentArticleId.value) {
       const existing = articles.value.find(a => a.id === currentArticleId.value)
       if (existing) {
-        existing.greekContent = greekContent
+        existing.japaneseContent = japaneseContent
         existing.englishContent = englishContent || ''
         existing.title = title
         existing.timestamp = now
         saveArticles()
         return existing
       }
-      // If the tracked article was deleted, fall through to create new one
       currentArticleId.value = null
     }
 
-    // --- Case 2: no active session — create a new article ---
+    // Create new
     const article = {
       id: generateId(),
-      greekContent: greekContent,
+      japaneseContent: japaneseContent,
       englishContent: englishContent || '',
       title: title,
       timestamp: now,
@@ -98,13 +84,12 @@ export function useArticleHistory() {
     return article
   }
 
-  const scheduleAutoSave = (greekContent, englishContent) => {
+  const scheduleAutoSave = (japaneseContent, englishContent) => {
     if (autoSaveTimeout.value) clearTimeout(autoSaveTimeout.value)
-
-    if (!greekContent || !greekContent.trim()) return
+    if (!japaneseContent || !japaneseContent.trim()) return
 
     autoSaveTimeout.value = setTimeout(() => {
-      saveCurrentArticle(greekContent, englishContent)
+      saveCurrentArticle(japaneseContent, englishContent)
       autoSaveTimeout.value = null
     }, AUTOSAVE_DELAY)
   }
@@ -128,12 +113,6 @@ export function useArticleHistory() {
     saveArticles()
   }
 
-  /**
-   * Load an article from history into the editor.
-   * Sets currentArticleId so that subsequent edits / saves UPDATE it
-   * instead of creating a new article. This is the key behavior the user
-   * wants: opening from history and editing should not fork a new article.
-   */
   const loadArticle = (articleId) => {
     const article = articles.value.find(a => a.id === articleId)
     if (article) {
@@ -147,11 +126,6 @@ export function useArticleHistory() {
     return currentArticleId.value === articleId
   }
 
-  /**
-   * End the current editing session.
-   * Call this ONLY when the user explicitly finishes the article (e.g.,
-   * "Clear All Text"). After this, the next save creates a brand-new article.
-   */
   const resetCurrentTracking = () => {
     currentArticleId.value = null
   }
@@ -168,17 +142,11 @@ export function useArticleHistory() {
     const date = new Date(timestamp)
     const now = new Date()
     const diff = now - date
-
     if (diff < 60000) return 'Just now'
     if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`
     if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`
     if (diff < 604800000) return `${Math.floor(diff / 86400000)}d ago`
-
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    })
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   }
 
   onMounted(() => {

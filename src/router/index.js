@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'converter',
-      component: () => import('../components/GreekConverter.vue'), // Removed /index.js
+      component: () => import('../components/JapaneseConverter.vue'), // Removed /index.js
     },
 
   ],

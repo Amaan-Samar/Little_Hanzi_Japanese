@@ -10,24 +10,12 @@
         <div class="flex-1 overflow-y-auto p-6 pb-8 scrollbar-thin scrollbar-thumb-gray-200/50 scrollbar-track-transparent">
 
           <!-- Live Preview Section -->
-          <div class="mb-6 bg-gradient-to-br from-indigo-50/50 to-slate-50/50 rounded-xl p-4 border border-indigo-100/50">
-            <label class="block text-[11px] font-semibold text-indigo-600 uppercase tracking-wider mb-3">Live Preview</label>
+          <div class="mb-6 bg-gradient-to-br from-sakura-50/50 to-sky-50/50 rounded-xl p-4 border border-sakura-100/50">
+            <label class="block text-[11px] font-semibold text-sakura-600 uppercase tracking-wider mb-3">Live Preview</label>
             <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/50">
-              <!-- Greek with Romanization Preview -->
+              <!-- Japanese with Romanization Preview -->
               <div class="mb-3" :style="{ fontFamily: getSelectedFontFamily() }">
-                <div class="flex flex-col items-start">
-                  <div class="flex gap-0 mb-0.5" v-if="localSettings.showRomanization">
-                    <span
-                      class="text-indigo-500 font-light tracking-wide"
-                      :style="{ fontSize: `${Math.min(localSettings.romanizationFontSize, localSettings.fontSize)}px` }"
-                    >
-                      {{ previewRomanization }}
-                    </span>
-                  </div>
-                  <div class="flex gap-0 font-semibold" :style="{ fontSize: `${localSettings.fontSize}px` }">
-                    <span>{{ previewGreek }}</span>
-                  </div>
-                </div>
+                <div class="preview-ruby" :style="{ fontSize: `${localSettings.fontSize}px` }" v-html="previewHtml"></div>
               </div>
 
               <!-- English Preview -->
@@ -40,15 +28,15 @@
               <div class="mt-2 text-[10px] text-gray-400 flex items-center gap-2">
                 <span class="font-medium">Order:</span>
                 <span class="px-2 py-0.5 bg-gray-100 rounded-full">
-                  {{ localSettings.displayOrder === 'gr-en' ? 'Greek → English' : 'English → Greek' }}
+                  {{ localSettings.displayOrder === 'ja-en' ? 'Japanese → English' : 'English → Japanese' }}
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- Greek Font Size -->
+          <!-- Japanese Font Size -->
           <div class="mb-6 last:mb-0">
-            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Greek Font Size</label>
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Japanese Font Size</label>
             <div class="flex items-center gap-3.5 mb-3.5">
               <button
                 class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
@@ -71,7 +59,7 @@
                 v-for="size in fontSizePresets"
                 :key="size"
                 class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
-                :class="{ 'bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm': localSettings.fontSize === size }"
+                :class="{ 'bg-sakura-50 border-sakura-200 text-sakura-700 shadow-sm': localSettings.fontSize === size }"
                 @click="setFontSize(size)"
               >
                 {{ size }}
@@ -81,7 +69,7 @@
 
           <!-- Romanization Font Size -->
           <div class="mb-6 last:mb-0">
-            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Romanization Size</label>
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Romaji Size</label>
             <div class="flex items-center gap-3.5 mb-3.5">
               <button
                 class="w-9 h-9 rounded-full border border-black/5 bg-white cursor-pointer flex items-center justify-center transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
@@ -104,13 +92,13 @@
                 v-for="size in romanizationPresets"
                 :key="size"
                 class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
-                :class="{ 'bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm': localSettings.romanizationFontSize === size }"
+                :class="{ 'bg-sakura-50 border-sakura-200 text-sakura-700 shadow-sm': localSettings.romanizationFontSize === size }"
                 @click="setRomanizationSize(size)"
               >
                 {{ size }}
               </button>
             </div>
-            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Greek)</p>
+            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Japanese)</p>
           </div>
 
           <!-- English Font Size -->
@@ -138,13 +126,13 @@
                 v-for="size in englishPresets"
                 :key="size"
                 class="px-2.5 py-1 border border-black/5 rounded-md bg-white cursor-pointer text-xs font-medium transition-all duration-200 text-gray-500 hover:bg-gray-50 hover:border-black/10"
-                :class="{ 'bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm': localSettings.englishFontSize === size }"
+                :class="{ 'bg-sakura-50 border-sakura-200 text-sakura-700 shadow-sm': localSettings.englishFontSize === size }"
                 @click="setEnglishSize(size)"
               >
                 {{ size }}
               </button>
             </div>
-            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Greek)</p>
+            <p class="text-xs text-gray-400 mt-2">Maximum: {{ localSettings.fontSize }}px (same as Japanese)</p>
           </div>
 
           <!-- Font Family -->
@@ -163,8 +151,8 @@
                 <button
                   v-for="font in fontOptions"
                   :key="font.value"
-                  class="w-full px-4 py-2.5 bg-transparent border-none text-left cursor-pointer transition-all duration-200 text-gray-600 text-sm hover:bg-indigo-50"
-                  :class="{ 'bg-indigo-50/50 text-indigo-700': localSettings.selectedFont === font.value }"
+                  class="w-full px-4 py-2.5 bg-transparent border-none text-left cursor-pointer transition-all duration-200 text-gray-600 text-sm hover:bg-sakura-50"
+                  :class="{ 'bg-sakura-50/50 text-sakura-700': localSettings.selectedFont === font.value }"
                   :style="{ fontFamily: font.fontFamily }"
                   @click="handleFontChange(font.value)"
                 >
@@ -174,20 +162,20 @@
             </div>
           </div>
 
-          <!-- Greek Transliteration Standard -->
+          <!-- Romaji System Standard -->
           <div class="mb-6 last:mb-0">
-            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Greek Transliteration Standard</label>
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Romaji System</label>
             <select
-              v-model="localSettings.transliterationPreset"
-              @change="handleTransliterationChange"
-              class="w-full px-4 py-3 bg-white border border-black/5 rounded-lg text-sm text-gray-600 focus:outline-none focus:border-indigo-300 focus:shadow-indigo-100/30 transition-all duration-200"
+              v-model="localSettings.romajiSystem"
+              @change="handleRomajiSystemChange"
+              class="w-full px-4 py-3 bg-white border border-black/5 rounded-lg text-sm text-gray-600 focus:outline-none focus:border-sakura-300 focus:shadow-sakura-100/30 transition-all duration-200"
             >
-              <option value="sbl-academic">SBL Academic — keeps macrons (ē / ō) and accents</option>
-              <option value="ala-lc-ancient">ALA-LC Ancient Greek — library catalog standard</option>
-              <option value="iso-843-type-1">ISO 843:1997 Type 1 — reversible, character-level</option>
+              <option value="hepburn">Hepburn — standard English-friendly (e.g., shi, chi, tsu)</option>
+              <option value="nippon">Nippon-shiki — strict phonetic (e.g., si, ti, tu)</option>
+              <option value="passport">Passport — Japanese government standard</option>
             </select>
             <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-              SBL preserves scholarly vowel length and accent marks. ALA-LC is the standard used by research libraries. ISO 843 is fully reversible for database storage.
+              Hepburn is most common for learners. Nippon-shiki preserves kana structure exactly. Passport is used for official Japanese documents.
             </p>
           </div>
 
@@ -196,15 +184,15 @@
             <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Display Sections</label>
             <div class="flex flex-col gap-3">
               <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
-                <input type="checkbox" v-model="localSettings.showRomanization" class="w-4.5 h-4.5 cursor-pointer accent-indigo-500" @change="handleShowRomanizationChange">
-                <span>Romanization</span>
+                <input type="checkbox" v-model="localSettings.showRomanization" class="w-4.5 h-4.5 cursor-pointer accent-sakura-500" @change="handleShowRomanizationChange">
+                <span>Romaji (Romanization)</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
-                <input type="checkbox" v-model="localSettings.showGreek" class="w-4.5 h-4.5 cursor-pointer accent-indigo-500" @change="handleShowGreekChange">
-                <span>Greek</span>
+                <input type="checkbox" v-model="localSettings.showJapanese" class="w-4.5 h-4.5 cursor-pointer accent-sakura-500" @change="handleShowJapaneseChange">
+                <span>Japanese</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-600">
-                <input type="checkbox" v-model="localSettings.showEnglish" class="w-4.5 h-4.5 cursor-pointer accent-indigo-500" @change="handleShowEnglishChange">
+                <input type="checkbox" v-model="localSettings.showEnglish" class="w-4.5 h-4.5 cursor-pointer accent-sakura-500" @change="handleShowEnglishChange">
                 <span>English</span>
               </label>
             </div>
@@ -215,12 +203,12 @@
             <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Display Order</label>
             <div class="flex gap-6" :class="{ 'flex-col gap-3': isMobile }">
               <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
-                <input type="radio" v-model="localSettings.displayOrder" value="en-gr" class="w-4.5 h-4.5 cursor-pointer accent-indigo-500" @change="handleDisplayOrderChange">
-                <span>English → Greek</span>
+                <input type="radio" v-model="localSettings.displayOrder" value="en-ja" class="w-4.5 h-4.5 cursor-pointer accent-sakura-500" @change="handleDisplayOrderChange">
+                <span>English → Japanese</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
-                <input type="radio" v-model="localSettings.displayOrder" value="gr-en" class="w-4.5 h-4.5 cursor-pointer accent-indigo-500" @change="handleDisplayOrderChange">
-                <span>Greek → English</span>
+                <input type="radio" v-model="localSettings.displayOrder" value="ja-en" class="w-4.5 h-4.5 cursor-pointer accent-sakura-500" @change="handleDisplayOrderChange">
+                <span>Japanese → English</span>
               </label>
             </div>
           </div>
@@ -237,33 +225,27 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { X, Minus, Plus, ChevronDown } from 'lucide-vue-next'
-import { convert } from '@humanities/greek-conversion'
+import { Kuroshiro } from 'kuroshiro-browser'
 
 const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: false
-  },
-  settings: {
-    type: Object,
-    required: true
-  }
+  isOpen: { type: Boolean, default: false },
+  settings: { type: Object, required: true }
 })
 
 const emit = defineEmits(['close', 'save', 'reset'])
 
 const localSettings = ref({
   fontSize: 18,
-  selectedFont: 'GFSDidot',
+  selectedFont: 'NotoSansJP',
   showRomanization: true,
-  showGreek: true,
+  showJapanese: true,
   showEnglish: true,
-  displayOrder: 'gr-en',
+  displayOrder: 'ja-en',
   romanizationFontSize: 10,
   englishFontSize: 14,
-  transliterationPreset: 'sbl-academic',
+  romajiSystem: 'hepburn',
   ...props.settings
 })
 
@@ -274,44 +256,62 @@ const romanizationPresets = [4, 6, 8, 10, 12, 14, 16, 18]
 const englishPresets = [6, 8, 10, 12, 14, 16, 18, 20]
 
 const fontOptions = [
-  { value: 'GFSDidot', label: 'GFS Didot (Greek serif)', fontFamily: "'GFS Didot', 'Noto Serif', Georgia, serif" },
-  { value: 'Gentium', label: 'Gentium (scholarly)', fontFamily: "'Gentium Plus', 'Gentium', 'Noto Serif', Georgia, serif" },
-  { value: 'NotoSansSC', label: 'Noto Sans (sans-serif)', fontFamily: "'Noto Sans', 'Inter', sans-serif" },
-  { value: 'NotoSerifSC', label: 'Noto Serif', fontFamily: "'Noto Serif', 'Georgia', serif" },
+  { value: 'NotoSansJP', label: 'Noto Sans JP (sans-serif)', fontFamily: "'Noto Sans JP', 'Inter', sans-serif" },
+  { value: 'NotoSerifJP', label: 'Noto Serif JP (serif)', fontFamily: "'Noto Serif JP', 'Georgia', serif" },
   { value: 'Inter', label: 'Inter', fontFamily: "'Inter', sans-serif" },
   { value: 'Roboto', label: 'Roboto', fontFamily: "'Roboto', sans-serif" },
   { value: 'Poppins', label: 'Poppins', fontFamily: "'Poppins', sans-serif" }
 ]
 
-// Preview strings
-const previewGreek = 'Ἕλλησιν'
-const previewRomanization = computed(() => {
+const kuroshiro = ref(null)
+const isKuroshiroReady = ref(false)
+
+onMounted(async () => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  document.addEventListener('keydown', handleEscape)
+  document.addEventListener('click', handleClickOutside)
+
   try {
-    return convert(previewGreek, 'greek', 'transliteration', {
-      preset: localSettings.value.transliterationPreset
-    })
-  } catch {
-    return previewGreek
+    kuroshiro.value = await Kuroshiro.buildAndInitWithKuromoji(import.meta.env.PROD)
+    isKuroshiroReady.value = true
+  } catch (err) {
+    console.error('Failed to load Kuroshiro dictionary in settings modal:', err)
   }
 })
+
+const previewJapanese = '日本語のプレビュー'
+const previewHtml = ref(previewJapanese)
+
+watch([() => localSettings.value.romajiSystem, isKuroshiroReady], async ([newSystem, ready]) => {
+  if (!ready || !kuroshiro.value) return
+  try {
+    previewHtml.value = await kuroshiro.value.convert(previewJapanese, {
+      to: 'romaji',
+      mode: 'furigana',
+      romajiSystem: newSystem
+    })
+  } catch {
+    previewHtml.value = previewJapanese
+  }
+}, { immediate: true })
 
 let fontSizeTimeout = null
 
 const getSelectedFontLabel = () => {
   const font = fontOptions.find(f => f.value === localSettings.value.selectedFont)
-  return font ? font.label : 'GFS Didot'
+  return font ? font.label : 'Noto Sans JP'
 }
 
 const getSelectedFontFamily = () => {
   const font = fontOptions.find(f => f.value === localSettings.value.selectedFont)
-  return font ? font.fontFamily : "'GFS Didot', Georgia, serif"
+  return font ? font.fontFamily : "'Noto Sans JP', sans-serif"
 }
 
 const toggleFontDropdown = () => {
   isFontDropdownOpen.value = !isFontDropdownOpen.value
 }
 
-// Greek font size controls
 const increaseFontSize = () => {
   if (localSettings.value.fontSize < 32) {
     localSettings.value.fontSize += 2
@@ -337,7 +337,6 @@ const setFontSize = (size) => {
   emitSave()
 }
 
-// Romanization font size controls
 const increaseRomanizationSize = () => {
   if (localSettings.value.romanizationFontSize < localSettings.value.fontSize) {
     localSettings.value.romanizationFontSize += 1
@@ -359,7 +358,6 @@ const setRomanizationSize = (size) => {
   }
 }
 
-// English font size controls
 const increaseEnglishSize = () => {
   if (localSettings.value.englishFontSize < localSettings.value.fontSize) {
     localSettings.value.englishFontSize += 1
@@ -394,7 +392,7 @@ const handleFontChange = (fontValue) => {
   emit('save', localSettings.value)
 }
 
-const handleTransliterationChange = () => {
+const handleRomajiSystemChange = () => {
   emitSave()
 }
 
@@ -402,7 +400,7 @@ const handleShowRomanizationChange = () => {
   emit('save', localSettings.value)
 }
 
-const handleShowGreekChange = () => {
+const handleShowJapaneseChange = () => {
   emit('save', localSettings.value)
 }
 
@@ -430,14 +428,14 @@ const close = () => {
 const resetToDefaults = () => {
   const defaults = {
     fontSize: 18,
-    selectedFont: 'GFSDidot',
+    selectedFont: 'NotoSansJP',
     showRomanization: true,
-    showGreek: true,
+    showJapanese: true,
     showEnglish: true,
-    displayOrder: 'gr-en',
+    displayOrder: 'ja-en',
     romanizationFontSize: 10,
     englishFontSize: 14,
-    transliterationPreset: 'sbl-academic'
+    romajiSystem: 'hepburn'
   }
   localSettings.value = { ...defaults }
   emit('reset')
@@ -471,13 +469,6 @@ watch(() => props.settings, (newVal) => {
     localSettings.value = { ...newVal }
   }
 }, { deep: true })
-
-onMounted(() => {
-  checkMobile()
-  window.addEventListener('resize', checkMobile)
-  document.addEventListener('keydown', handleEscape)
-  document.addEventListener('click', handleClickOutside)
-})
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkMobile)
@@ -550,7 +541,25 @@ onBeforeUnmount(() => {
 
 input[type="checkbox"],
 input[type="radio"] {
-  accent-color: #6366F1;
+  accent-color: #EC4899; /* Sakura Pink */
+}
+
+/* Preview Ruby Styling */
+.preview-ruby {
+  line-height: 2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.preview-ruby ruby {
+  ruby-align: center;
+  margin: 0 1px;
+}
+.preview-ruby rt {
+  font-size: 0.5em;
+  color: #ec4899; /* Highlight color for Romaji */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -582,10 +591,6 @@ button {
 .font-dropdown::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.08);
   border-radius: 20px;
-}
-
-.preview-romanization {
-  transition: all 0.2s ease;
 }
 
 @media (max-width: 480px) {

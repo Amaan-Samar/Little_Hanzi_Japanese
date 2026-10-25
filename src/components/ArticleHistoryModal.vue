@@ -70,7 +70,7 @@
                         </h3>
                         <p class="text-xs text-gray-700 leading-relaxed mb-1">
                           <span class="text-[10px] font-medium text-indigo-400 uppercase tracking-wider mr-1">GR</span>
-                          {{ truncateText(article.greekContent, 60) }}
+                          {{ truncateText(article.JapaneseContent, 60) }}
                         </p>
                         <p class="text-xs text-gray-500 leading-relaxed">
                           <span class="text-[10px] font-medium text-gray-400 uppercase tracking-wider mr-1">EN</span>

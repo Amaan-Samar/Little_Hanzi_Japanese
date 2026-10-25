@@ -1,5 +1,5 @@
 {
-  "name": "Little_Hanzi_Greek",
+  "name": "Little_Hanzi_Japanese",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@humanities/greek-conversion": "^1.0.0-rc.1",
     "@vueuse/core": "^11.1.0",
+    "kuroshiro-browser": "^0.1.0",
     "lucide-vue-next": "^1.0.0",
     "pinia": "^2.2.4",
     "vue": "^3.5.12",

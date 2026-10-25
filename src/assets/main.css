@@ -8,24 +8,35 @@
 
 html,
 body {
-  font-family: Overpass, sans-serif;
+  font-family: 'Noto Sans JP', 'Inter', Overpass, sans-serif;
 }
 
-/* src/assets/colors.css */
 :root {
-  /* ===== Indigo Family (Primary) ===== */
-  --indigo-50: #EEF2FF;
-  --indigo-100: #E0E7FF;
-  --indigo-200: #C7D2FE;
-  --indigo-300: #A5B4FC;
-  --indigo-400: #818CF8;
-  --indigo-500: #6366F1;
-  --indigo-600: #4F46E5;
-  --indigo-700: #4338CA;
-  --indigo-800: #3730A3;
-  --indigo-900: #312E81;
+  /* ===== Sakura Pink (Primary) ===== */
+  --sakura-50: #FDF2F8;
+  --sakura-100: #FCE7F3;
+  --sakura-200: #FBCFE8;
+  --sakura-300: #F9A8D4;
+  --sakura-400: #F472B6;
+  --sakura-500: #EC4899;
+  --sakura-600: #DB2777;
+  --sakura-700: #BE185D;
+  --sakura-800: #9D174D;
+  --sakura-900: #831843;
 
-  /* ===== Slate Family (Neutral) ===== */
+  /* ===== Sky Blue (Secondary) ===== */
+  --sky-50: #F0F9FF;
+  --sky-100: #E0F2FE;
+  --sky-200: #BAE6FD;
+  --sky-300: #7DD3FC;
+  --sky-400: #38BDF8;
+  --sky-500: #0EA5E9;
+  --sky-600: #0284C7;
+  --sky-700: #0369A1;
+  --sky-800: #075985;
+  --sky-900: #0C4A6E;
+
+  /* ===== Slate Family (Neutral Text) ===== */
   --slate-50: #F8FAFC;
   --slate-100: #F1F5F9;
   --slate-200: #E2E8F0;
@@ -41,51 +52,52 @@ body {
   --white: #FFFFFF;
 
   /* ===== Semantic ===== */
-  --primary: var(--indigo-500);
-  --primary-dark: var(--indigo-600);
-  --primary-darker: var(--indigo-700);
-  --primary-light: var(--indigo-400);
-  --primary-lighter: var(--indigo-300);
-  --primary-bg: var(--indigo-50);
+  --primary: var(--sakura-500);
+  --primary-dark: var(--sakura-600);
+  --primary-darker: var(--sakura-700);
+  --primary-light: var(--sakura-400);
+  --primary-lighter: var(--sakura-300);
+  --primary-bg: var(--sakura-50);
 
-  --secondary: var(--slate-500);
-  --secondary-dark: var(--slate-700);
-  --secondary-light: var(--slate-400);
-  --secondary-bg: var(--slate-50);
+  --secondary: var(--sky-500);
+  --secondary-dark: var(--sky-700);
+  --secondary-light: var(--sky-400);
+  --secondary-bg: var(--sky-50);
 
   /* ===== Text ===== */
-  --text: var(--slate-900);
-  --text-secondary: var(--slate-700);
+  --text: var(--slate-800);           /* Deep slate for high contrast */
+  --text-secondary: var(--slate-600);
   --text-muted: var(--slate-500);
   --text-light: var(--slate-400);
   --text-white: var(--white);
 
   /* ===== Backgrounds ===== */
-  --bg-main: var(--slate-50);
+  --bg-main: var(--sky-50);
   --bg-card: rgba(255, 255, 255, 0.75);
-  --bg-input: rgba(255, 255, 255, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.85);
   --bg-white: var(--white);
 
   /* ===== Gradients ===== */
-  --gradient-main: linear-gradient(135deg, var(--slate-50) 0%, var(--indigo-50) 40%, var(--slate-100) 100%);
-  --gradient-logo: linear-gradient(135deg, var(--indigo-600) 0%, var(--indigo-500) 50%, var(--indigo-400) 100%);
-  --gradient-btn: linear-gradient(135deg, var(--indigo-500) 0%, var(--indigo-600) 100%);
+  /* Soft Sakura to Sky gradient matching your image */
+  --gradient-main: linear-gradient(135deg, var(--sakura-50) 0%, var(--sky-50) 50%, var(--sky-100) 100%);
+  --gradient-logo: linear-gradient(135deg, var(--sakura-500) 0%, #8B5CF6 50%, var(--sky-500) 100%);
+  --gradient-btn: linear-gradient(135deg, var(--sakura-500) 0%, var(--sakura-600) 100%);
   --gradient-danger: linear-gradient(135deg, var(--slate-500) 0%, var(--slate-700) 100%);
 
   /* ===== Shadows ===== */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-primary: 0 4px 20px rgba(99, 102, 241, 0.06);
-  --shadow-primary-hover: 0 4px 24px rgba(99, 102, 241, 0.1);
+  --shadow-primary: 0 4px 20px rgba(236, 72, 153, 0.06);
+  --shadow-primary-hover: 0 4px 24px rgba(236, 72, 153, 0.1);
   --shadow-danger: 0 4px 16px rgba(100, 116, 139, 0.2);
 
   /* ===== Borders ===== */
-  --border-primary-light: 1px solid rgba(99, 102, 241, 0.08);
-  --border-primary: 1px solid rgba(99, 102, 241, 0.15);
-  --border-primary-strong: 2px solid rgba(99, 102, 241, 0.15);
-  --border-secondary: 1px solid rgba(100, 116, 139, 0.08);
-  --border-secondary-strong: 1px solid rgba(100, 116, 139, 0.2);
+  --border-primary-light: 1px solid rgba(236, 72, 153, 0.1);
+  --border-primary: 1px solid rgba(236, 72, 153, 0.2);
+  --border-primary-strong: 2px solid rgba(236, 72, 153, 0.2);
+  --border-secondary: 1px solid rgba(14, 165, 233, 0.15);
+  --border-secondary-strong: 1px solid rgba(14, 165, 233, 0.25);
 
   /* ===== Radius ===== */
   --radius-sm: 8px;

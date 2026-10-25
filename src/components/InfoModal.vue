@@ -13,9 +13,9 @@
           
           <!-- App Info -->
           <div class="mb-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-2">About LittleHanzi Greek</h2>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">About LittleHanzi Japanese</h2>
             <p class="text-sm text-gray-600 leading-relaxed">
-              A tool for learning Greek through reading. Paste Greek text and get instant 
+              A tool for learning Japanese through reading. Paste Japanese text and get instant 
               romanization and English translations to help you read and understand better.
             </p>
           </div>
@@ -24,12 +24,12 @@
           <div class="mb-6 bg-gradient-to-br from-purple-50/50 to-blue-50/50 rounded-xl p-4 border border-purple-100/50">
             <label class="block text-[11px] font-semibold text-purple-600 uppercase tracking-wider mb-2">App URL</label>
             <a 
-              href="https://amaan-samar.github.io/Little_Hanzi_Greek/"
+              href="https://amaan-samar.github.io/Little_Hanzi_Japanese/"
               target="_blank"
               rel="noopener noreferrer"
               class="block text-sm text-purple-700 hover:text-purple-900 font-medium break-all hover:underline"
             >
-              https://amaan-samar.github.io/Little_Hanzi_Greek/
+              https://amaan-samar.github.io/Little_Hanzi_Japanese/
             </a>
           </div>
 
@@ -68,7 +68,7 @@
             <ul class="text-sm text-gray-600 space-y-1.5">
               <li class="flex items-start gap-2">
                 <span class="text-amber-500 mt-0.5">•</span>
-                <span>Paste Korean text in the left box and English translation in the right</span>
+                <span>Paste Japanese text in the left box and English translation below that</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-amber-500 mt-0.5">•</span>
@@ -89,68 +89,47 @@
 <script setup>
 import { X } from 'lucide-vue-next'
 
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: false
-  }
-})
-
 const emit = defineEmits(['close'])
 
 const resources = [
-  // --- Dictionaries (scholarly) ---
   {
-    name: 'LSJ (Liddell-Scott-Jones)',
+    name: 'Jisho.org',
     icon: '📖',
-    url: 'https://lsj.gr/',
-    description: 'The standard Ancient Greek–English lexicon, searchable with transliteration support and multiple language pairs.'
+    url: 'https://jisho.org/',
+    description: 'The most popular free Japanese-English dictionary with kanji lookup, example sentences, and romaji search.'
   },
   {
-    name: 'Brill Dictionary of Ancient Greek',
-    icon: '🏛️',
-    url: 'https://brill.com/display/db/bdgo',
-    description: 'The most comprehensive modern dictionary of Ancient Greek, covering literature, papyri, and inscriptions.'
-  },
-  {
-    name: 'Perseus Digital Library',
-    icon: '📜',
-    url: 'https://www.perseus.tufts.edu/',
-    description: 'Primary texts with morphological tools and linked lexica — ideal for reading with scholarly support.'
-  },
-  {
-    name: 'Thesaurus Linguae Graecae (TLG)',
-    icon: '🗄️',
-    url: 'https://stephanus.tlg.uci.edu/',
-    description: 'The definitive digital corpus of Greek literature from Homer to the fall of Byzantium (subscription required).'
-  },
-
-  // --- Learning / reference ---
-  {
-    name: 'Classics for All',
+    name: 'Kanshudo',
     icon: '🎓',
-    url: 'https://classicsforall.org.uk/',
-    description: 'Free teaching resources on Homer, Greek tragedy, art, and history for learners and teachers.'
+    url: 'https://www.kanshudo.com/',
+    description: 'Comprehensive Japanese learning platform with kanji mnemonics, grammar guides, and reading practice.'
   },
   {
-    name: 'Dickinson College Commentaries',
+    name: 'Tae Kim\'s Guide to Japanese Grammar',
     icon: '📝',
-    url: 'https://dcc.dickinson.edu/',
-    description: 'Greek and Latin texts with explanatory notes, vocabulary, and grammatical commentary for intermediate readers.'
+    url: 'https://guidetojapanese.org/learn/',
+    description: 'Free, well-structured grammar guide from beginner to intermediate, with clear explanations.'
   },
   {
-    name: 'Greek Language Portal (Κέντρο Ελληνικής Γλώσσας)',
-    icon: '🇬🇷',
-    url: 'https://greeklanguage.gr/',
-    description: 'Official resources for Modern Greek certification, including interactive textbooks and the KLIK app.'
+    name: 'Aozora Bunko',
+    icon: '📚',
+    url: 'https://www.aozora.gr.jp/',
+    description: 'Free digital library of public-domain Japanese literature — ideal for reading practice with your app.'
   },
   {
-    name: 'Onassis Foundation – Greek Studies',
-    icon: '🏺',
-    url: 'https://www.onassis.org/initiatives/onassis-academic-programs/greek-studies-amplification',
-    description: 'Supports Greek studies worldwide; site includes information on funded programs and classical education initiatives.'
+    name: 'WaniKani',
+    icon: '🈴',
+    url: 'https://www.wanikani.com/',
+    description: 'Spaced-repetition kanji learning system (free for first 3 levels).'
+  },
+  {
+    name: 'NHK Easy News',
+    icon: '📰',
+    url: 'https://www3.nhk.or.jp/news/easy/',
+    description: 'Daily news rewritten in simple Japanese with furigana, perfect for intermediate readers.'
   }
-]
+];
+
 const close = () => {
   emit('close')
 }

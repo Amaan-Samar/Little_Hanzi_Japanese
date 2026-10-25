@@ -20,7 +20,7 @@ Usage:
 
     
 
-    python3 code_collector.py --folder /home/amaan/Documents/github/Little_Hanzi_Greek/src --output src.txt
+    python3 code_collector.py --folder /home/amaan/Documents/github/Little_Hanzi_Japanese/src --output src.txt
     
 
 """

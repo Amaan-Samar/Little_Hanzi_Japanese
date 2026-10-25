@@ -2,10 +2,10 @@
   <div class="converter-wrapper">
     <div class="app-header">
       <div class="logo-section">
-        <h1 class="logo">LittleHanzi Ἑλληνικά</h1>
+        <h1 class="logo">Little Hanzi 日本語</h1>
       </div>
       <div class="header-buttons">
-        <button class="save-icon-btn" @click="handleManualSave" title="Save Article" :disabled="!greekText.trim() || isSaving">
+        <button class="save-icon-btn" @click="handleManualSave" title="Save Article" :disabled="!japaneseText.trim() || isSaving">
           <Save :size="20" />
           <span v-if="isSaving" class="save-spinner"></span>
         </button>
@@ -35,22 +35,22 @@
     <InfoModal :isOpen="isInfoModalOpen" @close="closeInfoModal" />
 
     <div class="main-content">
-      <LoadingSpinner :isLoading="isLoading" :text="loadingText" />
+      <LoadingSpinner :isLoading="isLoading || isProcessing" :text="loadingText" />
 
       <div v-if="showSaveToast" class="toast toast-success animate-slideDown">
-        <span>✅ Article saved successfully!</span>
+        <span>🌸 Article saved successfully!</span>
       </div>
 
       <div class="input-display-row">
         <div class="text-section" :style="{fontFamily: getFontFamily, fontSize: `${fontSize}px` }">
           <div class="input-wrapper">
-            <textarea v-model="greekText" placeholder="Enter Greek text here..." class="text-input w-full"></textarea>
-            <button v-if="greekText.trim()" @click="openEditModal('greek')" class="edit-btn" title="Edit in popup">
+            <textarea v-model="japaneseText" placeholder="Enter Japanese text here..." class="text-input w-full"></textarea>
+            <button v-if="japaneseText.trim()" @click="openEditModal('japanese')" class="edit-btn" title="Edit in popup">
               <EditIcon :size="16" />
             </button>
           </div>
-          <button @click="clearOrPasteText('greek')" class="action-btn">
-            {{ greekText.trim() ? 'Clear' : 'Paste' }}
+          <button @click="clearOrPasteText('japanese')" class="action-btn">
+            {{ japaneseText.trim() ? 'Clear' : 'Paste' }}
           </button>
         </div>
 
@@ -85,67 +85,34 @@
         @reset="resetToDefaults"
       />
 
-      <div v-if="greekText.trim() && (showEnglish || showGreek)" class="comparison-section">
+      <div v-if="japaneseText.trim() && (showEnglish || showJapanese)" class="comparison-section">
         <div class="comparison-display relative">
           <div v-for="(block, sentenceId) in comparisonData" :key="sentenceId"
                class="comparison-block relative"
                :data-paragraph-index="sentenceId">
 
-            <template v-if="displayOrder === 'en-gr'">
+            <template v-if="displayOrder === 'en-ja'">
               <div v-if="showEnglish && englishSegments[sentenceId]" class="english-translation-box">
                 <div class="english-text" :style="{ fontSize: `${englishFontSize}px`, lineHeight: '1.6' }">
                   {{ englishSegments[sentenceId] }}
                 </div>
               </div>
 
-              <div v-if="showGreek" class="line-container" :style="{ fontFamily: getFontFamily }">
+              <div v-if="showJapanese" class="line-container" :style="{ fontFamily: getFontFamily }">
                 <button class="bookmark-btn" @click.stop="toggleBookmark(sentenceId)" title="Bookmark this paragraph">
                   <Bookmark :size="14" :fill="currentBookmark === sentenceId ? 'currentColor' : 'none'" />
                 </button>
-                <div class="text-line relative">
-                  <div class="line-words" :style="{ fontSize: `${fontSize}px` }">
-                    <span v-for="(wordData, wordIndex) in block.words" :key="wordIndex" class="word-group">
-                      <span class="word-with-romanization">
-                        <span class="romanization-above" :style="{ display: showRomanization ? 'flex' : 'none' }">
-                          <span class="romanization-char" :style="{ fontSize: `${romanizationFontSize}px` }">
-                            {{ wordData.romanized }}
-                          </span>
-                        </span>
-                        <span class="word">
-                          <span v-for="(char, charIndex) in wordData.greekChars" :key="charIndex" class="greek-char">
-                            {{ char }}
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                <!-- v-html renders the ruby tags -->
+                <div class="ruby-content" :style="{ fontSize: `${fontSize}px` }" v-html="block.html"></div>
               </div>
             </template>
 
             <template v-else>
-              <div v-if="showGreek" class="line-container" :style="{ fontFamily: getFontFamily }">
+              <div v-if="showJapanese" class="line-container" :style="{ fontFamily: getFontFamily }">
                 <button class="bookmark-btn" @click.stop="toggleBookmark(sentenceId)" title="Bookmark this paragraph">
                   <Bookmark :size="14" :fill="currentBookmark === sentenceId ? 'currentColor' : 'none'" />
                 </button>
-                <div class="text-line relative">
-                  <div class="line-words" :style="{ fontSize: `${fontSize}px` }">
-                    <span v-for="(wordData, wordIndex) in block.words" :key="wordIndex" class="word-group">
-                      <span class="word-with-romanization">
-                        <span class="romanization-above" :style="{ display: showRomanization ? 'flex' : 'none' }">
-                          <span class="romanization-char" :style="{ fontSize: `${romanizationFontSize}px` }">
-                            {{ wordData.romanized }}
-                          </span>
-                        </span>
-                        <span class="word">
-                          <span v-for="(char, charIndex) in wordData.greekChars" :key="charIndex" class="greek-char">
-                            {{ char }}
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                <div class="ruby-content" :style="{ fontSize: `${fontSize}px` }" v-html="block.html"></div>
               </div>
 
               <div v-if="showEnglish && englishSegments[sentenceId]" class="english-translation-box">
@@ -156,7 +123,7 @@
             </template>
           </div>
 
-          <div v-if="greekText.trim()" class="quick-actions">
+          <div v-if="japaneseText.trim()" class="quick-actions">
             <button @click="requestClearAll" class="clear-all-btn">Clear All Text</button>
           </div>
 
@@ -164,15 +131,15 @@
         </div>
       </div>
 
-      <div v-else-if="greekText.trim() && !showEnglish && !showGreek" class="empty-state">
-        <p>Both English and Greek paragraphs are hidden. Enable them in settings.</p>
+      <div v-else-if="japaneseText.trim() && !showEnglish && !showJapanese" class="empty-state">
+        <p>Both English and Japanese paragraphs are hidden. Enable them in settings.</p>
       </div>
     </div>
 
     <ConfirmModal
       :isOpen="showConfirmModal"
       title="Clear All Text"
-      message="Are you sure you want to clear all Greek and English text? This action cannot be undone."
+      message="Are you sure you want to clear all Japanese and English text? This action cannot be undone."
       confirmText="Yes, Clear All"
       cancelText="Cancel"
       @confirm="confirmClearAll"
@@ -183,27 +150,28 @@
 
 <script>
 import ArticleHistoryModal from './ArticleHistoryModal.vue';
-import { useArticleHistory } from '../composables/useArticleHistory.js';
+import { useArticleHistory } from '../composables/useArticleHistory';
 import { Edit as EditIcon, Settings, BookOpen, Save, Info, Bookmark } from 'lucide-vue-next';
 import EditModal from './EditModal.vue';
 import ConfirmModal from './ConfirmModal.vue';
 import SettingsModal from './SettingsModal.vue';
 import InfoModal from './InfoModal.vue';
-import { ref, computed, watch, nextTick } from 'vue';
-import { convert } from '@humanities/greek-conversion';
+import { ref, computed, watch, nextTick, onMounted } from 'vue';
 import LoadingSpinner from './LoadingSpinner.vue';
-import { useSettings } from '../composables/useSettings.js';
+import { useSettings } from '../composables/useSettings';
+
+import { Kuroshiro } from 'kuroshiro-browser';
 
 export default {
   components: {
     ArticleHistoryModal, EditModal, ConfirmModal, SettingsModal, InfoModal,
     LoadingSpinner, BookOpen, EditIcon, Settings, Save, Info, Bookmark,
   },
-  name: 'GreekConverter',
+  name: 'JapaneseConverter',
   setup() {
     const {
-      fontSize, selectedFont, showRomanization, showGreek, showEnglish,
-      displayOrder, romanizationFontSize, englishFontSize, transliterationPreset,
+      fontSize, selectedFont, showRomanization, showJapanese, showEnglish,
+      displayOrder, romanizationFontSize, englishFontSize, romajiSystem,
       resetSettings
     } = useSettings()
 
@@ -213,28 +181,94 @@ export default {
       resetCurrentTracking, isSaving, setBookmark
     } = useArticleHistory()
 
-    const greekText = ref('');
+    const japaneseText = ref('');
     const englishText = ref('');
     const showConfirmModal = ref(false);
     const isSettingsModalOpen = ref(false);
     const isInfoModalOpen = ref(false);
     const isLoading = ref(false);
+    const isProcessing = ref(false);
     const loadingText = ref('Processing...');
     const showSaveToast = ref(false);
     let toastTimeout = null;
 
     const isEditModalOpen = ref(false)
-    const editModalType = ref('greek')
-    const editModalTitle = computed(() => editModalType.value === 'greek' ? 'Greek Text' : 'English Translation')
-    const editModalContent = computed(() => editModalType.value === 'greek' ? greekText.value : englishText.value)
+    const editModalType = ref('japanese')
+    const editModalTitle = computed(() => editModalType.value === 'japanese' ? 'Japanese Text' : 'English Translation')
+    const editModalContent = computed(() => editModalType.value === 'japanese' ? japaneseText.value : englishText.value)
 
     const isHistoryModalOpen = ref(false)
     const currentArticleId = ref(null)
     const currentBookmark = ref(null)
 
+    // --- Kuroshiro Setup ---
+    const kuroshiro = ref(null);
+    const isKuroshiroReady = ref(false);
+
+    onMounted(async () => {
+      try {
+        kuroshiro.value = await Kuroshiro.buildAndInitWithKuromoji(import.meta.env.PROD);
+        isKuroshiroReady.value = true;
+        processText();
+      } catch (err) {
+        console.error('Failed to load Kuroshiro:', err);
+        loadingText.value = 'Failed to load dictionary. Check public/dict folder.';
+      }
+    });
+
+    // --- Furigana / Ruby HTML Generation ---
+    const comparisonData = ref({});
+
+    const convertParagraphToRuby = async (text) => {
+      if (!kuroshiro.value || !text.trim()) return text;
+      try {
+        return await kuroshiro.value.convert(text, {
+          to: 'romaji',
+          mode: 'furigana',
+          romajiSystem: romajiSystem.value
+        });
+      } catch (e) {
+        console.error('Furigana conversion failed:', e);
+        return text;
+      }
+    };
+
+    const processText = async () => {
+      if (!japaneseText.value.trim() || !isKuroshiroReady.value) {
+        comparisonData.value = {};
+        return;
+      }
+
+      isProcessing.value = true;
+      const normalizedText = japaneseText.value
+        .replace(/\r\n/g, '\n')
+        .replace(/\n\s*\n(\s*\n)*/g, '\n\n');
+
+      const paragraphs = normalizedText.split(/\n\n/).map(p => p.trim()).filter(p => p);
+      const result = {};
+
+      for (let i = 0; i < paragraphs.length; i++) {
+        result[i] = {
+          html: await convertParagraphToRuby(paragraphs[i])
+        };
+      }
+
+      comparisonData.value = result;
+      isProcessing.value = false;
+    };
+
+    let processTimeout;
+    watch([japaneseText, romajiSystem], () => {
+      clearTimeout(processTimeout);
+      processTimeout = setTimeout(() => {
+        processText();
+      }, 300);
+    });
+
+    // --- App Logic ---
     const handleManualSave = () => {
-      if (!greekText.value.trim()) return
-      const article = saveCurrentArticle(greekText.value, englishText.value)
+      if (!japaneseText.value.trim()) return
+      const article = saveCurrentArticle(japaneseText.value, englishText.value)
       if (article) {
         currentArticleId.value = article.id
         showSaveToastMessage('Article saved successfully!')
@@ -247,12 +281,10 @@ export default {
       toastTimeout = setTimeout(() => { showSaveToast.value = false }, 3000)
     }
 
-    watch([greekText, englishText], ([newGreek, newEnglish]) => {
-      if (newGreek && newGreek.trim()) {
-        scheduleAutoSave(newGreek, newEnglish)
+    watch([japaneseText, englishText], ([newJa, newEn]) => {
+      if (newJa && newJa.trim()) {
+        scheduleAutoSave(newJa, newEn)
       } else {
-        // Do NOT reset tracking here — only the explicit "Clear All Text"
-        // action should end the editing session.
         cancelAutoSave()
       }
     }, { deep: true })
@@ -267,7 +299,7 @@ export default {
       loadingText.value = 'Loading article...'
       await new Promise(resolve => setTimeout(resolve, 300))
 
-      greekText.value = article.greekContent || ''
+      japaneseText.value = article.japaneseContent || ''
       englishText.value = article.englishContent || ''
       currentArticleId.value = article.id
       currentBookmark.value = article.bookmark ?? null
@@ -291,8 +323,7 @@ export default {
 
     const toggleBookmark = (paragraphIndex) => {
       if (!currentArticleId.value) {
-        // If not yet saved, save first
-        const article = saveCurrentArticle(greekText.value, englishText.value)
+        const article = saveCurrentArticle(japaneseText.value, englishText.value)
         if (article) currentArticleId.value = article.id
       }
       if (currentArticleId.value) {
@@ -314,58 +345,15 @@ export default {
       selectedFont: selectedFont.value,
       showRomanization: showRomanization.value,
       showEnglish: showEnglish.value,
-      showGreek: showGreek.value,
+      showJapanese: showJapanese.value,
       displayOrder: displayOrder.value,
       romanizationFontSize: romanizationFontSize.value,
       englishFontSize: englishFontSize.value,
-      transliterationPreset: transliterationPreset.value
+      romajiSystem: romajiSystem.value
     }))
 
-    // Greek word processing
-    const getWordsWithRomanization = (text) => {
-      if (!text) return []
-      const tokens = text.split(/(\s+|[.,!?;:()"'])/g).filter(t => t.trim() || t === ' ')
-      const result = []
-      let currentWord = ''
-
-      for (const token of tokens) {
-        if (token.trim() === '') {
-          if (currentWord) { result.push(processWord(currentWord)); currentWord = '' }
-          result.push({ greek: token, greekChars: [], romanized: '', isPunctuation: false })
-        } else if (/[\u0370-\u03FF\u1F00-\u1FFF]/.test(token)) {
-          if (currentWord) { result.push(processWord(currentWord)); currentWord = '' }
-          result.push(processWord(token))
-        } else if (/[.,!?;:()"']/.test(token)) {
-          if (currentWord) { result.push(processWord(currentWord)); currentWord = '' }
-          result.push({ greek: token, greekChars: [token], romanized: token, isPunctuation: true })
-        } else {
-          currentWord += token
-        }
-      }
-      if (currentWord) result.push(processWord(currentWord))
-      return result
-    }
-
-    const processWord = (word) => {
-      const greekChars = [...word]
-      let romanized = ''
-      try {
-        romanized = convert(word, 'greek', 'transliteration', {
-          preset: transliterationPreset.value
-        })
-      } catch (e) {
-        romanized = word
-      }
-      return {
-        greek: word,
-        greekChars: greekChars,
-        romanized: romanized,
-        isPunctuation: false
-      }
-    }
-
     const openSettingsModal = () => { isSettingsModalOpen.value = true }
-    const requestClearAll = () => { if (greekText.value.trim() || englishText.value.trim()) showConfirmModal.value = true }
+    const requestClearAll = () => { if (japaneseText.value.trim() || englishText.value.trim()) showConfirmModal.value = true }
     const confirmClearAll = () => { clearText('both'); showConfirmModal.value = false }
     const cancelClearAll = () => { showConfirmModal.value = false }
     const closeSettingsModal = () => { isSettingsModalOpen.value = false }
@@ -375,11 +363,11 @@ export default {
       selectedFont.value = newSettings.selectedFont
       showRomanization.value = newSettings.showRomanization
       showEnglish.value = newSettings.showEnglish
-      showGreek.value = newSettings.showGreek
+      showJapanese.value = newSettings.showJapanese
       displayOrder.value = newSettings.displayOrder
       romanizationFontSize.value = newSettings.romanizationFontSize
       englishFontSize.value = newSettings.englishFontSize
-      transliterationPreset.value = newSettings.transliterationPreset
+      romajiSystem.value = newSettings.romajiSystem
       closeSettingsModal()
     }
 
@@ -388,28 +376,28 @@ export default {
     const closeEditModal = () => { isEditModalOpen.value = false }
 
     const saveEditModalContent = (newContent) => {
-      if (editModalType.value === 'greek') greekText.value = newContent
+      if (editModalType.value === 'japanese') japaneseText.value = newContent
       else englishText.value = newContent
       closeEditModal()
     }
 
     const fonts = {
-      NotoSansSC: "'Noto Sans SC', 'Inter', sans-serif",
-      NotoSerifSC: "'Noto Serif SC', 'Georgia', serif",
-      Inter: "'Inter', 'Noto Sans SC', sans-serif",
-      Roboto: "'Roboto', 'Noto Sans SC', sans-serif",
-      Poppins: "'Poppins', 'Noto Sans SC', sans-serif",
+      NotoSansJP: "'Noto Sans JP', 'Inter', sans-serif",
+      NotoSerifJP: "'Noto Serif JP', 'Georgia', serif",
+      Inter: "'Inter', 'Noto Sans JP', sans-serif",
+      Roboto: "'Roboto', 'Noto Sans JP', sans-serif",
+      Poppins: "'Poppins', 'Noto Sans JP', sans-serif",
     };
-    const getFontFamily = computed(() => fonts[selectedFont.value]);
+    const getFontFamily = computed(() => fonts[selectedFont.value] || fonts.NotoSansJP);
 
-    const breakEnglishText = (englishText, greekSegments) => {
+    const breakEnglishText = (englishText, japaneseSegments) => {
       if (!englishText.trim()) return {}
       const normalizedText = englishText.replace(/\r\n/g, '\n').replace(/\n\s*\n(\s*\n)*/g, '\n\n')
       const englishParagraphs = normalizedText.split(/\n\n/).map(p => p.trim()).filter(p => p)
       const result = {}
-      const greekSegmentKeys = greekSegments ? Object.keys(greekSegments) : []
+      const japaneseSegmentKeys = japaneseSegments ? Object.keys(japaneseSegments) : []
       englishParagraphs.forEach((paragraph, index) => {
-        if (index < greekSegmentKeys.length) result[greekSegmentKeys[index]] = paragraph
+        if (index < japaneseSegmentKeys.length) result[japaneseSegmentKeys[index]] = paragraph
       })
       return result
     }
@@ -422,8 +410,8 @@ export default {
       try {
         await new Promise(resolve => setTimeout(resolve, 100))
         const clipboardText = await navigator.clipboard.readText()
-        const targetType = target || 'greek'
-        if (targetType === 'greek') greekText.value = clipboardText
+        const targetType = target || 'japanese'
+        if (targetType === 'japanese') japaneseText.value = clipboardText
         else englishText.value = clipboardText
         await new Promise(resolve => setTimeout(resolve, 100))
       } catch (error) {
@@ -434,7 +422,7 @@ export default {
     }
 
     const clearText = (type = 'both') => {
-      if (type === 'greek' || type === 'both') greekText.value = ''
+      if (type === 'japanese' || type === 'both') japaneseText.value = ''
       if (type === 'english' || type === 'both') englishText.value = ''
       if (type === 'both') {
         cancelAutoSave()
@@ -445,31 +433,20 @@ export default {
     }
 
     const clearOrPasteText = (type) => {
-      const text = type === 'greek' ? greekText.value : englishText.value
+      const text = type === 'japanese' ? japaneseText.value : englishText.value
       if (text.trim()) clearText(type)
       else pasteFromClipboard(type)
     }
-
-    const comparisonData = computed(() => {
-      if (!greekText.value) return {}
-      const normalizedText = greekText.value.replace(/\r\n/g, '\n').replace(/\n\s*\n(\s*\n)*/g, '\n\n')
-      const greekParagraphs = normalizedText.split(/\n\n/).map(p => p.trim()).filter(p => p)
-      const result = {}
-      greekParagraphs.forEach((paragraph, index) => {
-        result[index] = { words: getWordsWithRomanization(paragraph) }
-      })
-      return result
-    })
 
     return {
       articles, isHistoryModalOpen, openHistoryModal, closeHistoryModal,
       loadArticleIntoEditor, handleDeleteArticle, handleDeleteAllArticles,
       isCurrentArticle, formatDate,
       isInfoModalOpen, openInfoModal, closeInfoModal,
-      greekText, englishText, selectedFont, fontSize,
-      showRomanization, showGreek, showEnglish, displayOrder,
-      romanizationFontSize, englishFontSize, transliterationPreset,
-      isLoading, loadingText, isSaving, showSaveToast,
+      japaneseText, englishText, selectedFont, fontSize,
+      showRomanization, showJapanese, showEnglish, displayOrder,
+      romanizationFontSize, englishFontSize, romajiSystem,
+      isLoading, isProcessing, loadingText, isSaving, showSaveToast,
       getFontFamily, comparisonData, englishSegments, settings,
       clearOrPasteText, clearAllText: clearText, handleManualSave, showSaveToastMessage,
       EditIcon, Settings, Save, Info, Bookmark,
@@ -489,29 +466,33 @@ export default {
   border-bottom: var(--border-primary-light); padding: 12px 24px;
   display: flex; justify-content: space-between; align-items: center; z-index: 100;
 }
-.logo { font-size: 20px; font-weight: 600; background: var(--gradient-logo); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+.logo { 
+  font-size: 20px; font-weight: 700; 
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #0ea5e9 100%); 
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; 
+}
 .header-buttons { display: flex; gap: 8px; align-items: center; }
 .save-icon-btn, .history-icon-btn, .settings-icon-btn, .info-icon-btn {
   background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-muted);
 }
-.save-icon-btn:hover:not(:disabled) { background: var(--indigo-100); color: var(--indigo-600); transform: scale(1.05); }
+.save-icon-btn:hover:not(:disabled) { background: #fce7f3; color: #ec4899; transform: scale(1.05); }
 .save-icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .save-spinner {
-  position: absolute; width: 20px; height: 20px; border: 2px solid var(--slate-200);
-  border-top-color: var(--indigo-500); border-radius: 50%; animation: spin 0.8s linear infinite;
+  position: absolute; width: 20px; height: 20px; border: 2px solid #e2e8f0;
+  border-top-color: #ec4899; border-radius: 50%; animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-.history-icon-btn:hover { background: var(--indigo-100); transform: scale(1.05); }
-.settings-icon-btn:hover { background: var(--indigo-100); transform: rotate(90deg); }
-.info-icon-btn:hover { background: var(--indigo-100); color: var(--indigo-600); transform: scale(1.05); }
+.history-icon-btn:hover { background: #e0f2fe; color: #0ea5e9; transform: scale(1.05); }
+.settings-icon-btn:hover { background: #fce7f3; color: #ec4899; transform: rotate(90deg); }
+.info-icon-btn:hover { background: #e0f2fe; color: #0ea5e9; transform: scale(1.05); }
 
 /* Toast */
 .toast {
   position: fixed; top: 80px; left: 50%; transform: translateX(-50%); padding: 12px 24px;
   border-radius: 12px; font-size: 14px; font-weight: 500; z-index: 3000;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.95); border: 1px solid var(--indigo-200); color: var(--indigo-600);
+  background: rgba(255, 255, 255, 0.95); border: 1px solid #fbcfe8; color: #ec4899;
   animation: slideDown 0.3s ease;
 }
 @keyframes slideDown { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
@@ -524,72 +505,75 @@ export default {
 
 .text-input {
   width: 100%; min-height: 40px; padding: 12px; background: var(--bg-input);
-  backdrop-filter: blur(10px); border: var(--border-primary-strong); border-radius: var(--radius-md);
+  backdrop-filter: blur(10px); border: 2px solid rgba(236, 72, 153, 0.15); border-radius: var(--radius-md);
   font-size: 14px; transition: all 0.2s; resize: vertical; font-family: inherit;
   white-space: pre-wrap; word-wrap: break-word; word-break: break-word;
   overflow-wrap: break-word; box-sizing: border-box; color: var(--text);
 }
 .text-input:focus {
-  outline: none; border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); background: rgba(255, 255, 255, 0.95);
+  outline: none; border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1); background: rgba(255, 255, 255, 0.95);
 }
-.text-input::placeholder { color: var(--slate-400); opacity: 0.5; }
+.text-input::placeholder { color: #94a3b8; opacity: 0.6; }
 
 .english-input { min-height: 30px; padding: 8px; }
 
 .action-btn {
   padding: 8px 20px; margin-top: 8px; font-size: 13px; font-weight: 600;
   background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
-  border: var(--border-primary); border-radius: var(--radius-sm);
+  border: 1px solid rgba(236, 72, 153, 0.2); border-radius: var(--radius-sm);
   color: var(--text-muted); cursor: pointer; transition: all 0.2s;
 }
-.action-btn:hover { background: var(--indigo-50); border-color: var(--primary); color: var(--indigo-600); }
+.action-btn:hover { background: #fdf2f8; border-color: #ec4899; color: #ec4899; }
 
 .edit-btn {
   position: absolute; top: 8px; right: 8px; background: var(--bg-input);
-  backdrop-filter: blur(10px); border: var(--border-primary); border-radius: var(--radius-sm);
+  backdrop-filter: blur(10px); border: 1px solid rgba(236, 72, 153, 0.2); border-radius: var(--radius-sm);
   padding: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; color: var(--text-muted); z-index: 10;
 }
-.edit-btn:hover { background: var(--indigo-50); border-color: var(--primary); color: var(--indigo-600); transform: scale(1.05); }
+.edit-btn:hover { background: #fdf2f8; border-color: #ec4899; color: #ec4899; transform: scale(1.05); }
 
 .quick-actions { max-width: 1200px; margin: 20px auto; padding: 0 1rem; text-align: center; }
 .clear-all-btn {
   padding: 8px 20px; font-size: 13px; font-weight: 600;
-  background: var(--slate-100); border: 1px solid var(--slate-200);
-  border-radius: var(--radius-sm); color: var(--slate-600); cursor: pointer; transition: all 0.2s;
+  background: #f1f5f9; border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm); color: #64748b; cursor: pointer; transition: all 0.2s;
 }
-.clear-all-btn:hover { background: var(--slate-200); transform: translateY(-1px); }
+.clear-all-btn:hover { background: #e2e8f0; transform: translateY(-1px); }
 
-/* Line containers */
-.line-words {
-  text-wrap: wrap; width: 100%; display: flex; flex-wrap: wrap;
-  word-wrap: break-word; word-break: break-word; overflow-wrap: break-word;
-  white-space: normal; line-height: 1.4;
+/* Ruby Content Styling */
+.ruby-content {
+  line-height: 2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
-.word-group { display: inline-flex; flex-direction: column; align-items: center; white-space: normal; margin: 0 1px; }
-.word-with-romanization { display: inline-flex; flex-direction: column; align-items: center; }
-.romanization-above { display: flex; gap: 0px; justify-content: center; margin-bottom: 1px; flex-wrap: nowrap; }
-.romanization-char {
-  color: var(--indigo-500); font-weight: 400; letter-spacing: 0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  display: inline-block; opacity: 0.7;
+.ruby-content ruby {
+  ruby-align: center;
+  margin: 0 1px;
 }
-.word { display: inline-flex; font-weight: 400; color: var(--text); gap: 0px; }
-.greek-char { display: inline-block; }
+.ruby-content rt {
+  font-size: 0.5em;
+  /* Here is the separate color for Romaji */
+  color: #ec4899; 
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
 
 .english-translation-box {
   background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px);
   border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 8px;
-  border: var(--border-secondary);
+  border: 1px solid rgba(14, 165, 233, 0.15);
 }
 .english-text {
-  color: var(--slate-700); line-height: 1.6; font-family: inherit;
+  color: #334155; line-height: 1.6; font-family: inherit;
   white-space: pre-wrap; word-wrap: break-word; word-break: break-word; overflow-wrap: break-word;
 }
 
 .empty-state {
-  text-align: center; padding: 60px 20px; color: var(--primary);
+  text-align: center; padding: 60px 20px; color: #ec4899;
   font-style: italic; background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px); border-radius: var(--radius-lg);
 }
@@ -603,24 +587,22 @@ export default {
   position: relative;
   background: var(--bg-card); backdrop-filter: blur(20px);
   border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px;
-  border: var(--border-primary-light); box-shadow: var(--shadow-primary);
-  width: 100%; overflow-x: auto; word-wrap: break-word; word-break: break-word; transition: all 0.3s;
+  border: 1px solid rgba(236, 72, 153, 0.1); box-shadow: 0 4px 20px rgba(236, 72, 153, 0.05);
+  width: 100%; overflow-x: hidden; word-wrap: break-word; word-break: break-word; transition: all 0.3s;
 }
 .line-container:hover {
-  background: rgba(255, 255, 255, 0.85); box-shadow: var(--shadow-primary-hover);
-  border-color: rgba(99, 102, 241, 0.15);
+  background: rgba(255, 255, 255, 0.85); box-shadow: 0 4px 24px rgba(236, 72, 153, 0.1);
+  border-color: rgba(236, 72, 153, 0.25);
 }
-
-.text-line { display: block; word-wrap: break-word; white-space: normal; overflow-wrap: break-word; }
 
 /* Bookmark button */
 .bookmark-btn {
   position: absolute; top: 8px; right: 8px; width: 28px; height: 28px;
   border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--slate-400); transition: all 0.2s; z-index: 5;
+  cursor: pointer; color: #94a3b8; transition: all 0.2s; z-index: 5;
 }
-.bookmark-btn:hover { background: var(--indigo-50); color: var(--indigo-500); transform: scale(1.1); }
+.bookmark-btn:hover { background: #fdf2f8; color: #ec4899; transform: scale(1.1); }
 
 @media (max-width: 768px) {
   .app-header { padding: 8px 16px; }
@@ -629,7 +611,6 @@ export default {
   .text-section { padding: 0 0.5rem; }
   .comparison-section { padding: 0 0.5rem; }
   .line-container { padding: 12px; }
-  .line-words { gap: 2px 4px; }
   .toast { top: 70px; font-size: 12px; padding: 10px 16px; max-width: 90%; }
 }
 </style>
