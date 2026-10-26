@@ -26,12 +26,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # NEW: Copy kuromoji dictionary files into dist
-      - name: Copy Dictionary Files
-        run: |
-          mkdir -p ./dist/dict
-          cp -r ./node_modules/kuroshiro-browser/dist/dict/* ./dist/dict/
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
