@@ -13,21 +13,21 @@
           
           <!-- App Info -->
           <div class="mb-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-2">About LittleHanzi Japanese</h2>
-            <p class="text-sm text-gray-600 leading-relaxed">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">About Little Hanzi Japanese</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
               A tool for learning Japanese through reading. Paste Japanese text and get instant 
-              romanization and English translations to help you read and understand better.
+              furigana (romaji annotations) and English translations to help you read and understand better.
             </p>
           </div>
 
           <!-- App Link -->
-          <div class="mb-6 bg-gradient-to-br from-purple-50/50 to-blue-50/50 rounded-xl p-4 border border-purple-100/50">
-            <label class="block text-[11px] font-semibold text-purple-600 uppercase tracking-wider mb-2">App URL</label>
+          <div class="mb-6 bg-gradient-to-br from-pink-50/50 to-sky-50/50 rounded-xl p-4 border border-pink-100/50">
+            <label class="block text-[11px] font-semibold text-pink-600 uppercase tracking-wider mb-2">App URL</label>
             <a 
               href="https://amaan-samar.github.io/Little_Hanzi_Japanese/"
               target="_blank"
               rel="noopener noreferrer"
-              class="block text-sm text-purple-700 hover:text-purple-900 font-medium break-all hover:underline"
+              class="block text-sm text-pink-700 hover:text-pink-900 font-medium break-all hover:underline"
             >
               https://amaan-samar.github.io/Little_Hanzi_Japanese/
             </a>
@@ -35,7 +35,7 @@
 
           <!-- Learning Resources -->
           <div class="mb-6">
-            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Learning Resources</label>
+            <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Learning Resources</label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <a
                 v-for="resource in resources"
@@ -43,17 +43,17 @@
                 :href="resource.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group block p-4 bg-white border border-black/5 rounded-xl hover:border-purple-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                class="group block p-4 bg-white border border-black/5 rounded-xl hover:border-pink-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
               >
                 <div class="flex items-start gap-3">
-                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-200">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 transition-colors duration-200">
                     <span class="text-lg">{{ resource.icon }}</span>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h4 class="text-sm font-semibold text-gray-800 group-hover:text-purple-700 transition-colors duration-200">
+                    <h4 class="text-sm font-semibold text-gray-800 group-hover:text-pink-700 transition-colors duration-200">
                       {{ resource.name }}
                     </h4>
-                    <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">
+                    <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">
                       {{ resource.description }}
                     </p>
                   </div>
@@ -63,19 +63,19 @@
           </div>
 
           <!-- Tips -->
-          <div class="bg-amber-50/80 rounded-xl p-4 border border-amber-100/50">
-            <h4 class="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">💡 Tips</h4>
-            <ul class="text-sm text-gray-600 space-y-1.5">
+          <div class="bg-sky-50/80 rounded-xl p-4 border border-sky-100/50">
+            <h4 class="text-xs font-semibold text-sky-700 uppercase tracking-wider mb-2">💡 Tips</h4>
+            <ul class="text-sm text-slate-600 space-y-1.5">
               <li class="flex items-start gap-2">
-                <span class="text-amber-500 mt-0.5">•</span>
-                <span>Paste Japanese text in the left box and English translation below that</span>
+                <span class="text-sky-500 mt-0.5">•</span>
+                <span>Paste Japanese text in the left box and English translation in the right</span>
               </li>
               <li class="flex items-start gap-2">
-                <span class="text-amber-500 mt-0.5">•</span>
+                <span class="text-sky-500 mt-0.5">•</span>
                 <span>Adjust font sizes and display settings using the Settings gear icon</span>
               </li>
               <li class="flex items-start gap-2">
-                <span class="text-amber-500 mt-0.5">•</span>
+                <span class="text-sky-500 mt-0.5">•</span>
                 <span>Your articles are automatically saved in History for later reading</span>
               </li>
             </ul>
@@ -88,6 +88,14 @@
 
 <script setup>
 import { X } from 'lucide-vue-next'
+
+// DEFINE THE PROP HERE so Vue knows to accept it
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const emit = defineEmits(['close'])
 
@@ -128,7 +136,7 @@ const resources = [
     url: 'https://www3.nhk.or.jp/news/easy/',
     description: 'Daily news rewritten in simple Japanese with furigana, perfect for intermediate readers.'
   }
-];
+]
 
 const close = () => {
   emit('close')

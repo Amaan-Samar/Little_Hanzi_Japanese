@@ -7,10 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "postbuild": "mkdir -p ./dist/dict; cp -r ./node_modules/kuroshiro-browser/dist/dict/* ./dist/dict;"
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
   },
   "dependencies": {
-    "@vueuse/core": "^11.1.0",  
+    "@vueuse/core": "^11.1.0",
+    "kuroshiro": "^1.2.1",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "kuroshiro-browser": "^0.1.0",
     "lucide-vue-next": "^1.0.0",
     "pinia": "^2.2.4",

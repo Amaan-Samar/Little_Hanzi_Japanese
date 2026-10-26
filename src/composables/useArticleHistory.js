@@ -7,7 +7,7 @@ const AUTOSAVE_DELAY = 60 * 1000 // 1 minute
 
 export function useArticleHistory() {
   const articles = ref([])
-  const currentArticleId = ref(null)   // "active editing session" id
+  const currentArticleId = ref(null)   // Tracks the active editing session
   const autoSaveTimeout = ref(null)
   const isSaving = ref(false)
 
@@ -49,7 +49,7 @@ export function useArticleHistory() {
     const now = Date.now()
     const title = extractTitle(japaneseContent)
 
-    // Update existing session
+    // --- CRITICAL FIX: Update in place if we have an active session ---
     if (currentArticleId.value) {
       const existing = articles.value.find(a => a.id === currentArticleId.value)
       if (existing) {
@@ -60,10 +60,11 @@ export function useArticleHistory() {
         saveArticles()
         return existing
       }
+      // If the article was deleted in another tab, fall through to create new
       currentArticleId.value = null
     }
 
-    // Create new
+    // --- Create new only if no active session ---
     const article = {
       id: generateId(),
       japaneseContent: japaneseContent,

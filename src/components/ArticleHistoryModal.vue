@@ -8,13 +8,32 @@
         </button>
 
         <div class="flex-1 overflow-y-auto p-6 pt-8 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+          
           <div v-if="articles.length === 0" class="text-center py-16">
-            <BookOpen :size="40" class="mx-auto text-indigo-300" />
+            <BookOpen :size="40" class="mx-auto text-pink-300" />
             <p class="mt-4 text-sm font-medium text-gray-500">No saved articles yet</p>
             <p class="text-xs text-gray-400 mt-1">Articles you read will appear here</p>
           </div>
 
           <div v-else>
+            <!-- Tabs -->
+            <div class="flex gap-2 mb-4 border-b border-gray-100 pb-2">
+              <button 
+                @click="activeTab = 'all'"
+                class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+                :class="activeTab === 'all' ? 'bg-pink-50 text-pink-600' : 'text-gray-500 hover:bg-gray-50'"
+              >
+                All Articles
+              </button>
+              <button 
+                @click="activeTab = 'unfinished'"
+                class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5"
+                :class="activeTab === 'unfinished' ? 'bg-pink-50 text-pink-600' : 'text-gray-500 hover:bg-gray-50'"
+              >
+                🔖 Unfinished Reads
+              </button>
+            </div>
+
             <!-- Date range filter -->
             <div class="mb-4 flex flex-wrap items-center gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100">
               <label class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Filter</label>
@@ -23,7 +42,7 @@
                 v-model="startDate"
                 :min="dateRange.minStr"
                 :max="dateRange.maxStr"
-                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-indigo-300"
+                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-pink-300"
               />
               <span class="text-slate-300 text-xs">—</span>
               <input
@@ -31,12 +50,12 @@
                 v-model="endDate"
                 :min="dateRange.minStr"
                 :max="dateRange.maxStr"
-                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-indigo-300"
+                class="text-xs px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 focus:outline-none focus:border-pink-300"
               />
               <button
                 v-if="startDate || endDate"
                 @click="startDate = ''; endDate = ''"
-                class="text-[11px] text-indigo-500 hover:text-indigo-700 font-medium"
+                class="text-[11px] text-pink-500 hover:text-pink-700 font-medium"
               >
                 Clear
               </button>
@@ -44,7 +63,7 @@
 
             <div class="space-y-3">
               <div class="flex justify-between items-center pb-3 border-b border-gray-100">
-                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ filteredArticles.length }} of {{ articles.length }} article{{ articles.length === 1 ? '' : 's' }}</span>
+                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ filteredArticles.length }} article{{ filteredArticles.length === 1 ? '' : 's' }}</span>
                 <button v-if="articles.length > 0" @click="confirmDeleteAll" class="text-xs text-gray-400 hover:text-red-500 transition-colors duration-200 flex items-center gap-1">
                   <Trash2 :size="14" />
                   Delete All
@@ -52,15 +71,15 @@
               </div>
 
               <div v-if="filteredArticles.length === 0" class="text-center py-8 text-xs text-slate-400">
-                No articles in this date range.
+                No articles match this filter.
               </div>
 
               <div class="space-y-3">
                 <div
                   v-for="article in filteredArticles"
                   :key="article.id"
-                  class="group relative bg-white/50 rounded-xl border border-gray-100/80 transition-all duration-200 hover:border-indigo-200 hover:shadow-md hover:bg-white/80"
-                  :class="{ 'border-indigo-300 bg-indigo-50/50 shadow-sm': isCurrentArticle(article.id) }"
+                  class="group relative bg-white/50 rounded-xl border border-gray-100/80 transition-all duration-200 hover:border-pink-200 hover:shadow-md hover:bg-white/80"
+                  :class="{ 'border-pink-300 bg-pink-50/50 shadow-sm': isCurrentArticle(article.id) }"
                 >
                   <div class="p-4 pr-12 cursor-pointer" @click="selectArticle(article)">
                     <div class="flex items-start justify-between gap-3">
@@ -69,8 +88,8 @@
                           {{ article.title }}
                         </h3>
                         <p class="text-xs text-gray-700 leading-relaxed mb-1">
-                          <span class="text-[10px] font-medium text-indigo-400 uppercase tracking-wider mr-1">GR</span>
-                          {{ truncateText(article.JapaneseContent, 60) }}
+                          <span class="text-[10px] font-medium text-pink-500 uppercase tracking-wider mr-1">JA</span>
+                          {{ truncateText(article.japaneseContent, 60) }}
                         </p>
                         <p class="text-xs text-gray-500 leading-relaxed">
                           <span class="text-[10px] font-medium text-gray-400 uppercase tracking-wider mr-1">EN</span>
@@ -82,12 +101,14 @@
                       </span>
                     </div>
                     <div v-if="article.bookmark !== null && article.bookmark !== undefined" class="mt-1.5">
-                      <span class="text-[10px] text-indigo-400 font-medium">🔖 Bookmarked</span>
+                      <span class="text-[10px] text-pink-500 font-medium flex items-center gap-1">
+                        🔖 Bookmarked
+                      </span>
                     </div>
                   </div>
 
-                  <button
-                    @click="confirmDeleteArticle(article.id)"
+                  <button 
+                    @click="confirmDeleteArticle(article.id)" 
                     class="absolute top-3 right-3 w-7 h-7 rounded-full bg-transparent hover:bg-red-50 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 hover:scale-110"
                     title="Delete article"
                   >
@@ -141,7 +162,8 @@ const confirmModalTitle = ref('')
 const confirmModalMessage = ref('')
 const confirmModalConfirmText = ref('')
 
-// Date filter
+// Tabs & Filter
+const activeTab = ref('all') // 'all' | 'unfinished'
 const startDate = ref('')
 const endDate = ref('')
 
@@ -164,6 +186,13 @@ const dateRange = computed(() => {
 
 const filteredArticles = computed(() => {
   let list = props.articles
+
+  // Filter by tab
+  if (activeTab.value === 'unfinished') {
+    list = list.filter(a => a.bookmark !== null && a.bookmark !== undefined)
+  }
+
+  // Filter by date
   if (startDate.value) {
     const start = new Date(startDate.value + 'T00:00:00').getTime()
     list = list.filter(a => a.timestamp >= start)
@@ -172,6 +201,7 @@ const filteredArticles = computed(() => {
     const end = new Date(endDate.value + 'T23:59:59').getTime()
     list = list.filter(a => a.timestamp <= end)
   }
+
   return list
 })
 

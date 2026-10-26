@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { X, Minus, Plus, ChevronDown } from 'lucide-vue-next'
 import { Kuroshiro } from 'kuroshiro-browser'
 
@@ -263,6 +263,7 @@ const fontOptions = [
   { value: 'Poppins', label: 'Poppins', fontFamily: "'Poppins', sans-serif" }
 ]
 
+// --- Kuroshiro Setup for Live Preview ---
 const kuroshiro = ref(null)
 const isKuroshiroReady = ref(false)
 
@@ -280,9 +281,11 @@ onMounted(async () => {
   }
 })
 
+// Preview strings
 const previewJapanese = '日本語のプレビュー'
 const previewHtml = ref(previewJapanese)
 
+// Generate ruby HTML for preview
 watch([() => localSettings.value.romajiSystem, isKuroshiroReady], async ([newSystem, ready]) => {
   if (!ready || !kuroshiro.value) return
   try {
@@ -312,6 +315,7 @@ const toggleFontDropdown = () => {
   isFontDropdownOpen.value = !isFontDropdownOpen.value
 }
 
+// Japanese font size controls
 const increaseFontSize = () => {
   if (localSettings.value.fontSize < 32) {
     localSettings.value.fontSize += 2
@@ -337,6 +341,7 @@ const setFontSize = (size) => {
   emitSave()
 }
 
+// Romanization font size controls
 const increaseRomanizationSize = () => {
   if (localSettings.value.romanizationFontSize < localSettings.value.fontSize) {
     localSettings.value.romanizationFontSize += 1
@@ -358,6 +363,7 @@ const setRomanizationSize = (size) => {
   }
 }
 
+// English font size controls
 const increaseEnglishSize = () => {
   if (localSettings.value.englishFontSize < localSettings.value.fontSize) {
     localSettings.value.englishFontSize += 1
@@ -556,10 +562,10 @@ input[type="radio"] {
 }
 .preview-ruby rt {
   font-size: 0.5em;
-  color: #ec4899; /* Highlight color for Romaji */
+  color: #ec4899;
   font-weight: 500;
   letter-spacing: 0.5px;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {

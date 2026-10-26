@@ -160,6 +160,7 @@ import { ref, computed, watch, nextTick, onMounted } from 'vue';
 import LoadingSpinner from './LoadingSpinner.vue';
 import { useSettings } from '../composables/useSettings';
 
+// Use kuroshiro-browser for offline support
 import { Kuroshiro } from 'kuroshiro-browser';
 
 export default {
@@ -222,6 +223,7 @@ export default {
     const convertParagraphToRuby = async (text) => {
       if (!kuroshiro.value || !text.trim()) return text;
       try {
+        // mode: 'furigana' generates <ruby> tags automatically
         return await kuroshiro.value.convert(text, {
           to: 'romaji',
           mode: 'furigana',
@@ -257,6 +259,7 @@ export default {
       isProcessing.value = false;
     };
 
+    // Watch for text or romaji system changes
     let processTimeout;
     watch([japaneseText, romajiSystem], () => {
       clearTimeout(processTimeout);
@@ -313,12 +316,20 @@ export default {
       }
     }
 
+    // Inside your setup() function in JapaneseConverter.vue
+
     const scrollToBookmark = async (paragraphIndex) => {
+      // Wait for Vue DOM updates
       await nextTick()
-      const el = document.querySelector(`[data-paragraph-index="${paragraphIndex}"]`)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }
+      
+      // Add a short delay to allow the browser to calculate the line-heights
+      // of the newly rendered <ruby> tags
+      setTimeout(() => {
+        const el = document.querySelector(`[data-paragraph-index="${paragraphIndex}"]`)
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 150)
     }
 
     const toggleBookmark = (paragraphIndex) => {
@@ -542,7 +553,7 @@ export default {
 }
 .clear-all-btn:hover { background: #e2e8f0; transform: translateY(-1px); }
 
-/* Ruby Content Styling */
+/* Ruby Content */
 .ruby-content {
   line-height: 2;
   word-wrap: break-word;
@@ -555,11 +566,10 @@ export default {
 }
 .ruby-content rt {
   font-size: 0.5em;
-  /* Here is the separate color for Romaji */
-  color: #ec4899; 
+  color: #ec4899;
   font-weight: 500;
   letter-spacing: 0.5px;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .english-translation-box {
