@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # or your default branch name
+      - main
 
 permissions:
   contents: write
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # or your preferred version
+          node-version: '22'
 
       - name: Install Dependencies
         run: npm install
@@ -26,9 +26,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      # NEW: Copy kuromoji dictionary files into dist
+      - name: Copy Dictionary Files
+        run: |
+          mkdir -p ./dist/dict
+          cp -r ./node_modules/kuroshiro-browser/dist/dict/* ./dist/dict/
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder the action will deploy from
+          folder: dist
           branch: gh-pages
-          clean: true # Automatically remove deleted files from the deployment
+          clean: true
