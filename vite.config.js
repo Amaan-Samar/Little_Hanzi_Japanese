@@ -5,8 +5,15 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue(),
+
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
+        navigateFallback: '/Little_Hanzi_Japanese/index.html',
+      },
       includeAssets: [
         'icons/favicon-196.png',
         'icons/apple-icon-180.png'
@@ -21,7 +28,6 @@ export default defineConfig({
         scope: '/Little_Hanzi_Japanese/',
         start_url: '/Little_Hanzi_Japanese/',
 
-        // 👇 NEW — enables "share to Little Japanese" from the OS share sheet
         share_target: {
           action: '/Little_Hanzi_Japanese/share-handler',
           method: 'GET',

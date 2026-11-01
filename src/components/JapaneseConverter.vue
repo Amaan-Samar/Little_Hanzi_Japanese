@@ -38,7 +38,7 @@
       <LoadingSpinner :isLoading="isLoading || isProcessing" :text="loadingText" />
 
       <div v-if="showSaveToast" class="toast toast-success animate-slideDown">
-        <span>🌸 Article saved successfully!</span>
+        <span>{{ toastMessage }}</span>
       </div>
 
       <div class="input-display-row">
@@ -267,6 +267,7 @@ export default {
     const isProcessing = ref(false);
     const loadingText = ref('Processing...');
     const showSaveToast = ref(false);
+    const toastMessage = ref('');
     let toastTimeout = null;
 
     const isEditModalOpen = ref(false)
@@ -285,6 +286,8 @@ export default {
     const kuroshiro = ref(null);
     const isKuroshiroReady = ref(false);
 
+    // Declared before onMounted/onBeforeUnmount so both can safely reference it
+    let processTimeout;
 
     onMounted(async () => {
       // 1) Pick up shared text
@@ -374,13 +377,20 @@ export default {
     };
 
     // Watch for text or romaji system changes
-    let processTimeout;
     watch([japaneseText, romajiSystem], () => {
       clearTimeout(processTimeout);
       processTimeout = setTimeout(() => {
         processText();
       }, 300);
     });
+
+    // ---------- Toast ----------
+    const showSaveToastMessage = (message) => {
+      toastMessage.value = message
+      showSaveToast.value = true
+      if (toastTimeout) clearTimeout(toastTimeout)
+      toastTimeout = setTimeout(() => { showSaveToast.value = false }, 3000)
+    }
 
     const handleManualSave = () => {
       if (!japaneseText.value.trim()) return
@@ -398,13 +408,7 @@ export default {
         // createArticle sets currentArticleId internally
       }
 
-      if (article) showSaveToastMessage('Article saved successfully!')
-    }
-
-    const showSaveToastMessage = (message) => {
-      showSaveToast.value = true
-      if (toastTimeout) clearTimeout(toastTimeout)
-      toastTimeout = setTimeout(() => { showSaveToast.value = false }, 3000)
+      if (article) showSaveToastMessage('🌸 Article saved successfully!')
     }
 
     watch([japaneseText, englishText], ([newJa, newEn]) => {
@@ -577,7 +581,7 @@ export default {
       clearText('both')
       clearCurrentArticle()
       showConfirmModal.value = false
-}
+    }
     const cancelClearAll = () => { showConfirmModal.value = false }
     const closeSettingsModal = () => { isSettingsModalOpen.value = false }
 
@@ -672,7 +676,7 @@ export default {
       japaneseText, englishText, selectedFont, fontSize,
       showRomanization, showJapanese, showEnglish, displayOrder,
       romanizationFontSize, englishFontSize, romajiSystem,
-      isLoading, isProcessing, loadingText, isSaving, showSaveToast,
+      isLoading, isProcessing, loadingText, isSaving, showSaveToast, toastMessage,
       getFontFamily, comparisonData, englishSegments, settings,
       clearOrPasteText, clearAllText: clearText, handleManualSave, showSaveToastMessage,
       EditIcon, Settings, Save, Info, Bookmark, MoreVertical,
