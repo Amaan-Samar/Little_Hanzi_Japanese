@@ -20,7 +20,7 @@
                 : 'text-gray-500 hover:bg-gray-50'"
               @click="activeTab = 'learn'"
             >
-              📖 Learn
+              Guide & Resources
             </button>
             <button
               class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
@@ -29,7 +29,7 @@
                 : 'text-gray-500 hover:bg-gray-50'"
               @click="activeTab = 'apps'"
             >
-              🧩 Similar Apps
+              Similar Apps
             </button>
           </div>
 
@@ -44,19 +44,28 @@
               </p>
             </div>
 
-            <!-- App Link -->
-            <div class="mb-6 bg-gradient-to-br from-pink-50/50 to-sky-50/50 rounded-xl p-4 border border-pink-100/50">
-              <label class="block text-[11px] font-semibold text-pink-600 uppercase tracking-wider mb-2">App URL</label>
-              <a
-                href="https://amaan-samar.github.io/Little_Hanzi_Japanese/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block text-sm text-pink-700 hover:text-pink-900 font-medium break-all hover:underline"
-              >
-                https://amaan-samar.github.io/Little_Hanzi_Japanese/
-              </a>
+            <!-- Tips -->
+            <div class="mb-6 bg-sky-50/80 rounded-xl p-4 border border-sky-100/50">
+              <h4 class="text-xs font-semibold text-sky-700 uppercase tracking-wider mb-2">💡 Tips</h4>
+              <ul class="text-sm text-slate-600 space-y-1.5">
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Paste Japanese text in the left box and English translation in the right</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Adjust font sizes and display settings using the Settings gear icon</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Your articles are automatically saved in History for later reading</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Double-click (or double-tap) any paragraph to bookmark it for later</span>
+                </li>
+              </ul>
             </div>
-
             <!-- Learning Resources -->
             <div class="mb-6">
               <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Learning Resources</label>
@@ -86,28 +95,7 @@
               </div>
             </div>
 
-            <!-- Tips -->
-            <div class="mb-6 bg-sky-50/80 rounded-xl p-4 border border-sky-100/50">
-              <h4 class="text-xs font-semibold text-sky-700 uppercase tracking-wider mb-2">💡 Tips</h4>
-              <ul class="text-sm text-slate-600 space-y-1.5">
-                <li class="flex items-start gap-2">
-                  <span class="text-sky-500 mt-0.5">•</span>
-                  <span>Paste Japanese text in the left box and English translation in the right</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-sky-500 mt-0.5">•</span>
-                  <span>Adjust font sizes and display settings using the Settings gear icon</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-sky-500 mt-0.5">•</span>
-                  <span>Your articles are automatically saved in History for later reading</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-sky-500 mt-0.5">•</span>
-                  <span>Double-click (or double-tap) any paragraph to bookmark it for later</span>
-                </li>
-              </ul>
-            </div>
+
 
             <!-- Author appreciation card -->
             <div class="rounded-xl p-4 border border-pink-100/60 bg-gradient-to-br from-pink-50/60 via-white to-sky-50/40">
