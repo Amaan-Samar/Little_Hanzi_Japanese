@@ -8,6 +8,11 @@ const router = createRouter({
       name: 'converter',
       component: () => import('../components/JapaneseConverter.vue'), // Removed /index.js
     },
+    {
+      path: '/share-handler',
+      name: 'ShareHandler',
+      component: () => import('../views/ShareHandler.vue'),
+    },
 
   ],
 })

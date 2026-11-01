@@ -15,7 +15,7 @@ export function useSettings() {
           showRomanization: parsed.showRomanization ?? true,
           showJapanese: parsed.showJapanese ?? true,
           showEnglish: parsed.showEnglish ?? true,
-          displayOrder: parsed.displayOrder ?? 'ja-en',
+          displayOrder: parsed.displayOrder ?? 'en-ja',
           romanizationFontSize: parsed.romanizationFontSize ?? 10,
           englishFontSize: parsed.englishFontSize ?? 14,
           romajiSystem: parsed.romajiSystem ?? 'hepburn'
@@ -41,7 +41,7 @@ export function useSettings() {
     showRomanization: true,
     showJapanese: true,
     showEnglish: true,
-    displayOrder: 'ja-en',
+    displayOrder: 'en-ja',
     romanizationFontSize: 10,
     englishFontSize: 14,
     romajiSystem: 'hepburn'

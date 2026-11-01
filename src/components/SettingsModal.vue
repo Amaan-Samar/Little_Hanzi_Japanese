@@ -28,7 +28,7 @@
               <div class="mt-2 text-[10px] text-gray-400 flex items-center gap-2">
                 <span class="font-medium">Order:</span>
                 <span class="px-2 py-0.5 bg-gray-100 rounded-full">
-                  {{ localSettings.displayOrder === 'ja-en' ? 'Japanese → English' : 'English → Japanese' }}
+                  {{ localSettings.displayOrder === 'en-ja' ? 'English → Japanese' : 'Japanese → English' }}
                 </span>
               </div>
             </div>
@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { X, Minus, Plus, ChevronDown } from 'lucide-vue-next'
 import { Kuroshiro } from 'kuroshiro-browser'
 
@@ -242,7 +242,7 @@ const localSettings = ref({
   showRomanization: true,
   showJapanese: true,
   showEnglish: true,
-  displayOrder: 'ja-en',
+  displayOrder: 'en-ja',
   romanizationFontSize: 10,
   englishFontSize: 14,
   romajiSystem: 'hepburn',
@@ -438,7 +438,7 @@ const resetToDefaults = () => {
     showRomanization: true,
     showJapanese: true,
     showEnglish: true,
-    displayOrder: 'ja-en',
+    displayOrder: 'en-ja',
     romanizationFontSize: 10,
     englishFontSize: 14,
     romajiSystem: 'hepburn'

@@ -7,10 +7,11 @@ const AUTOSAVE_DELAY = 60 * 1000 // 1 minute
 
 export function useArticleHistory() {
   const articles = ref([])
-  const currentArticleId = ref(null)   // Tracks the active editing session
+  const currentArticleId = ref(null)   // single source of truth for the "live" article context
   const autoSaveTimeout = ref(null)
   const isSaving = ref(false)
 
+  // ---- persistence ----
   const loadArticles = () => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
@@ -29,9 +30,8 @@ export function useArticleHistory() {
     }
   }
 
-  const generateId = () => {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
-  }
+  const generateId = () =>
+    Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
 
   const extractTitle = (content) => {
     if (!content) return 'Untitled'
@@ -41,58 +41,127 @@ export function useArticleHistory() {
     return firstLine.length > 50 ? firstLine.substring(0, 50) + '...' : firstLine
   }
 
-  const saveCurrentArticle = (japaneseContent, englishContent) => {
-    if (!japaneseContent || !japaneseContent.trim()) {
-      return null
-    }
+  // ---- core API ----
+
+  /**
+   * Create a brand-new article and make it the current one.
+   * Use ONLY when there is no active context.
+   */
+  const createArticle = (japaneseContent, englishContent = '') => {
+    if (!japaneseContent || !japaneseContent.trim()) return null
 
     const now = Date.now()
-    const title = extractTitle(japaneseContent)
-
-    // --- CRITICAL FIX: Update in place if we have an active session ---
-    if (currentArticleId.value) {
-      const existing = articles.value.find(a => a.id === currentArticleId.value)
-      if (existing) {
-        existing.japaneseContent = japaneseContent
-        existing.englishContent = englishContent || ''
-        existing.title = title
-        existing.timestamp = now
-        saveArticles()
-        return existing
-      }
-      // If the article was deleted in another tab, fall through to create new
-      currentArticleId.value = null
-    }
-
-    // --- Create new only if no active session ---
     const article = {
       id: generateId(),
-      japaneseContent: japaneseContent,
+      japaneseContent,
       englishContent: englishContent || '',
-      title: title,
+      title: extractTitle(japaneseContent),
       timestamp: now,
-      bookmark: null
+      bookmark: null,
     }
-
     articles.value.unshift(article)
-
     if (articles.value.length > MAX_ARTICLES) {
       articles.value = articles.value.slice(0, MAX_ARTICLES)
     }
-
     saveArticles()
     currentArticleId.value = article.id
     return article
   }
 
-  const scheduleAutoSave = (japaneseContent, englishContent) => {
+  /**
+   * Update an EXISTING article in place. Does not append.
+   * Accepts partial patches: { japaneseContent?, englishContent?, title?, bookmark? }
+   */
+  const updateArticle = (id, patch) => {
+    if (!id) return null
+    const article = articles.value.find(a => a.id === id)
+    if (!article) return null
+
+    if (patch.japaneseContent !== undefined) {
+      article.japaneseContent = patch.japaneseContent
+      article.title = extractTitle(patch.japaneseContent)
+    }
+    if (patch.englishContent !== undefined) {
+      article.englishContent = patch.englishContent
+    }
+    if (patch.bookmark !== undefined) {
+      article.bookmark = patch.bookmark
+    }
+    article.timestamp = Date.now()
+
+    saveArticles()
+    return article
+  }
+
+  /**
+   * Adopt an article as the current context (used when loading from history).
+   */
+  const setCurrentArticle = (id) => {
+    currentArticleId.value = id
+  }
+
+  /**
+   * End the current context (Clear All Text). Next save starts a new article.
+   */
+  const clearCurrentArticle = () => {
+    currentArticleId.value = null
+  }
+
+  /**
+   * Backwards-compatible helper. Behavior:
+   *  - If a current article exists → update it in place.
+   *  - Otherwise → create a new one.
+   * Prefer createArticle / updateArticle directly in new code.
+   */
+  const saveCurrentArticle = (japaneseContent, englishContent = '') => {
+    if (currentArticleId.value) {
+      return updateArticle(currentArticleId.value, {
+        japaneseContent,
+        englishContent,
+      })
+    }
+    return createArticle(japaneseContent, englishContent)
+  }
+
+  /**
+   * Debounced autosave. NEVER creates a new article — only updates the
+   * active one. If no active article exists, autosave is a no-op (the
+   * manual save or first bookmark creates the article).
+   */
+  const scheduleAutoSave = (japaneseContent, englishContent = '') => {
     if (autoSaveTimeout.value) clearTimeout(autoSaveTimeout.value)
-    if (!japaneseContent || !japaneseContent.trim()) return
+
+    // If no context, do nothing — creating requires explicit user action.
+    if (!currentArticleId.value) return
+    // If both fields empty AND no current content, skip silently.
+    if (!japaneseContent && !englishContent) return
 
     autoSaveTimeout.value = setTimeout(() => {
-      saveCurrentArticle(japaneseContent, englishContent)
+      if (currentArticleId.value) {
+        updateArticle(currentArticleId.value, {
+          japaneseContent,
+          englishContent,
+        })
+      }
       autoSaveTimeout.value = null
     }, AUTOSAVE_DELAY)
+  }
+
+  /**
+   * Flush any pending autosave right now (e.g. before a manual save).
+   */
+  const flushAutoSave = (japaneseContent, englishContent = '') => {
+    if (autoSaveTimeout.value) {
+      clearTimeout(autoSaveTimeout.value)
+      autoSaveTimeout.value = null
+    }
+    if (currentArticleId.value) {
+      return updateArticle(currentArticleId.value, {
+        japaneseContent,
+        englishContent,
+      })
+    }
+    return null
   }
 
   const cancelAutoSave = () => {
@@ -123,13 +192,8 @@ export function useArticleHistory() {
     return null
   }
 
-  const isCurrentArticle = (articleId) => {
-    return currentArticleId.value === articleId
-  }
-
-  const resetCurrentTracking = () => {
-    currentArticleId.value = null
-  }
+  const isCurrentArticle = (articleId) =>
+    currentArticleId.value === articleId
 
   const setBookmark = (articleId, paragraphIndex) => {
     const article = articles.value.find(a => a.id === articleId)
@@ -155,9 +219,17 @@ export function useArticleHistory() {
   })
 
   return {
+    // state
     articles,
     currentArticleId,
     isSaving,
+    // new API
+    createArticle,
+    updateArticle,
+    setCurrentArticle,
+    clearCurrentArticle,
+    flushAutoSave,
+    // legacy / convenience
     saveCurrentArticle,
     scheduleAutoSave,
     cancelAutoSave,
@@ -165,9 +237,8 @@ export function useArticleHistory() {
     deleteAllArticles,
     loadArticle,
     isCurrentArticle,
-    resetCurrentTracking,
     setBookmark,
     formatDate,
-    saveArticles
+    saveArticles,
   }
 }

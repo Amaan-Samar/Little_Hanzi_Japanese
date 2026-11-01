@@ -98,20 +98,71 @@
                 </div>
               </div>
 
-              <div v-if="showJapanese" class="line-container" :style="{ fontFamily: getFontFamily }">
-                <button class="bookmark-btn" @click.stop="toggleBookmark(sentenceId)" title="Bookmark this paragraph">
-                  <Bookmark :size="14" :fill="currentBookmark === sentenceId ? 'currentColor' : 'none'" />
+              <div
+                v-if="showJapanese"
+                class="line-container"
+                :class="{ 'is-focused': focusedParagraph === sentenceId }"
+                :style="{ fontFamily: getFontFamily }"
+                @click="handleParagraphClick(sentenceId)"
+                @dblclick="handleParagraphDoubleClick(sentenceId)"
+                @touchstart.passive="handleTouchStart"
+                @touchmove.passive="handleTouchMove"
+                @touchend.passive="handleTouchEnd(sentenceId)"
+              >
+                <button
+                  v-if="currentBookmark === sentenceId"
+                  class="bookmark-btn is-active"
+                  @click.stop="toggleBookmark(sentenceId)"
+                  title="Remove bookmark"
+                >
+                  <Bookmark :size="14" fill="currentColor" />
                 </button>
-                <!-- v-html renders the ruby tags -->
+
+                <template v-if="focusedParagraph === sentenceId && currentBookmark !== sentenceId">
+                  <button
+                    class="paragraph-menu-btn"
+                    @click.stop="toggleParagraphMenu(sentenceId, $event)"
+                    title="More actions"
+                  >
+                    <MoreVertical :size="14" />
+                  </button>
+                </template>
+
                 <div class="ruby-content" :style="{ fontSize: `${fontSize}px` }" v-html="block.html"></div>
               </div>
             </template>
 
             <template v-else>
-              <div v-if="showJapanese" class="line-container" :style="{ fontFamily: getFontFamily }">
-                <button class="bookmark-btn" @click.stop="toggleBookmark(sentenceId)" title="Bookmark this paragraph">
-                  <Bookmark :size="14" :fill="currentBookmark === sentenceId ? 'currentColor' : 'none'" />
+              <div
+                v-if="showJapanese"
+                class="line-container"
+                :class="{ 'is-focused': focusedParagraph === sentenceId }"
+                :style="{ fontFamily: getFontFamily }"
+                @click="handleParagraphClick(sentenceId)"
+                @dblclick="handleParagraphDoubleClick(sentenceId)"
+                @touchstart.passive="handleTouchStart"
+                @touchmove.passive="handleTouchMove"
+                @touchend.passive="handleTouchEnd(sentenceId)"
+              >
+                <button
+                  v-if="currentBookmark === sentenceId"
+                  class="bookmark-btn is-active"
+                  @click.stop="toggleBookmark(sentenceId)"
+                  title="Remove bookmark"
+                >
+                  <Bookmark :size="14" fill="currentColor" />
                 </button>
+
+                <template v-if="focusedParagraph === sentenceId && currentBookmark !== sentenceId">
+                  <button
+                    class="paragraph-menu-btn"
+                    @click.stop="toggleParagraphMenu(sentenceId, $event)"
+                    title="More actions"
+                  >
+                    <MoreVertical :size="14" />
+                  </button>
+                </template>
+
                 <div class="ruby-content" :style="{ fontSize: `${fontSize}px` }" v-html="block.html"></div>
               </div>
 
@@ -145,18 +196,41 @@
       @confirm="confirmClearAll"
       @cancel="cancelClearAll"
     />
+
+    <!-- Teleported paragraph ⋮ menu -->
+    <Teleport to="body">
+      <div
+        v-if="openMenuParagraph !== null && menuPosition"
+        class="paragraph-menu paragraph-menu--teleported"
+        :style="{ top: menuPosition.top + 'px', left: menuPosition.left + 'px' }"
+        @click.stop
+      >
+        <button
+          class="paragraph-menu-item"
+          @click.stop="bookmarkFromMenu(openMenuParagraph)"
+        >
+          Bookmark
+        </button>
+        <button
+          class="paragraph-menu-item"
+          @click.stop="copyParagraph(openMenuParagraph)"
+        >
+          Copy
+        </button>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script>
 import ArticleHistoryModal from './ArticleHistoryModal.vue';
 import { useArticleHistory } from '../composables/useArticleHistory';
-import { Edit as EditIcon, Settings, BookOpen, Save, Info, Bookmark } from 'lucide-vue-next';
+import { Edit as EditIcon, Settings, BookOpen, Save, Info, Bookmark, MoreVertical } from 'lucide-vue-next';
 import EditModal from './EditModal.vue';
 import ConfirmModal from './ConfirmModal.vue';
 import SettingsModal from './SettingsModal.vue';
 import InfoModal from './InfoModal.vue';
-import { ref, computed, watch, nextTick, onMounted } from 'vue';
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import LoadingSpinner from './LoadingSpinner.vue';
 import { useSettings } from '../composables/useSettings';
 
@@ -166,7 +240,7 @@ import { Kuroshiro } from 'kuroshiro-browser';
 export default {
   components: {
     ArticleHistoryModal, EditModal, ConfirmModal, SettingsModal, InfoModal,
-    LoadingSpinner, BookOpen, EditIcon, Settings, Save, Info, Bookmark,
+    LoadingSpinner, BookOpen, EditIcon, Settings, Save, Info, Bookmark, MoreVertical,
   },
   name: 'JapaneseConverter',
   setup() {
@@ -177,9 +251,11 @@ export default {
     } = useSettings()
 
     const {
-      articles, scheduleAutoSave, cancelAutoSave, saveCurrentArticle,
+      articles, currentArticleId,          // ← use the composable's ref directly
+      createArticle, updateArticle, setCurrentArticle, clearCurrentArticle, flushAutoSave,
+      scheduleAutoSave, cancelAutoSave,
       deleteArticle, deleteAllArticles, isCurrentArticle, formatDate,
-      resetCurrentTracking, isSaving, setBookmark
+      isSaving, setBookmark
     } = useArticleHistory()
 
     const japaneseText = ref('');
@@ -199,23 +275,52 @@ export default {
     const editModalContent = computed(() => editModalType.value === 'japanese' ? japaneseText.value : englishText.value)
 
     const isHistoryModalOpen = ref(false)
-    const currentArticleId = ref(null)
     const currentBookmark = ref(null)
+    const pendingBookmark = ref(null)          // set when loading from history; scrolled after render
+    const focusedParagraph = ref(null)         // paragraph index that has visual focus
+    const openMenuParagraph = ref(null)        // paragraph whose ⋮ menu is open
+    const menuPosition = ref(null)             // { top, left } viewport coords for teleported menu
 
     // --- Kuroshiro Setup ---
     const kuroshiro = ref(null);
     const isKuroshiroReady = ref(false);
 
+
     onMounted(async () => {
-      try {
-        kuroshiro.value = await Kuroshiro.buildAndInitWithKuromoji(import.meta.env.PROD);
-        isKuroshiroReady.value = true;
-        processText();
-      } catch (err) {
-        console.error('Failed to load Kuroshiro:', err);
-        loadingText.value = 'Failed to load dictionary. Check public/dict folder.';
+      // 1) Pick up shared text
+      const pendingText = sessionStorage.getItem('pendingShareText')
+      const pendingTarget = sessionStorage.getItem('pendingShareTarget') || 'japanese'
+
+      if (pendingText) {
+        if (pendingTarget === 'english') {
+          englishText.value = pendingText
+        } else {
+          japaneseText.value = pendingText
+        }
+        sessionStorage.removeItem('pendingShareText')
+        sessionStorage.removeItem('pendingShareTitle')
+        sessionStorage.removeItem('pendingShareTarget')
       }
-    });
+
+      // 2) Init Kuroshiro
+      try {
+        kuroshiro.value = await Kuroshiro.buildAndInitWithKuromoji(import.meta.env.PROD)
+        isKuroshiroReady.value = true
+        processText()
+      } catch (err) {
+        console.error('Failed to load Kuroshiro:', err)
+        loadingText.value = 'Failed to load dictionary. Check public/dict folder.'
+      }
+
+      // 3) Global click listener
+      document.addEventListener('click', handleDocumentClick)
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('click', handleDocumentClick)
+      clearTimeout(processTimeout)
+      clearTimeout(toastTimeout)
+    })
 
     // --- Furigana / Ruby HTML Generation ---
     const comparisonData = ref({});
@@ -223,7 +328,6 @@ export default {
     const convertParagraphToRuby = async (text) => {
       if (!kuroshiro.value || !text.trim()) return text;
       try {
-        // mode: 'furigana' generates <ruby> tags automatically
         return await kuroshiro.value.convert(text, {
           to: 'romaji',
           mode: 'furigana',
@@ -251,12 +355,22 @@ export default {
 
       for (let i = 0; i < paragraphs.length; i++) {
         result[i] = {
-          html: await convertParagraphToRuby(paragraphs[i])
+          html: await convertParagraphToRuby(paragraphs[i]),
+          plain: paragraphs[i],   // kept for "Copy paragraph"
         };
       }
 
       comparisonData.value = result;
       isProcessing.value = false;
+
+      // If a history load requested a bookmark scroll, do it now that
+      // [data-paragraph-index] elements exist in the DOM.
+      if (pendingBookmark.value !== null) {
+        const target = pendingBookmark.value;
+        pendingBookmark.value = null;
+        await nextTick();
+        scrollToBookmark(target);
+      }
     };
 
     // Watch for text or romaji system changes
@@ -268,14 +382,23 @@ export default {
       }, 300);
     });
 
-    // --- App Logic ---
     const handleManualSave = () => {
       if (!japaneseText.value.trim()) return
-      const article = saveCurrentArticle(japaneseText.value, englishText.value)
-      if (article) {
-        currentArticleId.value = article.id
-        showSaveToastMessage('Article saved successfully!')
+
+      let article
+      if (currentArticleId.value) {
+        // Update in place — flush any pending autosave first so we don't double-write.
+        flushAutoSave(japaneseText.value, englishText.value)
+        article = updateArticle(currentArticleId.value, {
+          japaneseContent: japaneseText.value,
+          englishContent: englishText.value,
+        })
+      } else {
+        article = createArticle(japaneseText.value, englishText.value)
+        // createArticle sets currentArticleId internally
       }
+
+      if (article) showSaveToastMessage('Article saved successfully!')
     }
 
     const showSaveToastMessage = (message) => {
@@ -304,48 +427,133 @@ export default {
 
       japaneseText.value = article.japaneseContent || ''
       englishText.value = article.englishContent || ''
-      currentArticleId.value = article.id
       currentBookmark.value = article.bookmark ?? null
       cancelAutoSave()
-      resetCurrentTracking()
+      setCurrentArticle(article.id)
 
       isLoading.value = false
 
       if (article.bookmark !== null && article.bookmark !== undefined) {
-        scrollToBookmark(article.bookmark)
+        if (comparisonData.value[article.bookmark]) {
+          await nextTick()
+          scrollToBookmark(article.bookmark)
+        } else {
+          pendingBookmark.value = article.bookmark
+        }
       }
     }
 
-    // Inside your setup() function in JapaneseConverter.vue
-
-    const scrollToBookmark = async (paragraphIndex) => {
-      // Wait for Vue DOM updates
-      await nextTick()
-      
-      // Add a short delay to allow the browser to calculate the line-heights
-      // of the newly rendered <ruby> tags
-      setTimeout(() => {
-        const el = document.querySelector(`[data-paragraph-index="${paragraphIndex}"]`)
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        }
-      }, 150)
+    const scrollToBookmark = (paragraphIndex) => {
+      const el = document.querySelector(`[data-paragraph-index="${paragraphIndex}"]`)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
     }
 
     const toggleBookmark = (paragraphIndex) => {
+      // Ensure context exists (first-ever bookmark on fresh content creates the article)
       if (!currentArticleId.value) {
-        const article = saveCurrentArticle(japaneseText.value, englishText.value)
-        if (article) currentArticleId.value = article.id
+        const article = createArticle(japaneseText.value, englishText.value)
+        if (!article) return   // no japanese text — nothing to bookmark
       }
-      if (currentArticleId.value) {
-        if (currentBookmark.value === paragraphIndex) {
-          currentBookmark.value = null
-          setBookmark(currentArticleId.value, null)
-        } else {
-          currentBookmark.value = paragraphIndex
-          setBookmark(currentArticleId.value, paragraphIndex)
-        }
+      if (!currentArticleId.value) return
+
+      const nextBookmark =
+        currentBookmark.value === paragraphIndex ? null : paragraphIndex
+      currentBookmark.value = nextBookmark
+      setBookmark(currentArticleId.value, nextBookmark)
+    }
+
+    // ---------- Paragraph focus & menu ----------
+    const handleParagraphClick = (index) => {
+      focusedParagraph.value = index
+    }
+
+    const toggleParagraphMenu = (index, event) => {
+      // Toggle closed
+      if (openMenuParagraph.value === index) {
+        openMenuParagraph.value = null
+        menuPosition.value = null
+        return
       }
+      openMenuParagraph.value = index
+      focusedParagraph.value = index
+
+      // Anchor the menu under the ⋮ button, clamping to the viewport
+      const btn = event?.currentTarget
+      if (btn) {
+        const rect = btn.getBoundingClientRect()
+        const MENU_WIDTH = 200
+        const MENU_HEIGHT = 88      // ~ two items + padding
+        const MARGIN = 8
+
+        const left = Math.min(
+          window.innerWidth - MENU_WIDTH - MARGIN,
+          Math.max(MARGIN, rect.right - MENU_WIDTH)
+        )
+
+        const spaceBelow = window.innerHeight - rect.bottom
+        const top = spaceBelow >= MENU_HEIGHT + MARGIN
+          ? rect.bottom + 4
+          : rect.top - MENU_HEIGHT - 4
+
+        menuPosition.value = { top, left }
+      }
+    }
+
+    const handleDocumentClick = (e) => {
+      const inside = e.target.closest('.line-container, .paragraph-menu')
+      if (!inside) {
+        focusedParagraph.value = null
+        openMenuParagraph.value = null
+        menuPosition.value = null
+      }
+    }
+
+    // ---------- Double-click / double-tap ----------
+    const handleParagraphDoubleClick = (index) => {
+      // Text selection is disabled via CSS, so this is safe on desktop.
+      toggleBookmark(index)
+    }
+
+    let touchMoved = false
+    let lastTapIndex = null
+    let lastTapTime = 0
+    const handleTouchStart = () => { touchMoved = false }
+    const handleTouchMove = () => { touchMoved = true }
+    const handleTouchEnd = (index) => {
+      if (touchMoved) return
+      const now = Date.now()
+      if (lastTapIndex === index && now - lastTapTime < 300) {
+        toggleBookmark(index)
+        lastTapIndex = null
+        lastTapTime = 0
+      } else {
+        lastTapIndex = index
+        lastTapTime = now
+        focusedParagraph.value = index
+      }
+    }
+
+    // ---------- Menu actions ----------
+    const bookmarkFromMenu = (index) => {
+      toggleBookmark(index)
+      openMenuParagraph.value = null
+      menuPosition.value = null
+    }
+
+    const copyParagraph = async (index) => {
+      const block = comparisonData.value[index]
+      if (!block?.plain) return
+      try {
+        await navigator.clipboard.writeText(block.plain)
+        showSaveToastMessage('📋 Paragraph copied!')
+      } catch (err) {
+        console.error('Copy failed:', err)
+        showSaveToastMessage('Failed to copy')
+      }
+      openMenuParagraph.value = null
+      menuPosition.value = null
     }
 
     const handleDeleteArticle = (articleId) => { deleteArticle(articleId) }
@@ -365,7 +573,11 @@ export default {
 
     const openSettingsModal = () => { isSettingsModalOpen.value = true }
     const requestClearAll = () => { if (japaneseText.value.trim() || englishText.value.trim()) showConfirmModal.value = true }
-    const confirmClearAll = () => { clearText('both'); showConfirmModal.value = false }
+    const confirmClearAll = () => {
+      clearText('both')
+      clearCurrentArticle()
+      showConfirmModal.value = false
+}
     const cancelClearAll = () => { showConfirmModal.value = false }
     const closeSettingsModal = () => { isSettingsModalOpen.value = false }
 
@@ -437,9 +649,12 @@ export default {
       if (type === 'english' || type === 'both') englishText.value = ''
       if (type === 'both') {
         cancelAutoSave()
-        resetCurrentTracking()
-        currentArticleId.value = null
+        // context reset is done by confirmClearAll via clearCurrentArticle()
         currentBookmark.value = null
+        pendingBookmark.value = null
+        focusedParagraph.value = null
+        openMenuParagraph.value = null
+        menuPosition.value = null
       }
     }
 
@@ -460,17 +675,101 @@ export default {
       isLoading, isProcessing, loadingText, isSaving, showSaveToast,
       getFontFamily, comparisonData, englishSegments, settings,
       clearOrPasteText, clearAllText: clearText, handleManualSave, showSaveToastMessage,
-      EditIcon, Settings, Save, Info, Bookmark,
+      EditIcon, Settings, Save, Info, Bookmark, MoreVertical,
       isEditModalOpen, editModalTitle, editModalContent, openEditModal, closeEditModal, saveEditModalContent,
       isSettingsModalOpen, openSettingsModal, closeSettingsModal, saveSettings, resetToDefaults,
       showConfirmModal, requestClearAll, confirmClearAll, cancelClearAll,
       currentBookmark, toggleBookmark,
+      // Bookmark UX
+      focusedParagraph, openMenuParagraph, menuPosition,
+      handleParagraphClick, toggleParagraphMenu,
+      handleParagraphDoubleClick,
+      handleTouchStart, handleTouchMove, handleTouchEnd,
+      copyParagraph, bookmarkFromMenu,
     };
   },
 };
 </script>
 
 <style scoped>
+/* ===== Bookmark UX additions ===== */
+
+/* Disable text selection on paragraphs — double-click is our gesture now */
+.line-container {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Focused paragraph highlight */
+.line-container.is-focused {
+  border-color: rgba(236, 72, 153, 0.35);
+  box-shadow: 0 4px 24px rgba(236, 72, 153, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Bookmarked paragraph — always visible, filled pink */
+.bookmark-btn.is-active {
+  color: #ec4899;
+  background: #fdf2f8;
+}
+
+/* ⋮ menu button — top-right of the focused paragraph */
+.paragraph-menu-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: all 0.2s;
+  z-index: 5;
+}
+.paragraph-menu-btn:hover {
+  background: #fdf2f8;
+  color: #ec4899;
+  transform: scale(1.1);
+}
+
+/* Teleported menu (rendered into <body>) */
+.paragraph-menu--teleported {
+  position: fixed;
+  background: #fff;
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+  z-index: 1500;
+  min-width: 200px;
+}
+
+.paragraph-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.paragraph-menu-item:hover {
+  background: #fdf2f8;
+  color: #ec4899;
+}
+
 /* Header */
 .app-header {
   position: sticky; top: 0; background: var(--bg-card); backdrop-filter: blur(20px);

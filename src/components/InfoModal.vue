@@ -89,7 +89,6 @@
 <script setup>
 import { X } from 'lucide-vue-next'
 
-// DEFINE THE PROP HERE so Vue knows to accept it
 const props = defineProps({
   isOpen: {
     type: Boolean,

@@ -162,10 +162,59 @@ const confirmModalTitle = ref('')
 const confirmModalMessage = ref('')
 const confirmModalConfirmText = ref('')
 
+const focusedParagraph = ref(null)         // paragraph index | null
+const openMenuParagraph = ref(null)        // paragraph index | null
+
 // Tabs & Filter
 const activeTab = ref('all') // 'all' | 'unfinished'
 const startDate = ref('')
 const endDate = ref('')
+
+
+const setFocused = (index) => {
+  focusedParagraph.value = index
+}
+
+const clearFocusIfOutside = (e) => {
+  // Called on document click to unfocus if click landed outside any line-container
+  const inside = e.target.closest('.line-container, .paragraph-menu')
+  if (!inside) {
+    focusedParagraph.value = null
+    openMenuParagraph.value = null
+  }
+}
+
+const handleParagraphClick = (index) => {
+  // Only set focus; don't toggle bookmark on a single click
+  setFocused(index)
+}
+
+const handleParagraphDoubleClick = (index) => {
+  // Desktop: skip if user is selecting text
+  if (window.getSelection()?.toString()) return
+  toggleBookmark(index)
+}
+
+// Mobile double-tap
+let lastTapTime = 0
+let lastTapIndex = null
+const handleParagraphTouchEnd = (index) => {
+  const now = Date.now()
+  if (lastTapIndex === index && now - lastTapTime < 300) {
+    toggleBookmark(index)
+    lastTapTime = 0
+    lastTapIndex = null
+  } else {
+    lastTapTime = now
+    lastTapIndex = index
+    setFocused(index)
+  }
+}
+
+const toggleMenu = (index) => {
+  openMenuParagraph.value = openMenuParagraph.value === index ? null : index
+  setFocused(index)
+}
 
 const toDateInputValue = (ts) => {
   const d = new Date(ts)

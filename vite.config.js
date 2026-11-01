@@ -20,6 +20,18 @@ export default defineConfig({
         display: 'standalone',
         scope: '/Little_Hanzi_Japanese/',
         start_url: '/Little_Hanzi_Japanese/',
+
+        // 👇 NEW — enables "share to Little Japanese" from the OS share sheet
+        share_target: {
+          action: '/Little_Hanzi_Japanese/share-handler',
+          method: 'GET',
+          params: {
+            title: 'title',
+            text: 'text',
+            url: 'url'
+          }
+        },
+
         icons: [
           {
             src: 'icons/manifest-icon-192.maskable.png',
