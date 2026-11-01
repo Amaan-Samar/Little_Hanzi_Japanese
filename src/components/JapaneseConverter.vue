@@ -776,6 +776,7 @@ export default {
 
 /* Header */
 .app-header {
+  padding-top: env(safe-area-inset-top);
   position: sticky; top: 0; background: var(--bg-card); backdrop-filter: blur(20px);
   border-bottom: var(--border-primary-light); padding: 12px 24px;
   display: flex; justify-content: space-between; align-items: center; z-index: 100;
@@ -812,7 +813,7 @@ export default {
 @keyframes slideDown { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
 .main-content { display: block; }
-.converter-wrapper { width: 100%; min-height: 100vh; background: var(--gradient-main); }
+.converter-wrapper { padding-bottom: env(safe-area-inset-bottom); width: 100%; min-height: 100vh; background: var(--gradient-main); }
 .input-display-row { margin: 20px auto; padding: 5px; display: block; width: 100%; max-width: 1200px; }
 .text-section { width: 100%; padding: 0 1rem; margin-bottom: 20px; }
 .input-wrapper { position: relative; width: 100%; }
