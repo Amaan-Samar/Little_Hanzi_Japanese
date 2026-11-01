@@ -164,6 +164,17 @@ http://localhost:3000/Little_Hanzi_Japanese/share-handler?text=%E3%81%93%E3%82%9
 
 You should see a brief "Loading…" or a picker (for short text), then be redirected to the editor with the text pre-filled.
 
+## About the Author
+
+Built by [Amaan Samar](https://github.com/Amaan-Samar) — a language learner who got tired of reading
+textbook Japanese and wanted a tool to read real articles.
+
+### More Little Hanzi apps
+
+- [Little Hanzi Chinese](https://amaan-samar.github.io/Little_Hanzi_Chinese/) — pinyin + English, paragraph by paragraph
+- [Little Hanzi Greek](https://amaan-samar.github.io/Little_Hanzi_Greek/) — Greek + English, paragraph by paragraph
+- [Little Hanzi Korean](https://amaan-samar.github.io/Little_Hanzi_Korean/) — Korean + English, paragraph by paragraph
+
 ## License
 
 MIT

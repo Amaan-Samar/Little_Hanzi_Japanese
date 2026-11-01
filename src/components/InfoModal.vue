@@ -3,83 +3,244 @@
   <Teleport to="body">
     <div v-if="isOpen" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/5 backdrop-blur-md animate-fadeIn" @click="close">
       <div class="relative bg-white/85 backdrop-blur-xl rounded-2xl w-[90%] max-w-[600px] max-h-[90vh] flex flex-col animate-slideUp border border-white/50 shadow-2xl" @click.stop>
-        
+
         <!-- Close Button -->
         <button class="absolute -top-2.5 -right-2.5 w-8 h-8 rounded-full bg-white border border-black/5 cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-gray-50 hover:border-black/10 text-gray-400 hover:text-gray-600 shadow-md hover:shadow-lg z-10" @click="close">
           <X :size="16" />
         </button>
 
         <div class="flex-1 overflow-y-auto p-6 pb-8 scrollbar-thin scrollbar-thumb-gray-200/50 scrollbar-track-transparent">
-          
-          <!-- App Info -->
-          <div class="mb-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-2">About Little Hanzi Japanese</h2>
-            <p class="text-sm text-slate-600 leading-relaxed">
-              A tool for learning Japanese through reading. Paste Japanese text and get instant 
-              furigana (romaji annotations) and English translations to help you read and understand better.
-            </p>
-          </div>
 
-          <!-- App Link -->
-          <div class="mb-6 bg-gradient-to-br from-pink-50/50 to-sky-50/50 rounded-xl p-4 border border-pink-100/50">
-            <label class="block text-[11px] font-semibold text-pink-600 uppercase tracking-wider mb-2">App URL</label>
-            <a 
-              href="https://amaan-samar.github.io/Little_Hanzi_Japanese/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block text-sm text-pink-700 hover:text-pink-900 font-medium break-all hover:underline"
+          <!-- Tabs -->
+          <div class="flex gap-2 mb-5 border-b border-gray-100 pb-2">
+            <button
+              class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+              :class="activeTab === 'learn'
+                ? 'bg-pink-50 text-pink-600'
+                : 'text-gray-500 hover:bg-gray-50'"
+              @click="activeTab = 'learn'"
             >
-              https://amaan-samar.github.io/Little_Hanzi_Japanese/
-            </a>
+              📖 Learn
+            </button>
+            <button
+              class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+              :class="activeTab === 'apps'
+                ? 'bg-pink-50 text-pink-600'
+                : 'text-gray-500 hover:bg-gray-50'"
+              @click="activeTab = 'apps'"
+            >
+              🧩 Similar Apps
+            </button>
           </div>
 
-          <!-- Learning Resources -->
-          <div class="mb-6">
-            <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Learning Resources</label>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- ================= TAB: Learn ================= -->
+          <div v-show="activeTab === 'learn'">
+            <!-- App Info -->
+            <div class="mb-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">About Little Hanzi Japanese</h2>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                A tool for learning Japanese through reading. Paste Japanese text and get instant
+                furigana (romaji annotations) and English translations to help you read and understand better.
+              </p>
+            </div>
+
+            <!-- App Link -->
+            <div class="mb-6 bg-gradient-to-br from-pink-50/50 to-sky-50/50 rounded-xl p-4 border border-pink-100/50">
+              <label class="block text-[11px] font-semibold text-pink-600 uppercase tracking-wider mb-2">App URL</label>
               <a
-                v-for="resource in resources"
-                :key="resource.name"
-                :href="resource.url"
+                href="https://amaan-samar.github.io/Little_Hanzi_Japanese/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group block p-4 bg-white border border-black/5 rounded-xl hover:border-pink-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                class="block text-sm text-pink-700 hover:text-pink-900 font-medium break-all hover:underline"
               >
-                <div class="flex items-start gap-3">
-                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 transition-colors duration-200">
-                    <span class="text-lg">{{ resource.icon }}</span>
+                https://amaan-samar.github.io/Little_Hanzi_Japanese/
+              </a>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="mb-6">
+              <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Learning Resources</label>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <a
+                  v-for="resource in resources"
+                  :key="resource.name"
+                  :href="resource.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block p-4 bg-white border border-black/5 rounded-xl hover:border-pink-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 transition-colors duration-200">
+                      <span class="text-lg">{{ resource.icon }}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class="text-sm font-semibold text-gray-800 group-hover:text-pink-700 transition-colors duration-200">
+                        {{ resource.name }}
+                      </h4>
+                      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">
+                        {{ resource.description }}
+                      </p>
+                    </div>
                   </div>
-                  <div class="flex-1 min-w-0">
-                    <h4 class="text-sm font-semibold text-gray-800 group-hover:text-pink-700 transition-colors duration-200">
-                      {{ resource.name }}
-                    </h4>
-                    <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">
-                      {{ resource.description }}
-                    </p>
+                </a>
+              </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="mb-6 bg-sky-50/80 rounded-xl p-4 border border-sky-100/50">
+              <h4 class="text-xs font-semibold text-sky-700 uppercase tracking-wider mb-2">💡 Tips</h4>
+              <ul class="text-sm text-slate-600 space-y-1.5">
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Paste Japanese text in the left box and English translation in the right</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Adjust font sizes and display settings using the Settings gear icon</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Your articles are automatically saved in History for later reading</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sky-500 mt-0.5">•</span>
+                  <span>Double-click (or double-tap) any paragraph to bookmark it for later</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Author appreciation card -->
+            <div class="rounded-xl p-4 border border-pink-100/60 bg-gradient-to-br from-pink-50/60 via-white to-sky-50/40">
+              <div class="flex items-start gap-3">
+                <img
+                  :src="author.avatarUrl"
+                  :alt="author.name"
+                  class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0"
+                  @error="authorAvatarFailed = true"
+                  v-show="!authorAvatarFailed"
+                />
+                <div v-if="authorAvatarFailed" class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-semibold flex-shrink-0">
+                  {{ author.name.charAt(0) }}
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <p class="text-[11px] font-semibold text-pink-600 uppercase tracking-wider mb-0.5">Made with care by</p>
+                  <a
+                    :href="author.githubUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 text-sm font-semibold text-gray-800 hover:text-pink-700 transition-colors group"
+                  >
+                    {{ author.name }}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-pink-500 transition-colors">
+                      <path d="M7 17L17 7"/>
+                      <path d="M7 7h10v10"/>
+                    </svg>
+                  </a>
+                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    {{ author.tagline }}
+                  </p>
+                  <div class="mt-2 flex flex-wrap gap-3 text-[11px]">
+                    <a
+                      :href="author.githubUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-slate-400 hover:text-pink-600 transition-colors font-medium"
+                    >
+                      GitHub →
+                    </a>
+                    <a
+                      :href="author.githubUrl + '/Little_Hanzi_Japanese'"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-slate-400 hover:text-pink-600 transition-colors font-medium"
+                    >
+                      Source code →
+                    </a>
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
 
-          <!-- Tips -->
-          <div class="bg-sky-50/80 rounded-xl p-4 border border-sky-100/50">
-            <h4 class="text-xs font-semibold text-sky-700 uppercase tracking-wider mb-2">💡 Tips</h4>
-            <ul class="text-sm text-slate-600 space-y-1.5">
-              <li class="flex items-start gap-2">
-                <span class="text-sky-500 mt-0.5">•</span>
-                <span>Paste Japanese text in the left box and English translation in the right</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-sky-500 mt-0.5">•</span>
-                <span>Adjust font sizes and display settings using the Settings gear icon</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-sky-500 mt-0.5">•</span>
-                <span>Your articles are automatically saved in History for later reading</span>
-              </li>
-            </ul>
+          <!-- ================= TAB: Similar Apps ================= -->
+          <div v-show="activeTab === 'apps'">
+            <div class="mb-5">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">More from Little Hanzi</h2>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Same reading-first approach, for other languages. Pick whichever you're learning next.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <a
+                v-for="app in siblingApps"
+                :key="app.name"
+                :href="app.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group relative flex items-center gap-3 p-4 bg-white border border-black/5 rounded-xl hover:border-pink-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                :class="{ 'ring-1 ring-pink-200 bg-pink-50/40': app.isCurrent }"
+              >
+                <span
+                  v-if="app.isCurrent"
+                  class="absolute -top-1.5 -right-1.5 px-1.5 py-0.5 rounded-full bg-pink-500 text-white text-[9px] font-bold uppercase tracking-wide shadow-sm"
+                >
+                  Here
+                </span>
+
+                <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center overflow-hidden group-hover:bg-pink-50 transition-colors duration-200">
+                  <img
+                    v-if="!app.iconFailed"
+                    :src="app.iconUrl"
+                    :alt="app.name"
+                    class="w-8 h-8 object-contain"
+                    @error="app.iconFailed = true"
+                  />
+                  <span v-else class="text-2xl">{{ app.fallbackIcon }}</span>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-2">
+                    <h4 class="text-sm font-semibold text-gray-800 group-hover:text-pink-700 transition-colors duration-200 truncate">
+                      {{ app.name }}
+                    </h4>
+                    <span class="text-[10px] font-medium uppercase tracking-wider text-slate-300 group-hover:text-pink-400 transition-colors flex-shrink-0">
+                      {{ app.language }}
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">
+                    {{ app.description }}
+                  </p>
+                </div>
+
+                <div class="flex-shrink-0 text-slate-300 group-hover:text-pink-400 transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17L17 7"/>
+                    <path d="M7 7h10v10"/>
+                  </svg>
+                </div>
+              </a>
+            </div>
+
+            <p class="text-[11px] text-center text-slate-400 mt-6">
+              Built with the same philosophy — read real content, don't drill flashcards.
+            </p>
           </div>
+
+          <!-- Persistent credit line, visible on both tabs -->
+          <p class="mt-6 pt-4 border-t border-gray-100 text-center text-[11px] text-slate-400">
+            Made with 🌸 by
+            <a
+              :href="author.githubUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-slate-500 hover:text-pink-600 transition-colors"
+            >
+              {{ author.name }}
+            </a>
+          </p>
+
         </div>
       </div>
     </div>
@@ -87,6 +248,7 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { X } from 'lucide-vue-next'
 
 const props = defineProps({
@@ -97,6 +259,22 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
+
+const activeTab = ref('learn')   // 'learn' | 'apps'
+
+// Reset to "Learn" tab each time the modal opens
+watch(() => props.isOpen, (open) => {
+  if (open) activeTab.value = 'learn'
+})
+
+// Author info — edit these three fields to match your profile
+const author = {
+  name: 'Amaan Samar',
+  githubUrl: 'https://github.com/Amaan-Samar',
+  avatarUrl: 'https://github.com/Amaan-Samar.png',
+  tagline: 'Built for learners who want to read real Japanese, not drill flashcards.'
+}
+const authorAvatarFailed = ref(false)
 
 const resources = [
   {
@@ -112,7 +290,7 @@ const resources = [
     description: 'Comprehensive Japanese learning platform with kanji mnemonics, grammar guides, and reading practice.'
   },
   {
-    name: 'Tae Kim\'s Guide to Japanese Grammar',
+    name: "Tae Kim's Guide to Japanese Grammar",
     icon: '📝',
     url: 'https://guidetojapanese.org/learn/',
     description: 'Free, well-structured grammar guide from beginner to intermediate, with clear explanations.'
@@ -136,6 +314,49 @@ const resources = [
     description: 'Daily news rewritten in simple Japanese with furigana, perfect for intermediate readers.'
   }
 ]
+
+const siblingApps = ref([
+  {
+    name: 'Little Hanzi Japanese',
+    language: 'Japanese',
+    description: "The app you're using right now — read Japanese with furigana and English translations.",
+    url: 'https://amaan-samar.github.io/Little_Hanzi_Japanese/',
+    iconUrl: 'https://amaan-samar.github.io/Little_Hanzi_Japanese/icons/favicon-196.png',
+    fallbackIcon: '🇯🇵',
+    iconFailed: false,
+    isCurrent: true
+  },
+  {
+    name: 'Little Hanzi Chinese',
+    language: 'Chinese',
+    description: 'Read Chinese articles with pinyin annotations and English translations, paragraph by paragraph.',
+    url: 'https://amaan-samar.github.io/Little_Hanzi_Chinese/',
+    iconUrl: 'https://amaan-samar.github.io/Little_Hanzi_Chinese/icons/favicon-196.png',
+    fallbackIcon: '🀄',
+    iconFailed: false,
+    isCurrent: false
+  },
+  {
+    name: 'Little Hanzi Greek',
+    language: 'Greek',
+    description: 'Read Greek text with transliteration and English translations — same clean reading experience.',
+    url: 'https://amaan-samar.github.io/Little_Hanzi_Greek/',
+    iconUrl: 'https://amaan-samar.github.io/Little_Hanzi_Greek/icons/favicon-196.png',
+    fallbackIcon: '🇬🇷',
+    iconFailed: false,
+    isCurrent: false
+  },
+  {
+    name: 'Little Hanzi Korean',
+    language: 'Korean',
+    description: 'Read Korean with romanization and English translations, built for reading practice.',
+    url: 'https://amaan-samar.github.io/Little_Hanzi_Korean/',
+    iconUrl: 'https://amaan-samar.github.io/Little_Hanzi_Korean/icons/favicon-196.png',
+    fallbackIcon: '🇰🇷',
+    iconFailed: false,
+    isCurrent: false
+  }
+])
 
 const close = () => {
   emit('close')
