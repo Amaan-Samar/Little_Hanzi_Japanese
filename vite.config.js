@@ -22,7 +22,7 @@ export default defineConfig({
         name: 'Little Japanese',
         short_name: 'Japanese',
         description: 'Japanese reading tool with scholarly transliteration',
-        theme_color: '#6366F1',
+        theme_color: '#F8FAFC',
         background_color: '#F8FAFC',
         display: 'standalone',
         scope: '/Little_Hanzi_Japanese/',
